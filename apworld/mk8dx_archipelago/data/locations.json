@@ -1,0 +1,2999 @@
+[
+  {
+    "name": "Complete Mushroom Cup (Grand Prix)",
+    "region": "Mushroom Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Flower Cup (Grand Prix)",
+    "region": "Flower Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Star Cup (Grand Prix)",
+    "region": "Star Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Special Cup (Grand Prix)",
+    "region": "Special Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Shell Cup (Grand Prix)",
+    "region": "Shell Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Banana Cup (Grand Prix)",
+    "region": "Banana Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Leaf Cup (Grand Prix)",
+    "region": "Leaf Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Lightning Cup (Grand Prix)",
+    "region": "Lightning Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Egg Cup (Grand Prix)",
+    "region": "Egg Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Triforce Cup (Grand Prix)",
+    "region": "Triforce Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Crossing Cup (Grand Prix)",
+    "region": "Crossing Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Bell Cup (Grand Prix)",
+    "region": "Bell Cup",
+    "category": [
+      "Cup Completion"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Golden Dash Cup (Grand Prix)",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Lucky Cat Cup (Grand Prix)",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Turnip Cup (Grand Prix)",
+    "region": "Turnip Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Propeller Cup (Grand Prix)",
+    "region": "Propeller Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Rock Cup (Grand Prix)",
+    "region": "Rock Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Moon Cup (Grand Prix)",
+    "region": "Moon Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Fruit Cup (Grand Prix)",
+    "region": "Fruit Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Boomerang Cup (Grand Prix)",
+    "region": "Boomerang Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Feather Cup (Grand Prix)",
+    "region": "Feather Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Cherry Cup (Grand Prix)",
+    "region": "Cherry Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Acorn Cup (Grand Prix)",
+    "region": "Acorn Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Complete Spiny Cup (Grand Prix)",
+    "region": "Spiny Cup",
+    "category": [
+      "Cup Completion",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ]
+  },
+  {
+    "name": "Mario Kart Stadium - Finish",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup"
+    ]
+  },
+  {
+    "name": "Mario Kart Stadium - Top 3",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Mario Kart Stadium - Win",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Water Park - Finish",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup"
+    ]
+  },
+  {
+    "name": "Water Park - Top 3",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Water Park - Win",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Sweet Sweet Canyon - Finish",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup"
+    ]
+  },
+  {
+    "name": "Sweet Sweet Canyon - Top 3",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Sweet Sweet Canyon - Win",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Thwomp Ruins - Finish",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup"
+    ]
+  },
+  {
+    "name": "Thwomp Ruins - Top 3",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Thwomp Ruins - Win",
+    "region": "Mushroom Cup",
+    "category": [
+      "Courses",
+      "Mushroom Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Mario Circuit - Finish",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup"
+    ]
+  },
+  {
+    "name": "Mario Circuit - Top 3",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Mario Circuit - Win",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Toad Harbor - Finish",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup"
+    ]
+  },
+  {
+    "name": "Toad Harbor - Top 3",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Toad Harbor - Win",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Twisted Mansion - Finish",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup"
+    ]
+  },
+  {
+    "name": "Twisted Mansion - Top 3",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Twisted Mansion - Win",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Shy Guy Falls - Finish",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup"
+    ]
+  },
+  {
+    "name": "Shy Guy Falls - Top 3",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Shy Guy Falls - Win",
+    "region": "Flower Cup",
+    "category": [
+      "Courses",
+      "Flower Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Sunshine Airport - Finish",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup"
+    ]
+  },
+  {
+    "name": "Sunshine Airport - Top 3",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Sunshine Airport - Win",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Dolphin Shoals - Finish",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup"
+    ]
+  },
+  {
+    "name": "Dolphin Shoals - Top 3",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Dolphin Shoals - Win",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Electrodrome - Finish",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup"
+    ]
+  },
+  {
+    "name": "Electrodrome - Top 3",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Electrodrome - Win",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Mount Wario - Finish",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup"
+    ]
+  },
+  {
+    "name": "Mount Wario - Top 3",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Mount Wario - Win",
+    "region": "Star Cup",
+    "category": [
+      "Courses",
+      "Star Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Cloudtop Cruise - Finish",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup"
+    ]
+  },
+  {
+    "name": "Cloudtop Cruise - Top 3",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Cloudtop Cruise - Win",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Bone-Dry Dunes - Finish",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup"
+    ]
+  },
+  {
+    "name": "Bone-Dry Dunes - Top 3",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Bone-Dry Dunes - Win",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Bowser's Castle - Finish",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup"
+    ]
+  },
+  {
+    "name": "Bowser's Castle - Top 3",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Bowser's Castle - Win",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Rainbow Road - Finish",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup"
+    ]
+  },
+  {
+    "name": "Rainbow Road - Top 3",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Rainbow Road - Win",
+    "region": "Special Cup",
+    "category": [
+      "Courses",
+      "Special Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Moo Moo Meadows - Finish",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup"
+    ]
+  },
+  {
+    "name": "Wii Moo Moo Meadows - Top 3",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Moo Moo Meadows - Win",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Mario Circuit - Finish",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup"
+    ]
+  },
+  {
+    "name": "GBA Mario Circuit - Top 3",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Mario Circuit - Win",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Cheep Cheep Beach - Finish",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup"
+    ]
+  },
+  {
+    "name": "DS Cheep Cheep Beach - Top 3",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Cheep Cheep Beach - Win",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Toad's Turnpike - Finish",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup"
+    ]
+  },
+  {
+    "name": "N64 Toad's Turnpike - Top 3",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Toad's Turnpike - Win",
+    "region": "Shell Cup",
+    "category": [
+      "Courses",
+      "Shell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Dry Dry Desert - Finish",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup"
+    ]
+  },
+  {
+    "name": "GCN Dry Dry Desert - Top 3",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Dry Dry Desert - Win",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "SNES Donut Plains 3 - Finish",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup"
+    ]
+  },
+  {
+    "name": "SNES Donut Plains 3 - Top 3",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "SNES Donut Plains 3 - Win",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Royal Raceway - Finish",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup"
+    ]
+  },
+  {
+    "name": "N64 Royal Raceway - Top 3",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Royal Raceway - Win",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS DK Jungle - Finish",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup"
+    ]
+  },
+  {
+    "name": "3DS DK Jungle - Top 3",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS DK Jungle - Win",
+    "region": "Banana Cup",
+    "category": [
+      "Courses",
+      "Banana Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Wario Stadium - Finish",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup"
+    ]
+  },
+  {
+    "name": "DS Wario Stadium - Top 3",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Wario Stadium - Win",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Sherbet Land - Finish",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup"
+    ]
+  },
+  {
+    "name": "GCN Sherbet Land - Top 3",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Sherbet Land - Win",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Music Park - Finish",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup"
+    ]
+  },
+  {
+    "name": "3DS Music Park - Top 3",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Music Park - Win",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Yoshi Valley - Finish",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup"
+    ]
+  },
+  {
+    "name": "N64 Yoshi Valley - Top 3",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Yoshi Valley - Win",
+    "region": "Leaf Cup",
+    "category": [
+      "Courses",
+      "Leaf Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Tick-Tock Clock - Finish",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup"
+    ]
+  },
+  {
+    "name": "DS Tick-Tock Clock - Top 3",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Tick-Tock Clock - Win",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Piranha Plant Slide - Finish",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup"
+    ]
+  },
+  {
+    "name": "3DS Piranha Plant Slide - Top 3",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Piranha Plant Slide - Win",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Grumble Volcano - Finish",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup"
+    ]
+  },
+  {
+    "name": "Wii Grumble Volcano - Top 3",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Grumble Volcano - Win",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Rainbow Road - Finish",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup"
+    ]
+  },
+  {
+    "name": "N64 Rainbow Road - Top 3",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Rainbow Road - Win",
+    "region": "Lightning Cup",
+    "category": [
+      "Courses",
+      "Lightning Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Yoshi Circuit - Finish",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup"
+    ]
+  },
+  {
+    "name": "GCN Yoshi Circuit - Top 3",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Yoshi Circuit - Win",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Excitebike Arena - Finish",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup"
+    ]
+  },
+  {
+    "name": "Excitebike Arena - Top 3",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Excitebike Arena - Win",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Dragon Driftway - Finish",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup"
+    ]
+  },
+  {
+    "name": "Dragon Driftway - Top 3",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Dragon Driftway - Win",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Mute City - Finish",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup"
+    ]
+  },
+  {
+    "name": "Mute City - Top 3",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Mute City - Win",
+    "region": "Egg Cup",
+    "category": [
+      "Courses",
+      "Egg Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Wario's Gold Mine - Finish",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup"
+    ]
+  },
+  {
+    "name": "Wii Wario's Gold Mine - Top 3",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Wario's Gold Mine - Win",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "SNES Rainbow Road - Finish",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup"
+    ]
+  },
+  {
+    "name": "SNES Rainbow Road - Top 3",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "SNES Rainbow Road - Win",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Ice Ice Outpost - Finish",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup"
+    ]
+  },
+  {
+    "name": "Ice Ice Outpost - Top 3",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Ice Ice Outpost - Win",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Hyrule Circuit - Finish",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup"
+    ]
+  },
+  {
+    "name": "Hyrule Circuit - Top 3",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Hyrule Circuit - Win",
+    "region": "Triforce Cup",
+    "category": [
+      "Courses",
+      "Triforce Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Baby Park - Finish",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup"
+    ]
+  },
+  {
+    "name": "GCN Baby Park - Top 3",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Baby Park - Win",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Cheese Land - Finish",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup"
+    ]
+  },
+  {
+    "name": "GBA Cheese Land - Top 3",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Cheese Land - Win",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wild Woods - Finish",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup"
+    ]
+  },
+  {
+    "name": "Wild Woods - Top 3",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wild Woods - Win",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Animal Crossing - Finish",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup"
+    ]
+  },
+  {
+    "name": "Animal Crossing - Top 3",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Animal Crossing - Win",
+    "region": "Crossing Cup",
+    "category": [
+      "Courses",
+      "Crossing Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Neo Bowser City - Finish",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup"
+    ]
+  },
+  {
+    "name": "3DS Neo Bowser City - Top 3",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Neo Bowser City - Win",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Ribbon Road - Finish",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup"
+    ]
+  },
+  {
+    "name": "GBA Ribbon Road - Top 3",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Ribbon Road - Win",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Super Bell Subway - Finish",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup"
+    ]
+  },
+  {
+    "name": "Super Bell Subway - Top 3",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Super Bell Subway - Win",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Big Blue - Finish",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup"
+    ]
+  },
+  {
+    "name": "Big Blue - Top 3",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Big Blue - Win",
+    "region": "Bell Cup",
+    "category": [
+      "Courses",
+      "Bell Cup",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Paris Promenade - Finish",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Paris Promenade - Top 3",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Paris Promenade - Win",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Toad Circuit - Finish",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "3DS Toad Circuit - Top 3",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Toad Circuit - Win",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Choco Mountain - Finish",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "N64 Choco Mountain - Top 3",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Choco Mountain - Win",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Coconut Mall - Finish",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Coconut Mall - Top 3",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Coconut Mall - Win",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Courses",
+      "Golden Dash Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Tokyo Blur - Finish",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Tokyo Blur - Top 3",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Tokyo Blur - Win",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Shroom Ridge - Finish",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "DS Shroom Ridge - Top 3",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Shroom Ridge - Win",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Sky Garden - Finish",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GBA Sky Garden - Top 3",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Sky Garden - Win",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Ninja Hideaway - Finish",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Ninja Hideaway - Top 3",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Ninja Hideaway - Win",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Courses",
+      "Lucky Cat Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour New York Minute - Finish",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour New York Minute - Top 3",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour New York Minute - Win",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "SNES Mario Circuit 3 - Finish",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "SNES Mario Circuit 3 - Top 3",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "SNES Mario Circuit 3 - Win",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "N64 Kalimari Desert - Finish",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "N64 Kalimari Desert - Top 3",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "N64 Kalimari Desert - Win",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Waluigi Pinball - Finish",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "DS Waluigi Pinball - Top 3",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Waluigi Pinball - Win",
+    "region": "Turnip Cup",
+    "category": [
+      "Courses",
+      "Turnip Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Sydney Sprint - Finish",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Sydney Sprint - Top 3",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Sydney Sprint - Win",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Snow Land - Finish",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GBA Snow Land - Top 3",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Snow Land - Win",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Mushroom Gorge - Finish",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Mushroom Gorge - Top 3",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Mushroom Gorge - Win",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Sky-High Sundae - Finish",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Sky-High Sundae - Top 3",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Sky-High Sundae - Win",
+    "region": "Propeller Cup",
+    "category": [
+      "Courses",
+      "Propeller Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour London Loop - Finish",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour London Loop - Top 3",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour London Loop - Win",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Boo Lake - Finish",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GBA Boo Lake - Top 3",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Boo Lake - Win",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Rock Rock Mountain - Finish",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "3DS Rock Rock Mountain - Top 3",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Rock Rock Mountain - Win",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Maple Treeway - Finish",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Maple Treeway - Top 3",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Maple Treeway - Win",
+    "region": "Rock Cup",
+    "category": [
+      "Courses",
+      "Rock Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Berlin Byways - Finish",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Berlin Byways - Top 3",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Berlin Byways - Win",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Peach Gardens - Finish",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "DS Peach Gardens - Top 3",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Peach Gardens - Win",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Merry Mountain - Finish",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Merry Mountain - Top 3",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Merry Mountain - Win",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Rainbow Road - Finish",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "3DS Rainbow Road - Top 3",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Rainbow Road - Win",
+    "region": "Moon Cup",
+    "category": [
+      "Courses",
+      "Moon Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Amsterdam Drift - Finish",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Amsterdam Drift - Top 3",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Amsterdam Drift - Win",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Riverside Park - Finish",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GBA Riverside Park - Top 3",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Riverside Park - Win",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii DK Summit - Finish",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii DK Summit - Top 3",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii DK Summit - Win",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Yoshi's Island - Finish",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Yoshi's Island - Top 3",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Yoshi's Island - Win",
+    "region": "Fruit Cup",
+    "category": [
+      "Courses",
+      "Fruit Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Bangkok Rush - Finish",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Bangkok Rush - Top 3",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Bangkok Rush - Win",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "DS Mario Circuit - Finish",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "DS Mario Circuit - Top 3",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "DS Mario Circuit - Win",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Waluigi Stadium - Finish",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GCN Waluigi Stadium - Top 3",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Waluigi Stadium - Win",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Singapore Speedway - Finish",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Singapore Speedway - Top 3",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Singapore Speedway - Win",
+    "region": "Boomerang Cup",
+    "category": [
+      "Courses",
+      "Boomerang Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Athens Dash - Finish",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Athens Dash - Top 3",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Athens Dash - Win",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN Daisy Cruiser - Finish",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GCN Daisy Cruiser - Top 3",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN Daisy Cruiser - Win",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Moonview Highway - Finish",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Moonview Highway - Top 3",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Moonview Highway - Win",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Squeaky Clean Sprint - Finish",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Squeaky Clean Sprint - Top 3",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Squeaky Clean Sprint - Win",
+    "region": "Feather Cup",
+    "category": [
+      "Courses",
+      "Feather Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Los Angeles Laps - Finish",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Los Angeles Laps - Top 3",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Los Angeles Laps - Win",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GBA Sunset Wilds - Finish",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GBA Sunset Wilds - Top 3",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GBA Sunset Wilds - Win",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Koopa Cape - Finish",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Koopa Cape - Top 3",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Koopa Cape - Win",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Vancouver Velocity - Finish",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Vancouver Velocity - Top 3",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Vancouver Velocity - Win",
+    "region": "Cherry Cup",
+    "category": [
+      "Courses",
+      "Cherry Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Rome Avanti - Finish",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Rome Avanti - Top 3",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Rome Avanti - Win",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "GCN DK Mountain - Finish",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "GCN DK Mountain - Top 3",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "GCN DK Mountain - Win",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Daisy Circuit - Finish",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Daisy Circuit - Top 3",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Daisy Circuit - Win",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Piranha Plant Cove - Finish",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Piranha Plant Cove - Top 3",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Piranha Plant Cove - Win",
+    "region": "Acorn Cup",
+    "category": [
+      "Courses",
+      "Acorn Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Tour Madrid Drive - Finish",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Tour Madrid Drive - Top 3",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Tour Madrid Drive - Win",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "3DS Rosalina's Ice World - Finish",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "3DS Rosalina's Ice World - Top 3",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "3DS Rosalina's Ice World - Win",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "SNES Bowser Castle 3 - Finish",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "SNES Bowser Castle 3 - Top 3",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "SNES Bowser Castle 3 - Win",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Wii Rainbow Road - Finish",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass"
+    ]
+  },
+  {
+    "name": "Wii Rainbow Road - Top 3",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Top 3"
+    ]
+  },
+  {
+    "name": "Wii Rainbow Road - Win",
+    "region": "Spiny Cup",
+    "category": [
+      "Courses",
+      "Spiny Cup",
+      "Booster Course Pass",
+      "Win"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Trophy Collection Complete",
+    "region": "MK8DX",
+    "category": [
+      "Goal"
+    ],
+    "requires": "{GoalTrophies()}",
+    "victory": true
+  }
+]

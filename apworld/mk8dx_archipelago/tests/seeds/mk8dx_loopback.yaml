@@ -1,0 +1,18 @@
+name: Mario
+game: Mario Kart 8 Deluxe
+description: MK8DX loopback test seed (single slot)
+
+Mario Kart 8 Deluxe:
+  accessibility: minimal
+  include_booster_course_pass: true
+  include_top3_locations: true
+  include_win_locations: true
+  shuffle_characters: true
+  shuffle_vehicles: true
+  shuffle_items: true
+  restrict_cpu_items: false
+  speed_stages: 3
+  min_speed_percent: 60
+  win_requires_speed: 2
+  goal_cups: 8
+  starting_cups: 1

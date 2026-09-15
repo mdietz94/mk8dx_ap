@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Client runtime
+apworld/mk8dx_archipelago/client/logs/
+apworld/mk8dx_archipelago/client/*.log
+apworld/mk8dx_archipelago/tests/seeds/out/
+
+# Switch build
+switch-mod/build/
+switch-mod/sd-overlay/
+
+# Game dumps / symbol dumps: never commit (Nintendo binaries)
+*.nso
+*.nsp
+*.xci
+*.nca
+docs/main-*.nso
+docs/ghidra/
+*.text.bin
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# vendor/Archipelago is a submodule; ignore its runtime droppings
+vendor/Archipelago/host.yaml
+vendor/Archipelago/Players/
+vendor/Archipelago/output/
+vendor/Archipelago/custom_worlds/*.apworld
+vendor/*/__pycache__/
+
+.claude/worktrees/
+
+# Prepackaged libc++ fetched by LibHakkun setup_libcxx_prepackaged.py at build time
+switch-mod/lib/std/

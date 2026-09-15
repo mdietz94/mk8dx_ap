@@ -1,0 +1,122 @@
+{
+  "Mushroom Cup": {
+    "requires": "|Mushroom Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Flower Cup": {
+    "requires": "|Flower Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Star Cup": {
+    "requires": "|Star Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Special Cup": {
+    "requires": "|Special Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Shell Cup": {
+    "requires": "|Shell Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Banana Cup": {
+    "requires": "|Banana Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Leaf Cup": {
+    "requires": "|Leaf Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Lightning Cup": {
+    "requires": "|Lightning Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Egg Cup": {
+    "requires": "|Egg Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Triforce Cup": {
+    "requires": "|Triforce Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Crossing Cup": {
+    "requires": "|Crossing Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Bell Cup": {
+    "requires": "|Bell Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Golden Dash Cup": {
+    "requires": "|Golden Dash Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Lucky Cat Cup": {
+    "requires": "|Lucky Cat Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Turnip Cup": {
+    "requires": "|Turnip Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Propeller Cup": {
+    "requires": "|Propeller Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Rock Cup": {
+    "requires": "|Rock Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Moon Cup": {
+    "requires": "|Moon Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Fruit Cup": {
+    "requires": "|Fruit Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Boomerang Cup": {
+    "requires": "|Boomerang Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Feather Cup": {
+    "requires": "|Feather Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Cherry Cup": {
+    "requires": "|Cherry Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Acorn Cup": {
+    "requires": "|Acorn Cup|",
+    "connects_to": [],
+    "starting": true
+  },
+  "Spiny Cup": {
+    "requires": "|Spiny Cup|",
+    "connects_to": [],
+    "starting": true
+  }
+}

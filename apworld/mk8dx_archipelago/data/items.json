@@ -1,0 +1,1524 @@
+[
+  {
+    "name": "Mushroom Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Flower Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Star Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Special Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Shell Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Banana Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Leaf Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Lightning Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Egg Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Triforce Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Crossing Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Bell Cup",
+    "progression": true,
+    "category": [
+      "Cups"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Golden Dash Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Lucky Cat Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Turnip Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Propeller Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Rock Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Moon Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Fruit Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Boomerang Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Feather Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Cherry Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Acorn Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Spiny Cup",
+    "progression": true,
+    "category": [
+      "Cups",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Trophy",
+    "progression": true,
+    "category": [
+      "Trophies"
+    ],
+    "count": 24
+  },
+  {
+    "name": "Character: Mario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Luigi",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Peach",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Daisy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Yoshi",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Toad",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Toadette",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Koopa Troopa",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Bowser",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Donkey Kong",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Wario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Waluigi",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Rosalina",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Metal Mario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Pink Gold Peach",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Lakitu",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Shy Guy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Baby Mario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Baby Luigi",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Baby Peach",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Baby Daisy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Baby Rosalina",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Larry",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Lemmy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Wendy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Ludwig",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Iggy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Roy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Morton",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Mii",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Tanooki Mario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Link",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Villager",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Isabelle",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Cat Peach",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Dry Bowser",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Villager (Female)",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Gold Mario",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Dry Bones",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Bowser Jr.",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: King Boo",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Inkling Girl",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Inkling Boy",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Birdo",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Kamek",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Petey Piranha",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Wiggler",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Diddy Kong",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Funky Kong",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Peachette",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Pauline",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Standard Kart",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Pipe Frame",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Mach 8",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Steel Driver",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Cat Cruiser",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Circuit Special",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Tri-Speeder",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Badwagon",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Prancer",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Biddybuggy",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Landship",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Sneeker",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Sports Coupe",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Gold Standard",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Standard Bike",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Comet",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Sport Bike",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: The Duke",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Flame Rider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Varmint",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Mr. Scooty",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Jet Bike",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Yoshi Bike",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Standard ATV",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Wild Wiggler",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Teddy Buggy",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: GLA",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: W 25 Silver Arrow",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: 300 SL Roadster",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Blue Falcon",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Tanooki Kart",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: B Dasher",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Master Cycle",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Streetle",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: P-Wing",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: City Tripper",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Bone Rattler",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Koopa Clown",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Splat Buggy",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Inkstriker",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Kart: Master Cycle Zero",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Karts"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Standard",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Monster",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Roller",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Slim",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Slick",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Metal",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Button",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Off-Road",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Sponge",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Wood",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Cushion",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Blue Standard",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Hot Monster",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Azure Roller",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Crimson Slim",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Cyber Slick",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Retro Off-Road",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Gold Tires",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: GLA Tires",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Triforce Tires",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Leaf Tires",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Tires: Ancient Tires",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Tires"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Super Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Cloud Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Wario Wing",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Waddle Wing",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Peach Parasol",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Parachute",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Parafoil",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Flower Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Bowser Kite",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Plane Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: MKTV Parafoil",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Gold Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Hylian Kite",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Paper Glider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Glider: Paraglider",
+    "useful": true,
+    "category": [
+      "Vehicles",
+      "Gliders"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Banana",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Green Shell",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Red Shell",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Mushroom",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Bob-omb",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Blooper",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Spiny Shell",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Triple Mushrooms",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Star",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Bullet Bill",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Lightning",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Golden Mushroom",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Fire Flower",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Piranha Plant",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Boomerang Flower",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Coin",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Super Horn",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Triple Bananas",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Triple Green Shells",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Triple Red Shells",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Crazy Eight",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Feather",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Item: Boo",
+    "useful": true,
+    "category": [
+      "Item Box"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Progressive Speed",
+    "progression": true,
+    "category": [
+      "Speed"
+    ],
+    "count": 5
+  }
+]

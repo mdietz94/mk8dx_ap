@@ -1,0 +1,130 @@
+# MK8DX symbols used by the mod.
+#
+# Each entry has up to two locators, tried in this order:
+#   pattern / offset  - IDA-style byte pattern ("??" = wildcard) scanned over
+#                       the main module's .text at boot; address = first match
+#                       + offset. Pattern data is copied as facts from
+#                       fishguy6564/MK8DX-Base-Plugin symbols.toml (see
+#                       docs/symbols.md for provenance and attribution).
+#   offset_305        - absolute main-relative offset, valid ONLY on 3.0.5
+#                       (build id FE941ED5BA14BE5D...). Sourced from the
+#                       commented ASM of RoGamer97/ASM-Cheats-and-Patches.
+#
+# Run `python scripts/gen_symbol_table.py` after editing to regenerate
+# switch-mod/src/sym/SymbolTable.inc (committed; a test checks freshness).
+
+[[symbols]]
+name = "gear::GetRaceInfo"
+mangled = "_ZN4gear11GetRaceInfoEv"
+pattern = "8C 01 0B 9B 8C 45 40 B9 2D 00 40 B9 9F 01 0D 6B 08 15 88 1A 5F 01 09 EB EB FE FF 54 02 00 00 14"
+offset = "0x2C"
+offset_305 = "0x87C244"
+
+[[symbols]]
+name = "gear::GetNextRaceInfo"
+mangled = "_ZN4gear15GetNextRaceInfoEv"
+pattern = "8C 01 0B 9B 8C 45 40 B9 2D 00 40 B9 9F 01 0D 6B 08 15 88 1A 5F 01 09 EB EB FE FF 54 02 00 00 14"
+offset = "0x44"
+
+[[symbols]]
+name = "gear::FlagAccessor::isOpen"
+mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush12EGrandPrixIDE"
+pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 E4 83 52 08 69 69 38"
+offset = "-0x24"
+
+[[symbols]]
+name = "gear::DLCManager::getCupStatus"
+mangled = "_ZN4gear10DLCManager12getCupStatusEN4mush12EGrandPrixIDE"
+pattern = "29 00 40 B9 89 13 F8 37 29 00 40 B9 3F 1D 00 71"
+offset = "-0x04"
+
+[[symbols]]
+name = "ui::SetNextCourse"
+mangled = "_ZN2ui13SetNextCourseERKNS_10CourseInfoE"
+pattern = "E0 03 13 AA 00 01 3F D6 1F 00 00 72 68 12 9F 9A 08 19 40 F9 09 45 97 B9 0A 39 54 B9 29 05 00 91 3F 01 0A 6B"
+offset = "0x4C"
+
+[[symbols]]
+name = "ui::Control_CourseButton::setCourse"
+mangled = "_ZN2ui20Control_CourseButton9setCourseERKNS_10CourseInfoE"
+# No published pattern for setCourse itself; setCourseInvalid is adjacent in
+# the source but we do not assume adjacency. Author a pattern with
+# scripts/make_pattern.py once the 3.0.5 NSO is on disk.
+pattern = ""
+offset = 0
+
+[[symbols]]
+name = "ui::Control_CupButton::setCup"
+mangled = "_ZN2ui17Control_CupButton6setCupENS_4ECupENS_8DLCStateE"
+pattern = "F4 03 01 AA 88 02 40 B9 F3 03 00 AA 68 D2 03 B9 48 00 40 B9 1F 15 00 71"
+offset = "-0x0C"
+
+[[symbols]]
+name = "ui::Control_RaceLapCoin::onCalc_"
+mangled = "_ZN2ui19Control_RaceLapCoin7onCalc_Ev"
+pattern = "FF 03 02 D1 F4 4F 06 A9 FD 7B 07 A9 FD C3 01 91 F3 03 00 AA 68 5E 40 F9 14 41 41 39 68 42 43 39"
+offset = "0x00"
+
+[[symbols]]
+name = "gear::SaveDataFile::load"
+mangled = "_ZN4gear12SaveDataFile4loadEi"
+pattern = "68 2E 40 F9 08 0D 40 F9 E0 03 17 AA 00 01 3F D6"
+offset = "-0x84"
+
+[[symbols]]
+name = "gear::GetCurrentUserSaveData"
+mangled = "_ZN4gear22GetCurrentUserSaveDataEv"
+pattern = "08 08 44 F9 00 AD 40 F9 FD 7B C1 A8 C0 03 5F D6"
+offset = "-0x0C"
+
+[[symbols]]
+name = "gear::FrameworkUtil::getCurrentGameScene"
+mangled = "_ZN4gear13FrameworkUtil19getCurrentGameSceneEv"
+pattern = ""
+offset = 0
+offset_305 = "0x7F41FC"
+
+[[symbols]]
+name = "gear::NetworkUtil::getMyKartIndex"
+mangled = "_ZN4gear11NetworkUtil14getMyKartIndexEv"
+pattern = ""
+offset = 0
+offset_305 = "0x85EEB8"
+
+[[symbols]]
+name = "ui::RaceWindow::onFakeGoal"
+mangled = "_ZN2ui10RaceWindow10onFakeGoalEv"
+pattern = ""
+offset = 0
+offset_305 = "0x54C8C8"
+
+[[symbols]]
+name = "gear::ItemOwner::startSlot"
+mangled = "_ZN4gear9ItemOwner9startSlotEiNS_9EItemSlotEbb"
+pattern = ""
+offset = 0
+offset_305 = "0x42780"
+
+[[symbols]]
+name = "mush::EDriverID::text_"
+mangled = "_ZN4mush9EDriverID5text_Ei"
+pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 3C 80 52 E0 03 15 AA"
+offset = "-0x80"
+
+[[symbols]]
+name = "mush::EBodyID::text_"
+mangled = "_ZN4mush7EBodyID5text_Ei"
+pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 E8 24 80 52 E0 03 15 AA"
+offset = "-0x80"
+
+[[symbols]]
+name = "mush::ETireID::text_"
+mangled = "_ZN4mush7ETireID5text_Ei"
+pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 C8 0E 80 52 E0 03 15 AA"
+offset = "-0x80"
+
+[[symbols]]
+name = "mush::EWingID::text_"
+mangled = "_ZN4mush7EWingID5text_Ei"
+pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA"
+offset = "-0x80"

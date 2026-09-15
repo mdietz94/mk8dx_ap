@@ -1,0 +1,32 @@
+{
+  "Booster Course Pass": {
+    "yaml_option": [
+      "include_booster_course_pass"
+    ]
+  },
+  "Top 3": {
+    "yaml_option": [
+      "include_top3_locations"
+    ]
+  },
+  "Win": {
+    "yaml_option": [
+      "include_win_locations"
+    ]
+  },
+  "Characters": {
+    "yaml_option": [
+      "shuffle_characters"
+    ]
+  },
+  "Vehicles": {
+    "yaml_option": [
+      "shuffle_vehicles"
+    ]
+  },
+  "Item Box": {
+    "yaml_option": [
+      "shuffle_items"
+    ]
+  }
+}
