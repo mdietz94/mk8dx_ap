@@ -33,7 +33,9 @@ def msgpack_map(d: dict) -> bytes:
                 return b"\xcc" + bytes([v])
             if 0 <= v <= 0xFFFF:
                 return b"\xcd" + v.to_bytes(2, "big")
-            return b"\xce" + v.to_bytes(4, "big")
+            if 0 <= v <= 0xFFFFFFFF:
+                return b"\xce" + v.to_bytes(4, "big")
+            return b"\xcf" + v.to_bytes(8, "big")
         if isinstance(v, str):
             b = v.encode("utf-8")
             if len(b) < 32:
@@ -74,7 +76,7 @@ async def main(port: int, course: str, rank: int, rule: str) -> int:
     await asyncio.sleep(1.0)
     await send({"t": "id_table", "kind": "driver",
                 "entries": [{"id": 0, "text": "Mario"}, {"id": 1, "text": "Luigi"}, {"id": 5, "text": "Kinopio"}]})
-    await send({"t": "course_name", "course_id": 0, "res": "tc_Course_Gu_FirstCircuit"})
+    await send({"t": "course_name", "course_id": 0, "res": f"tc_Course_{course}"})
     await asyncio.sleep(0.5)
     report = {"BeginTime": 20260915120000, "EndTime": 20260915120300, "RaceNo": 1,
               "Course": course, "Rank": rank, "Points": 15, "FinishReason": "Finish",
@@ -83,7 +85,8 @@ async def main(port: int, course: str, rank: int, rule: str) -> int:
     payload = msgpack_map(report)
     await send({"t": "play_report", "room": "RaceResult", "size": len(payload),
                 "truncated": False, "hex": payload.hex()})
-    await send({"t": "race_result", "seq": 1, "course_id": 0, "rule": 1, "engine": 2,
+    rule_id = {"GrandPrix": 0, "VS": 1, "TimeAttack": 2, "Battle": 3}.get(rule, 1)
+    await send({"t": "race_result", "seq": 1, "course_id": 0, "rule": rule_id, "engine": 2,
                 "mirror": False, "rank": rank - 1, "kart_index": 0})
     await send({"t": "log", "level": "info", "msg": "fake switch says hi"})
     await asyncio.sleep(2.0)

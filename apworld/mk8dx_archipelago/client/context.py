@@ -77,7 +77,7 @@ class MK8DXContext(CommonContext):
         if cmd == "Connected":
             self.slot_data = args.get("slot_data", {}) or {}
             self.state.slot = self.player_names.get(self.slot, self.auth or "")
-            self.state.seed = str(args.get("seed_name", ""))
+            self.state.seed = str(getattr(self, "seed_name", "") or args.get("seed_name", "") or "")
             self.state.ap_conn = "ready"
             self.state.apply_slot_data(self.slot_data)
             self._tiers = tuple(
@@ -94,10 +94,14 @@ class MK8DXContext(CommonContext):
         elif cmd == "ReceivedItems":
             if args.get("index", 0) == 0:
                 self.state.clear_items()
+            names = []
             for ni in args.get("items", []):
                 name = self._item_name(ni.item)
                 if name:
                     self.state.add_item(name)
+                    names.append(name)
+            log.info("received %d item(s) (index %s): %s", len(names), args.get("index", 0),
+                     ", ".join(names[:12]) + (" ..." if len(names) > 12 else ""))
             asyncio.create_task(self.push_state())
         elif cmd == "RoomUpdate":
             for loc_id in args.get("checked_locations", []):
@@ -128,10 +132,25 @@ class MK8DXContext(CommonContext):
                 return None
 
     def _location_id(self, name: str) -> int | None:
-        try:
-            return self.location_names_to_id.get(name) if hasattr(self, "location_names_to_id") else None
-        except Exception:
-            return None
+        """AP location id for one of our location names.
+
+        The apworld itself is importable in the client process (the client
+        lives inside it), so its static name -> id table is the source of
+        truth; the AutoWorldRegister lookup covers the zip-installed case."""
+        table = getattr(self, "_loc_name_to_id", None)
+        if table is None:
+            table = {}
+            try:
+                from worlds.AutoWorld import AutoWorldRegister
+                table = dict(AutoWorldRegister.world_types[self.game].location_name_to_id)
+            except Exception:
+                try:
+                    from ..Locations import location_name_to_id as _t
+                    table = dict(_t)
+                except Exception:
+                    log.exception("could not load the location id table")
+            self._loc_name_to_id = table
+        return table.get(name)
 
     # ---- Switch side ----
     async def push_state(self) -> None:

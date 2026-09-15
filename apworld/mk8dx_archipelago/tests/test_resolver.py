@@ -67,3 +67,11 @@ def test_grand_prix_tracker():
     assert t.observe(mushroom[1], RULE_VS) is None
     assert t.observe(mushroom[2], RULE_GRAND_PRIX) is None
     assert t.observe(mushroom[3], RULE_GRAND_PRIX) is None
+    # ...but a duplicate report of an already-counted race (second channel,
+    # possibly with a stale rule) does not abandon the run
+    t = GrandPrixTracker()
+    for c in mushroom[:3]:
+        assert t.observe(c, RULE_GRAND_PRIX) is None
+        assert t.observe(c, RULE_VS) is None
+        assert t.observe(c, RULE_GRAND_PRIX) is None
+    assert t.observe(mushroom[3], RULE_GRAND_PRIX).name == "Mushroom Cup"

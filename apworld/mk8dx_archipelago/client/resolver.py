@@ -92,10 +92,15 @@ class GrandPrixTracker:
 
     def observe(self, course: tables.Course, rule: int) -> tables.Cup | None:
         if rule != RULE_GRAND_PRIX:
+            # A second report of a race already counted in the current run
+            # (the hook and PlayReport channels both fire per race, and the
+            # hook path may carry a stale rule) must not abandon the run.
+            if course.slot in self._runs.get(course.cup, set()):
+                return None
             self._runs.clear()
             return None
         slots = self._runs.setdefault(course.cup, set())
-        if course.slot == 0:
+        if course.slot == 0 and slots != {0}:
             slots.clear()
         slots.add(course.slot)
         # A GP is sequential; any other cup in flight is abandoned.

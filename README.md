@@ -46,6 +46,9 @@ applies the LibHakkun Windows patches automatically.
 ```bash
 python scripts/install_apworld.py           # -> vendor/Archipelago/custom_worlds/mk8dx.apworld
 python vendor/Archipelago/Launcher.py       # Generate with a "Mario Kart 8 Deluxe" yaml, host, then "MK8DX Client"
+# or, without the Launcher (dev / headless):
+.venv/Scripts/python scripts/run_client.py --connect localhost:38281 --name Mario [--nogui]
+python scripts/switch_smoke_test.py --course Gu_FirstCircuit --rank 1 --rule VS   # fake Switch
 ```
 
 Connect the client to the room, boot the game with the mod. The client's
