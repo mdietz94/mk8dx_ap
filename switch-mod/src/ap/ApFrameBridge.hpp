@@ -19,10 +19,6 @@ void reportRaceResult(int course_id, int rule, int engine, bool mirror,
 void reportPlayReport(const char* room, std::size_t room_len,
                       const void* payload, std::size_t size);
 
-// KartGuardHook / CourseTableHook: learned course id -> resource name.
-// Deduped per session (each id is sent once).
-void reportCourseName(int course_id, const char* res);
-
 // IdTableDump: one table per kind.
 void reportIdTable(const IdTable& tbl);
 

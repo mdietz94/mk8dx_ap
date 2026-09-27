@@ -24,14 +24,16 @@ int main() {
     {
         Hello h{};
         copyFixed(h.mod_ver, "0.1.0");
-        copyFixed(h.game_ver, "3.0.5");
-        copyFixed(h.build_id, "FE941ED5BA14BE5D505698DA1BBF4FE7");
-        h.resolved = 17; h.total = 18;
+        copyFixed(h.game_ver, "4.0.0");
+        copyFixed(h.build_id, "2C336A9BCF79C3040CE506CDD391B578");
+        copyFixed(h.unresolved, "ui::SetNextCourse");
+        h.resolved = 16; h.total = 17;
         mk8ap::util::json::LineBuffer line;
         encodeHello(line, h);
         std::string s(line.data(), line.size());
         CHECK(s.find("\"t\":\"hello\"") != std::string::npos);
-        CHECK(s.find("\"resolved\":17") != std::string::npos);
+        CHECK(s.find("\"resolved\":16") != std::string::npos);
+        CHECK(s.find("\"unresolved\":\"ui::SetNextCourse\"") != std::string::npos);
         CHECK(s.back() == '\n');
     }
     // race_result

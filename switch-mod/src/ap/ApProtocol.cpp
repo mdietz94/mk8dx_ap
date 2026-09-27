@@ -24,6 +24,7 @@ void encodeHello(LineBuffer& line, const Hello& h) {
         .key("build_id").value(h.build_id)
         .key("resolved").value(h.resolved)
         .key("total").value(h.total)
+        .key("unresolved").value(h.unresolved)
         .key("device_id").value(h.device_id)
      .endObject();
     finish(line);
@@ -64,17 +65,6 @@ void encodePlayReport(LineBuffer& line, const PlayReport& p) {
     }
     line.append('"');
     e.endObject();
-    finish(line);
-}
-
-void encodeCourseName(LineBuffer& line, const CourseName& c) {
-    line.clear();
-    Encoder e{line};
-    e.beginObject()
-        .key("t").value("course_name")
-        .key("course_id").value(c.course_id)
-        .key("res").value(c.res)
-     .endObject();
     finish(line);
 }
 

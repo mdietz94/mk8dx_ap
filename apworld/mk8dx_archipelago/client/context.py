@@ -24,6 +24,8 @@ from .state import BridgeState, RaceEvent
 
 log = logging.getLogger("MK8DX")
 
+PAIR_WINDOW_S = 30.0
+
 
 class MK8DXCommandProcessor(ClientCommandProcessor):
     ctx: "MK8DXContext"
@@ -63,6 +65,11 @@ class MK8DXContext(CommonContext):
         self._gp = GrandPrixTracker()
         self._seen_reports: set[str] = set()
         self._seen_hook: dict[str, float] = {}
+        # Pairing window for learning course ids: the hook reports a numeric
+        # course id, the PlayReport reports the course string, both for the
+        # same race within a few seconds of each other.
+        self._last_hook_course: tuple[int, float] | None = None
+        self._last_report_course: tuple[str, float] | None = None
         self._goal_sent = False
         self._tiers: tuple[str, ...] = tables.LOCATION_TIERS
 
@@ -157,7 +164,19 @@ class MK8DXContext(CommonContext):
         if self.switch is not None:
             await self.switch.push_state()
 
+    def _pair_course_id(self) -> None:
+        h, p = self._last_hook_course, self._last_report_course
+        if h is None or p is None or abs(h[1] - p[1]) > PAIR_WINDOW_S:
+            return
+        if course_for_internal(p[0]) is None:
+            return
+        if self.state.learned.learn_course(h[0], p[0]):
+            log.info("learned course id %d = %s (paired hook + PlayReport)", h[0], p[0])
+        self._last_hook_course = self._last_report_course = None
+
     async def on_race_result(self, msg: RaceResultMsg) -> None:
+        self._last_hook_course = (msg.course_id, time.time())
+        self._pair_course_id()
         r = resolve_hook(msg.course_id, msg.rank, msg.rule, self.state.learned, self._tiers)
         key = f"hook|{msg.course_id}|{msg.kart_index}"
         now = time.time()
@@ -179,6 +198,8 @@ class MK8DXContext(CommonContext):
         if rep.key in self._seen_reports:
             return
         self._seen_reports.add(rep.key)
+        self._last_report_course = (rep.course, time.time())
+        self._pair_course_id()
         r = resolve_report(rep, self._tiers)
         if r.course is None:
             log.warning("play_report course %r is not in the course table; "

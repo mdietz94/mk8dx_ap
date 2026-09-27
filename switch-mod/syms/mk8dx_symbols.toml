@@ -1,15 +1,23 @@
-# MK8DX symbols used by the mod.
+# MK8DX 4.0.0 symbols used by the mod (main build id 2C336A9BCF79C304...).
 #
-# Each entry has up to two locators, tried in this order:
-#   pattern / offset  - IDA-style byte pattern ("??" = wildcard) scanned over
-#                       the main module's .text at boot; address = first match
-#                       + offset. Pattern data is copied as facts from
-#                       fishguy6564/MK8DX-Base-Plugin symbols.toml (see
-#                       docs/symbols.md for provenance and attribution).
-#   offset_305        - absolute main-relative offset, valid ONLY on 3.0.5
-#                       (build id FE941ED5BA14BE5D...). Sourced from the
-#                       commented ASM of RoGamer97/ASM-Cheats-and-Patches.
+# Each entry is located in one of two ways:
+#   address           - main-relative address on 4.0.0, published in the
+#                       commented ASM of RoGamer97/ASM-Cheats-and-Patches
+#                       (Switch/Mario Kart 8 Deluxe/4.0.0/*/source.s). Used
+#                       as-is; if a pattern is also present it is only
+#                       cross-checked and logged.
+#   pattern / offset  - for functions with no published 4.0.0 address.
+#                       IDA-style byte pattern scanned over main .text at
+#                       instruction alignment; address = match + offset.
+#                       Pattern data comes from fishguy6564/MK8DX-Base-Plugin
+#                       symbols.toml, which was authored against 3.0.5. If the
+#                       exact bytes miss, a RELAXED form is tried (branch
+#                       distances, ADRP pages and struct-offset immediates
+#                       wildcarded) and accepted only on a unique match. That
+#                       is the porting method Ro demonstrates in "Porting MK8D
+#                       patches to v4.0.0".
 #
+# Offsets are quoted strings because TOML has no negative hex literals.
 # Run `python scripts/gen_symbol_table.py` after editing to regenerate
 # switch-mod/src/sym/SymbolTable.inc (committed; a test checks freshness).
 
@@ -18,7 +26,7 @@ name = "gear::GetRaceInfo"
 mangled = "_ZN4gear11GetRaceInfoEv"
 pattern = "8C 01 0B 9B 8C 45 40 B9 2D 00 40 B9 9F 01 0D 6B 08 15 88 1A 5F 01 09 EB EB FE FF 54 02 00 00 14"
 offset = "0x2C"
-offset_305 = "0x87C244"
+address = "0x87FCD0"
 
 [[symbols]]
 name = "gear::GetNextRaceInfo"
@@ -41,17 +49,10 @@ offset = "-0x04"
 [[symbols]]
 name = "ui::SetNextCourse"
 mangled = "_ZN2ui13SetNextCourseERKNS_10CourseInfoE"
+# Contains LDRSW X9,[X8,#0x1744]; that member moved in 4.0.0, so this one is
+# expected to resolve through the relaxed form.
 pattern = "E0 03 13 AA 00 01 3F D6 1F 00 00 72 68 12 9F 9A 08 19 40 F9 09 45 97 B9 0A 39 54 B9 29 05 00 91 3F 01 0A 6B"
 offset = "0x4C"
-
-[[symbols]]
-name = "ui::Control_CourseButton::setCourse"
-mangled = "_ZN2ui20Control_CourseButton9setCourseERKNS_10CourseInfoE"
-# No published pattern for setCourse itself; setCourseInvalid is adjacent in
-# the source but we do not assume adjacency. Author a pattern with
-# scripts/make_pattern.py once the 3.0.5 NSO is on disk.
-pattern = ""
-offset = 0
 
 [[symbols]]
 name = "ui::Control_CupButton::setCup"
@@ -80,30 +81,31 @@ offset = "-0x0C"
 [[symbols]]
 name = "gear::FrameworkUtil::getCurrentGameScene"
 mangled = "_ZN4gear13FrameworkUtil19getCurrentGameSceneEv"
-pattern = ""
-offset = 0
-offset_305 = "0x7F41FC"
+pattern = "08 01 40 F9 08 11 40 F9 08 05 40 F9 09 01 46 39 3F 01 1E 72 E0 03 88 9A"
+offset = "-0x08"
+address = "0x7F7AC0"
 
 [[symbols]]
 name = "gear::NetworkUtil::getMyKartIndex"
 mangled = "_ZN4gear11NetworkUtil14getMyKartIndexEv"
-pattern = ""
-offset = 0
-offset_305 = "0x85EEB8"
+pattern = "A9 C3 1F 38 00 01 3F D6 FD 7B 41 A9 00 1C 00 13"
+offset = "-0x2C"
+address = "0x862820"
 
 [[symbols]]
 name = "ui::RaceWindow::onFakeGoal"
 mangled = "_ZN2ui10RaceWindow10onFakeGoalEv"
+# Ro's FINISH patch hooks onFakeGoal + 0xD8 at 0x550240.
 pattern = ""
-offset = 0
-offset_305 = "0x54C8C8"
+offset = "0x0"
+address = "0x550168"
 
 [[symbols]]
 name = "gear::ItemOwner::startSlot"
 mangled = "_ZN4gear9ItemOwner9startSlotEiNS_9EItemSlotEbb"
 pattern = ""
-offset = 0
-offset_305 = "0x42780"
+offset = "0x0"
+address = "0x4336C"
 
 [[symbols]]
 name = "mush::EDriverID::text_"

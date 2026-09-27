@@ -130,7 +130,10 @@ void ApClient::start(const BridgeTarget& target) {
     // an online title), in which case Initialize returns an error we ignore.
     const std::uint32_t nifm_rc = nn::nifm::Initialize();
     MK8AP_LOG_INFO("[net] nn::nifm::Initialize rc=0x%x", nifm_rc);
-    nn::nifm::SubmitNetworkRequestAndWait();
+    // Only submit our own request when the game has not already brought
+    // the network up: start() may run inside a menu or race hook, and
+    // SubmitNetworkRequestAndWait blocks the calling (game) thread.
+    if (!nn::nifm::IsNetworkAvailable()) nn::nifm::SubmitNetworkRequestAndWait();
     MK8AP_LOG_INFO("[net] network available: %s",
                    nn::nifm::IsNetworkAvailable() ? "YES" : "NO");
 
@@ -247,6 +250,7 @@ void ApClient::sendHello() {
     copyFixed(h.build_id, sym::buildIdHex());
     h.resolved = sym::resolvedCount();
     h.total = sym::totalCount();
+    sym::unresolvedNames(h.unresolved, sizeof(h.unresolved));
     util::json::LineBuffer line;
     encodeHello(line, h);
     if (sendLine(line.data(), line.size())) {
@@ -275,12 +279,6 @@ void ApClient::pumpOutbound() {
         if (!sendLine(line.data(), line.size())) return;
         st.outbound_reports.popDiscard();
         MK8AP_LOG_INFO("[pump] play_report room=%s (%zu bytes) sent", pr->room, pr->size);
-    }
-    CourseName c;
-    while (st.outbound_names.peek(c)) {
-        encodeCourseName(line, c);
-        if (!sendLine(line.data(), line.size())) return;
-        st.outbound_names.popDiscard();
     }
     while (const IdTable* t = st.outbound_tables.peekRef()) {
         encodeIdTable(line, *t);

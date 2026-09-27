@@ -1,28 +1,31 @@
 # Mario Kart 8 Deluxe for Archipelago
 
 An [Archipelago](https://archipelago.gg) world for **Mario Kart 8 Deluxe**
-(Nintendo Switch, version **3.0.5**) with a Switch-side mod: race results
-are reported automatically and cups, characters, vehicle parts, item-box
-items and top speed are locked until the matching AP items arrive.
+(Nintendo Switch, version **4.0.0 only**) with a Switch-side mod: race
+results are reported automatically and cups, characters, vehicle parts,
+item-box items and top speed are locked until the matching AP items arrive.
 
 Runs on Ryujinx and on a modded Switch (Atmosphere). No emulator memory
 reading: the mod talks to the PC client over LAN.
 
 ## Status
 
-Alpha. Built and host-tested; on-game verification of the hooks against a
-real 3.0.5 copy is the next step (see *First run* below). The design notes
-in `docs/` and the plan of record describe what is verified and what is
-still an assumption.
+Alpha. Built, host-tested, and the PC side is verified end to end over
+loopback. The Switch mod has not yet run against a real 4.0.0 copy; see
+*First run checklist*. `docs/symbols.md` lists which game functions have a
+published 4.0.0 address and which are still located by pattern.
+
+The mod checks the game's build id at boot. On anything other than 4.0.0
+(`2C336A9BCF79C304...`) it logs an error and stays inactive.
 
 ## Layout
 
 | Path | What |
 |---|---|
 | `apworld/mk8dx_archipelago/` | the apworld (Manual-template generator + data) and the Kivy client under `client/` |
-| `switch-mod/` | LibHakkun subsdk9: pattern-resolved hooks + TCP bridge |
-| `scripts/` | `build_switchmod.py`, `install_apworld.py`, `gen_apworld_data.py`, `gen_symbol_table.py`, `make_pattern.py`, `switch_smoke_test.py`, `ap_generate.py`, `ap_server.py` |
-| `docs/` | architecture, wire protocol, symbol provenance |
+| `switch-mod/` | LibHakkun subsdk9: resolved hooks + TCP bridge |
+| `scripts/` | `build_switchmod.py`, `install_apworld.py`, `run_client.py`, `gen_apworld_data.py`, `gen_symbol_table.py`, `make_pattern.py`, `switch_smoke_test.py`, `ap_generate.py`, `ap_server.py` |
+| `docs/` | architecture, wire protocol, symbol provenance, porting notes |
 | `vendor/Archipelago` | Archipelago submodule (pinned) |
 
 ## Build
@@ -59,10 +62,12 @@ complete `goal_cups` cups.
 
 ## First run checklist (on-game verification)
 
-1. Ryujinx log: `[sym] resolved N/M` with the 3.0.5 build id; every hook
-   line says `installed`.
-2. Load a save: `[net] worker thread started`, `[conn] CONNECTED`, and the
-   client logs `switch HELLO`.
+1. Ryujinx log: build id `2C336A9B...`, then one `[sym]` line per game
+   function and `[sym] resolved N/17`. Note any `UNRESOLVED` or
+   `RELAXED pattern` lines; the client also lists what is missing and which
+   feature it affects when the Switch connects.
+2. Reach the menu or load a save: `[net] starting networking`,
+   `[conn] CONNECTED`, and the client logs `switch HELLO`.
 3. Race one VS course: the client logs `play_report race: ...` and checks
    `<course> - Finish`.
 4. Cup select: `[cup]` log lines show `EGrandPrixID` values; confirm they
@@ -79,5 +84,5 @@ MK8AP_LIVE_AP=1 .venv/Scripts/python -m pytest apworld/mk8dx_archipelago/tests/t
 
 ## License
 
-MIT. Symbol patterns and offsets are data derived from public community
+MIT. Symbol addresses and patterns are data derived from public community
 research; see `docs/symbols.md` for attribution.

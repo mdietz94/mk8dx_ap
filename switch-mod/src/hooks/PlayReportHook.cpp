@@ -44,7 +44,9 @@ HkTrampoline<unsigned, void*, const InArrayChar*, const InBuffer*, unsigned long
                            static_cast<std::size_t>(pay_size), flags);
             ap::reportPlayReport(room ? room->ptr : nullptr, room_len,
                                  payload ? payload->ptr : nullptr, pay_size);
-            return g_saveReport.orig(self, room, payload, flags);
+            const unsigned ret = g_saveReport.orig(self, room, payload, flags);
+            startNetworkingOnce("nn::prepo SaveReport");
+            return ret;
         });
 
 HkTrampoline<unsigned, void*, const void*, const InArrayChar*, const InBuffer*, unsigned long>
@@ -58,7 +60,9 @@ HkTrampoline<unsigned, void*, const void*, const InArrayChar*, const InBuffer*, 
                            static_cast<std::size_t>(pay_size), flags);
             ap::reportPlayReport(room ? room->ptr : nullptr, room_len,
                                  payload ? payload->ptr : nullptr, pay_size);
-            return g_saveReportWithUser.orig(self, uid, room, payload, flags);
+            const unsigned ret = g_saveReportWithUser.orig(self, uid, room, payload, flags);
+            startNetworkingOnce("nn::prepo SaveReportWithUser");
+            return ret;
         });
 
 void report(const char* what, hk::Result rc) {

@@ -34,12 +34,14 @@ async def test_hello_ack_state_and_dispatch():
     async def recv():
         return json.loads(await asyncio.wait_for(reader.readline(), 3))
 
-    await send({"t": "hello", "mod_ver": "x", "game_ver": "3.0.5", "build_id": "FE", "resolved": 1, "total": 2})
+    await send({"t": "hello", "mod_ver": "x", "game_ver": "4.0.0", "build_id": "2C", "resolved": 1, "total": 2,
+                "unresolved": "gear::ItemOwner::startSlot"})
     ack = await recv()
     assert ack["t"] == "hello_ack" and ack["ok"] and ack["slot"] == "Mario" and ack["seed"] == "seed123"
     st = await recv()
     assert st["t"] == "state" and st["cups"] == 1
     assert state.switch_info["resolved"] == 1
+    assert state.switch_info["unresolved"] == "gear::ItemOwner::startSlot"
 
     await send({"t": "race_result", "seq": 1, "course_id": 3, "rule": 1, "engine": 2, "mirror": False, "rank": 0, "kart_index": 0})
     await send({"t": "play_report", "room": "R", "size": 3, "truncated": False, "hex": "de0000"})

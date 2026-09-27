@@ -21,6 +21,40 @@ from .state import BridgeState
 
 log = logging.getLogger("MK8DX")
 
+SUPPORTED_GAME_VERSION = "4.0.0"
+
+# Which feature each game function backs (mirrors switch-mod/src/hooks/).
+_SYMBOL_FEATURES = {
+    "gear::SaveDataFile::load": "early networking start (falls back to the first menu/race)",
+    "ui::RaceWindow::onFakeGoal": "fallback race detection (PlayReport still works)",
+    "gear::GetRaceInfo": "fallback race detection",
+    "gear::FrameworkUtil::getCurrentGameScene": "fallback race detection, speed cap",
+    "gear::NetworkUtil::getMyKartIndex": "fallback race detection, speed cap",
+    "gear::FlagAccessor::isOpen": "cup locking",
+    "gear::DLCManager::getCupStatus": "cup locking",
+    "ui::Control_CupButton::setCup": "cup locking (menu display)",
+    "gear::ItemOwner::startSlot": "item-box restriction",
+    "ui::SetNextCourse": "character / vehicle enforcement",
+    "gear::GetNextRaceInfo": "character / vehicle enforcement",
+    "ui::Control_RaceLapCoin::onCalc_": "speed cap",
+    "gear::GetCurrentUserSaveData": "(unused)",
+    "mush::EDriverID::text_": "character id calibration",
+    "mush::EBodyID::text_": "kart id calibration",
+    "mush::ETireID::text_": "tire id calibration",
+    "mush::EWingID::text_": "glider id calibration",
+}
+
+
+def describe_unresolved(names: str) -> list[str]:
+    """Feature descriptions for a comma-separated unresolved-symbol list."""
+    out: list[str] = []
+    for n in (names or "").split(","):
+        f = _SYMBOL_FEATURES.get(n.strip())
+        if f and f not in out and f != "(unused)":
+            out.append(f)
+    return out
+
+
 RaceResultHandler = Callable[[RaceResultMsg], Awaitable[None]]
 PlayReportHandler = Callable[[PlayReportMsg], Awaitable[None]]
 StateProvider = Callable[[], StateMsg]
@@ -149,12 +183,18 @@ class SwitchServer:
             self.state.switch_info.update({
                 "mod_ver": msg.mod_ver, "game_ver": msg.game_ver, "build_id": msg.build_id,
                 "resolved": msg.resolved, "total": msg.total,
+                "unresolved": msg.unresolved,
             })
             log.info("switch HELLO mod=%s game=%s build=%s symbols=%d/%d",
                      msg.mod_ver, msg.game_ver, msg.build_id, msg.resolved, msg.total)
+            if msg.game_ver and msg.game_ver != SUPPORTED_GAME_VERSION:
+                log.warning("switch reports game version %s; this client targets %s",
+                            msg.game_ver, SUPPORTED_GAME_VERSION)
             if msg.total and msg.resolved < msg.total:
-                log.warning("switch resolved only %d/%d game symbols; some features are off "
-                            "(see the Switch log for UNRESOLVED lines)", msg.resolved, msg.total)
+                off = describe_unresolved(msg.unresolved)
+                log.warning("switch located %d/%d game functions. Not found: %s. Affected: %s",
+                            msg.resolved, msg.total, msg.unresolved or "(not reported)",
+                            ", ".join(off) or "unknown")
             await self._send(HelloAckMsg(ok=True, seed=self.state.seed, slot=self.state.slot,
                                          client_ver=self.client_ver))
             await self.push_state()

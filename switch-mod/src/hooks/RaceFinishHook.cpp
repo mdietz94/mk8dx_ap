@@ -2,7 +2,7 @@
 // race window. Fallback race-result channel (the PlayReport capture is the
 // primary one); the PC dedupes the two by course + time.
 //
-// Derivation (RoGamer97 "YOU WIN / YOU LOSE" patch, 3.0.5): the finishing
+// Derivation (RoGamer97 "YOU WIN / YOU LOSE" patch, 4.0.0): the finishing
 // kart's index = getMyKartIndex() (-1 offline -> 0) + window id, where the
 // window id is the first int of the RaceWindow object; its rank is
 // RaceKartChecker[idx] + 0x40 via the scene -> ObjectEngine -> RaceDirector
@@ -27,8 +27,13 @@ namespace {
 
 HkTrampoline<std::uint64_t, void*> g_onFakeGoal = hk::hook::trampoline(
     [](void* window) -> std::uint64_t {
-        const int window_id = window ? game::rd<std::int32_t>(window, 0) : 0;
+        const int window_id = window ? game::rd<std::int32_t>(window, game::race_window::kWindowId) : 0;
+        const int hdr_kart = window ? game::rd<std::int32_t>(window, game::race_window::kKartIdx) : -1;
         const int kart = game::localKartIndex() + window_id;
+        if (hdr_kart != kart) {
+            MK8AP_LOG_INFO("[finish] note: RaceWindow+0xF4 kart idx=%d, derived=%d (using derived)",
+                           hdr_kart, kart);
+        }
         const int rank = game::kartRank(kart);
         const int rule = game::currentRule();
         const int engine = game::currentEngineClass();

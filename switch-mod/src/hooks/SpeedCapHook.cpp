@@ -54,6 +54,7 @@ void clampKart(int idx, int pct) {
 
 HkTrampoline<std::uint64_t, void*> g_onCalc = hk::hook::trampoline(
     [](void* self) -> std::uint64_t {
+        startNetworkingOnce("ui::Control_RaceLapCoin::onCalc_");
         auto& st = ap::ApState::instance();
         const int pct = st.speed_pct.load(std::memory_order_relaxed);
         if (st.restricting() && pct < 100) {

@@ -57,6 +57,7 @@ HkTrampoline<int, void*, int> g_getCupStatus = hk::hook::trampoline(
 
 HkTrampoline<std::uint64_t, void*, int, int> g_setCup = hk::hook::trampoline(
     [](void* self, int ecup, int dlcState) -> std::uint64_t {
+        startNetworkingOnce("ui::Control_CupButton::setCup");
         logOnce(g_logged_cup, ecup, "[cup] Control_CupButton::setCup(ecup=%d, state=%d)", ecup, dlcState);
         const int cupIdx = ecup - 1;  // ECup::Mushroom == 1
         if (cupIdx >= 0 && cupIdx < game::kCupCount &&

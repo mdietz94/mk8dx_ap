@@ -13,18 +13,6 @@ namespace {
 // outbound_logs producer-side spinlock: the ring is single-producer but
 // log() can be called from any thread.
 std::atomic_flag g_logs_push_lock = ATOMIC_FLAG_INIT;
-std::atomic_flag g_names_lock = ATOMIC_FLAG_INIT;
-
-// Per-session dedupe of course_name reports (ids are small ints; 256 slots).
-std::atomic<std::uint64_t> g_names_seen[4] = {};
-
-bool markNameSeen(int id) {
-    if (id < 0 || id >= 256) return false;
-    const std::uint64_t bitv = 1ULL << (id % 64);
-    const std::uint64_t prev = g_names_seen[id / 64].fetch_or(bitv, std::memory_order_relaxed);
-    return (prev & bitv) == 0;
-}
-
 }  // namespace
 
 void reportRaceResult(int course_id, int rule, int engine, bool mirror,
@@ -60,19 +48,6 @@ void reportPlayReport(const char* room, std::size_t room_len,
     if (!st.outbound_reports.push(pr)) {
         MK8AP_LOG_WARN("[bridge] outbound_reports FULL; dropped play_report room=%s", pr.room);
     }
-}
-
-void reportCourseName(int course_id, const char* res) {
-    if (!res || !*res) return;
-    if (!markNameSeen(course_id)) return;
-    CourseName c{};
-    c.course_id = course_id;
-    copyFixed(c.res, res);
-    while (g_names_lock.test_and_set(std::memory_order_acquire)) {}
-    const bool ok = ApState::instance().outbound_names.push(c);
-    g_names_lock.clear(std::memory_order_release);
-    if (!ok) MK8AP_LOG_WARN("[bridge] outbound_names FULL; dropped course %d", course_id);
-    else MK8AP_LOG_INFO("[bridge] learned course id=%d res=%s", course_id, res);
 }
 
 void reportIdTable(const IdTable& tbl) {

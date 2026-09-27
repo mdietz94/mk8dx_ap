@@ -105,7 +105,6 @@ public:
     // ---- outbound rings (hooks push, worker pops) ---------------------------
     SpscRing<RaceResult, 16> outbound_results;
     SpscRing<PlayReport, 4> outbound_reports;
-    SpscRing<CourseName, 64> outbound_names;
     SpscRing<IdTable, 8> outbound_tables;
     SpscRing<Log, 256> outbound_logs;
     std::atomic<std::uint32_t> log_drops{0};

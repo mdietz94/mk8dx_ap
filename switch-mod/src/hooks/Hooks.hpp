@@ -10,14 +10,18 @@ namespace mk8ap::hooks {
 void installSocketInitHook();   // nn::socket::Initialize observer
 void installPlayReportHooks();  // nn::prepo IPC SaveReport capture (race results)
 
-// Game hooks (pattern / 3.0.5-offset resolved)
+// Game hooks (resolved by sym::PatternResolver)
 void installSaveLoadHook();     // gear::SaveDataFile::load -> start networking
 void installRaceFinishHook();   // ui::RaceWindow::onFakeGoal -> race_result
 void installCupGateHooks();     // FlagAccessor::isOpen / DLCManager::getCupStatus / Control_CupButton::setCup
 void installItemGateHook();     // gear::ItemOwner::startSlot
-void installKartGuardHook();    // ui::SetNextCourse (enforce driver/parts, learn course)
-void installCourseTableHook();  // ui::Control_CourseButton::setCourse (learn course ids)
+void installKartGuardHook();    // ui::SetNextCourse (enforce driver/parts)
 void installSpeedCapHook();     // ui::Control_RaceLapCoin::onCalc_ (per-frame clamp)
+
+// Start the AP worker + dump the id tables, once. Called from the save-load
+// hook and, in case that pattern did not resolve, from every other hook that
+// fires once the game is up (menus, races, PlayReport). `trigger` is logged.
+void startNetworkingOnce(const char* trigger);
 
 // SocketInitHook helpers used by ApClient::start.
 bool socketInitialized();

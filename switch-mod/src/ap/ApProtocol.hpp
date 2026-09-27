@@ -45,6 +45,7 @@ struct Hello {
     char build_id[40] = {};
     int resolved = 0;
     int total = 0;
+    char unresolved[kLongCap] = {};  // comma-separated symbol names
     char device_id[kMedCap] = {};
 };
 
@@ -73,11 +74,6 @@ struct PlayReport {
 
 // Learned id -> name pairs. The PC owns the id tables; we just report what
 // the game tells us so the mapping is self-calibrating across versions.
-struct CourseName {
-    int course_id = -1;
-    char res[kMedCap] = {};  // CourseInfo::mCourseIconResource
-};
-
 struct IdEntry {
     int id = -1;
     char text[kShortCap] = {};
@@ -102,7 +98,6 @@ struct Ping {
 void encodeHello(util::json::LineBuffer&, const Hello&);
 void encodeRaceResult(util::json::LineBuffer&, const RaceResult&);
 void encodePlayReport(util::json::LineBuffer&, const PlayReport&);
-void encodeCourseName(util::json::LineBuffer&, const CourseName&);
 void encodeIdTable(util::json::LineBuffer&, const IdTable&);
 void encodeLog(util::json::LineBuffer&, const Log&);
 void encodePing(util::json::LineBuffer&, const Ping&);

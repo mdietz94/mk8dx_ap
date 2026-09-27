@@ -7,9 +7,9 @@ from client.protocol import HelloMsg, PlayReportMsg, RaceResultMsg, StateMsg, en
 
 
 def test_parse_hello_ignores_unknown_fields():
-    m = parse_line(b'{"t":"hello","mod_ver":"0.1.0","game_ver":"3.0.5","build_id":"FE94","resolved":3,"total":4,"future":1}\n')
+    m = parse_line(b'{"t":"hello","mod_ver":"0.1.0","game_ver":"4.0.0","build_id":"2C33","resolved":3,"total":4,"unresolved":"a::b,c::d","future":1}\n')
     assert isinstance(m, HelloMsg)
-    assert m.resolved == 3 and m.build_id == "FE94"
+    assert m.resolved == 3 and m.build_id == "2C33" and m.unresolved == "a::b,c::d"
 
 
 def test_parse_race_result_and_play_report():

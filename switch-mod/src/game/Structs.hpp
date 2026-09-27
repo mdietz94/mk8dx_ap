@@ -1,7 +1,9 @@
 // Offset-based accessors for the handful of game structures we read or
-// write. Offsets come from fishguy6564/MK8DX-Headers (64-bit branch) and
-// the RoGamer97 3.0.5 patch comments; each one is annotated with its source
-// so a future version bump knows what to re-verify.
+// write, for MK8DX 4.0.0. Offsets come from fishguy6564/MK8DX-Headers
+// (64-bit branch) and the RoGamer97 4.0.0 patch sources, which use every
+// chain and offset below (checked 2026-09-27). The layout changes 4.0.0
+// made (object::DriverKart members +8, UI page ids +1) are in structures
+// this mod does not touch.
 //
 // Deliberately NOT full struct mirrors: a wrong padding byte in a mirrored
 // 0x600-byte class silently shifts every later field, whereas a named
@@ -58,21 +60,13 @@ inline constexpr std::size_t kCourseId   = 0x00;  // mush::ECourseID (s32)
 inline constexpr std::size_t kPrefixMsbt = 0x04;
 inline constexpr std::size_t kCourseMsbt = 0x08;
 inline constexpr std::size_t kIsDLC      = 0x0C;  // bool
-// sead::FixedSafeString<64> mCourseIconResource follows at 0x10:
-//   +0x00 vtable, +0x08 const char* mStringTop, +0x10 s32 mBufferSize,
-//   then the inline 64-byte buffer. We read through mStringTop so the exact
-//   inline layout doesn't matter.
-inline constexpr std::size_t kIconResource = 0x10;
-inline constexpr std::size_t kSafeStringTop = 0x08;
+// The struct ends here (0x10 bytes). An earlier revision of the public
+// header listed an icon-resource string after it; that was wrong, so course
+// names are NOT read from CourseInfo. The PC learns course ids by pairing
+// the hook's numeric id with the PlayReport course string of the same race.
 }  // namespace course_info
 
-inline const char* courseInfoIconName(const void* ci) {
-    if (!ci) return nullptr;
-    const auto* sstr = static_cast<const std::uint8_t*>(ci) + course_info::kIconResource;
-    return rd<const char*>(sstr, course_info::kSafeStringTop);
-}
-
-// ---- Scene -> kart chain (RoGamer97 FINISH patch + MK8DX-Examples) -------
+// ---- Scene -> kart chain (RoGamer97 4.0.0 FINISH / Free Camera patches) ---
 //   gear::FrameworkUtil::getCurrentGameScene()   -> FrameworkGameScene*
 //   scene + 0x1B0                                -> object::ObjectEngine*
 //   engine + 0x218                               -> object::RaceDirector*
@@ -82,6 +76,13 @@ inline const char* courseInfoIconName(const void* ci) {
 //   vehicle + 0x28                               -> object::KartVehicleMove*
 //   raceDirector + 0x68                          -> gear::RaceKartChecker** (array)
 //   checker + 0x40                               -> s32 current rank (0-based)
+// ui::RaceWindow: the first s32 is the window index (Ro's FINISH patch); the
+// public header also lists mKartIdx at +0xF4. RaceFinishHook logs both.
+namespace race_window {
+inline constexpr std::size_t kWindowId = 0x00;
+inline constexpr std::size_t kKartIdx  = 0xF4;
+}  // namespace race_window
+
 namespace scene {
 inline constexpr std::size_t kObjectEngine = 0x1B0;
 inline constexpr std::size_t kRaceDirector = 0x218;
@@ -116,7 +117,7 @@ inline constexpr std::size_t kTopSpeed3 = 0x42C;
 namespace item_owner {
 inline constexpr std::size_t kPlayerId = 0x40;
 inline constexpr std::size_t kKartInfoProxy = 0x48;   // object::KartInfoProxy*
-inline constexpr std::size_t kProxyKartVehicle = 0x48; // proxy + 0x48 -> KartVehicle* (Debug Item Cycler)
+inline constexpr std::size_t kProxyKartVehicle = 0x48; // proxy + 0x48 -> KartVehicle* (4.0.0 Debug Item Cycler)
 }  // namespace item_owner
 
 // ---- gear::SaveData ---------------------------------------------------------

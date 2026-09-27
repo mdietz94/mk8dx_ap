@@ -1,13 +1,11 @@
-// Character / vehicle enforcement + course-id learning.
+// Character / vehicle enforcement.
 //
 // ui::SetNextCourse(const CourseInfo&) is the commit point of the menu flow
 // (driver -> kart -> course). At that moment gear::GetNextRaceInfo() holds
 // every kart's driver/body/tire/glider ids, so:
 //   * any locally controlled kart whose selection is AP-locked is rewritten
 //     to the seed's starting loadout (the select screen is not greyed yet;
-//     that needs a Page_DriverSelect hook nobody has published);
-//   * the CourseInfo gives us (course id, icon resource name) to teach the
-//     PC which id is which course.
+//     that needs a Page_DriverSelect hook nobody has published).
 //
 // "Local" karts: kart 0 is always the first local player; further local
 // players share its RacePlayerType (CPUs differ), so we treat every kart
@@ -19,7 +17,6 @@
 
 #include "hk/hook/Trampoline.h"
 
-#include "../ap/ApFrameBridge.hpp"
 #include "../ap/ApState.hpp"
 #include "../game/GameApi.hpp"
 #include "../game/Structs.hpp"
@@ -71,11 +68,11 @@ void enforceLoadouts() {
 
 HkTrampoline<std::uint64_t, const void*> g_setNextCourse = hk::hook::trampoline(
     [](const void* courseInfo) -> std::uint64_t {
+        startNetworkingOnce("ui::SetNextCourse");
         if (courseInfo) {
-            const int id = game::rd<std::int32_t>(courseInfo, game::course_info::kCourseId);
-            const char* res = game::courseInfoIconName(courseInfo);
-            MK8AP_LOG_INFO("[kart] SetNextCourse id=%d res=%s", id, res ? res : "(null)");
-            ap::reportCourseName(id, res);
+            MK8AP_LOG_INFO("[kart] SetNextCourse course id=%d dlc=%d",
+                           game::rd<std::int32_t>(courseInfo, game::course_info::kCourseId),
+                           game::rd<bool>(courseInfo, game::course_info::kIsDLC) ? 1 : 0);
         }
         enforceLoadouts();
         return g_setNextCourse.orig(courseInfo);

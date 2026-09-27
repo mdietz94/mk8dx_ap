@@ -5,9 +5,9 @@ with a Mario Kart 8 Deluxe slot), then:
 
     python scripts/switch_smoke_test.py [--port 17778] [--course Gu_FirstCircuit --rank 1]
 
-Sends HELLO, an id_table for drivers, a course_name, then a synthetic
-PlayReport race record for --course / --rank and prints everything the
-client sends back (hello_ack, state pushes). Stop with Ctrl-C.
+Sends HELLO, an id_table for drivers, then a synthetic PlayReport race
+record for --course / --rank followed by the matching hook race_result, and
+prints everything the client sends back (hello_ack, state pushes).
 """
 
 from __future__ import annotations
@@ -62,7 +62,7 @@ async def reader_loop(reader: asyncio.StreamReader) -> None:
             print("<< (raw)", line[:200])
 
 
-async def main(port: int, course: str, rank: int, rule: str) -> int:
+async def main(port: int, course: str, rank: int, rule: str, course_id: int = 0) -> int:
     reader, writer = await asyncio.open_connection("127.0.0.1", port)
     asyncio.create_task(reader_loop(reader))
 
@@ -71,12 +71,12 @@ async def main(port: int, course: str, rank: int, rule: str) -> int:
         await writer.drain()
         print(">>", obj)
 
-    await send({"t": "hello", "mod_ver": "fake-0.1.0", "game_ver": "3.0.5",
-                "build_id": "FE941ED5BA14BE5D505698DA1BBF4FE7", "resolved": 17, "total": 18})
+    await send({"t": "hello", "mod_ver": "fake-0.1.0", "game_ver": "4.0.0",
+                "build_id": "2C336A9BCF79C3040CE506CDD391B578", "resolved": 16, "total": 17,
+                "unresolved": "ui::SetNextCourse"})
     await asyncio.sleep(1.0)
     await send({"t": "id_table", "kind": "driver",
                 "entries": [{"id": 0, "text": "Mario"}, {"id": 1, "text": "Luigi"}, {"id": 5, "text": "Kinopio"}]})
-    await send({"t": "course_name", "course_id": 0, "res": f"tc_Course_{course}"})
     await asyncio.sleep(0.5)
     report = {"BeginTime": 20260915120000, "EndTime": 20260915120300, "RaceNo": 1,
               "Course": course, "Rank": rank, "Points": 15, "FinishReason": "Finish",
@@ -86,7 +86,9 @@ async def main(port: int, course: str, rank: int, rule: str) -> int:
     await send({"t": "play_report", "room": "RaceResult", "size": len(payload),
                 "truncated": False, "hex": payload.hex()})
     rule_id = {"GrandPrix": 0, "VS": 1, "TimeAttack": 2, "Battle": 3}.get(rule, 1)
-    await send({"t": "race_result", "seq": 1, "course_id": 0, "rule": rule_id, "engine": 2,
+    # Numeric course id as the hook would report it; the client pairs it
+    # with the PlayReport course string above to learn the id.
+    await send({"t": "race_result", "seq": 1, "course_id": course_id, "rule": rule_id, "engine": 2,
                 "mirror": False, "rank": rank - 1, "kart_index": 0})
     await send({"t": "log", "level": "info", "msg": "fake switch says hi"})
     await asyncio.sleep(2.0)
@@ -102,9 +104,10 @@ if __name__ == "__main__":
     p.add_argument("--course", default="Gu_FirstCircuit")
     p.add_argument("--rank", type=int, default=1)
     p.add_argument("--rule", default="VS")
+    p.add_argument("--course-id", type=int, default=0, help="numeric id the hook path reports")
     a = p.parse_args()
     try:
-        sys.exit(asyncio.run(main(a.port, a.course, a.rank, a.rule)))
+        sys.exit(asyncio.run(main(a.port, a.course, a.rank, a.rule, a.course_id)))
     except ConnectionRefusedError:
         print(f"connection refused: is the MK8DX Client listening on 127.0.0.1:{a.port}?")
         sys.exit(2)

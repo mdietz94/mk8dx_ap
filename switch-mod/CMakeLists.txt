@@ -14,7 +14,7 @@ include(config/config.cmake)
 # PC may have moved to a neighbouring address after a DHCP renumber and the
 # sweep still finds it. No default; fatal on missing.
 # ---------------------------------------------------------------------------
-set(MK8DX_VERSION          "3.0.5"         CACHE STRING "Target MK8DX version")
+set(MK8DX_VERSION          "4.0.0"         CACHE STRING "Target MK8DX version (the only supported one)")
 set(MK8AP_MOD_VERSION      "0.1.0"         CACHE STRING "Module version baked into HELLO")
 set(BRIDGE_HOST            ""              CACHE STRING "PC LAN IP - subnet sweep seed (REQUIRED; pass -DBRIDGE_HOST=<ip>)")
 set(BRIDGE_PORT            17778           CACHE STRING "Bridge TCP port")

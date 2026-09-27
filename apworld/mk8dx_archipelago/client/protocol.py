@@ -26,6 +26,7 @@ class HelloMsg:
     build_id: str = ""
     resolved: int = 0
     total: int = 0
+    unresolved: str = ""   # comma-separated game symbols the mod could not locate
     device_id: str = ""
 
 
@@ -57,6 +58,9 @@ class PlayReportMsg:
 
 @dataclass
 class CourseNameMsg:
+    """Explicit course id -> name pair. The Switch mod does not send this
+    (CourseInfo carries no name); ids are learned by pairing race_result
+    with play_report instead. Kept for the fake Switch and future use."""
     t: str = "course_name"
     course_id: int = -1
     res: str = ""

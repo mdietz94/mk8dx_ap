@@ -5,7 +5,7 @@ Two tiers, same shape as `smo_archipelago` / `smbw_ap`:
 ```
 Switch / Ryujinx                                   PC
 +-------------------------------+   TCP :17778   +---------------------------+   websocket   +-----------+
-| MK8DX 3.0.5 + subsdk9 (mod)   | <------------> | MK8DX Client (Kivy)       | <-----------> | AP server |
+| MK8DX 4.0.0 + subsdk9 (mod)   | <------------> | MK8DX Client (Kivy)       | <-----------> | AP server |
 |  hooks -> ApState rings       |   line JSON    |  SwitchServer + Discovery |               +-----------+
 |  ApClient worker (nn::socket) |   UDP :17779   |  MK8DXContext (CommonCtx) |
 +-------------------------------+                +---------------------------+
@@ -13,10 +13,12 @@ Switch / Ryujinx                                   PC
 
 ## Switch mod (`switch-mod/`, LibHakkun subsdk9)
 
-* `hkMain` resolves game symbols (`sym/PatternResolver`), binds
+* `hkMain` checks the build id is 4.0.0 (otherwise the mod stays
+  inactive), resolves game symbols (`sym/PatternResolver`), binds
   `game/GameApi`, installs SDK hooks (socket init observer, PlayReport IPC
   capture) and game hooks. Networking starts from the first
-  `gear::SaveDataFile::load` (game fully booted, profile chosen).
+  `gear::SaveDataFile::load`, or from the first menu / race / PlayReport
+  hook if that function was not located.
 * Threads: game threads run the hooks and only touch `ApState` (atomics +
   SPSC rings); one nn::os worker thread does discovery, TCP, HELLO, and
   pumps the rings.
@@ -28,7 +30,7 @@ Switch / Ryujinx                                   PC
     `Control_CupButton::setCup` return "locked" for AP-locked cups.
   * `ItemGateHook`: `ItemOwner::startSlot` remaps locked items to Coin.
   * `KartGuardHook`: `ui::SetNextCourse` rewrites locked driver/parts on
-    local karts to the starting loadout and learns course ids.
+    local karts to the starting loadout.
   * `SpeedCapHook`: per-frame clamp of `KartVehicleMove::mSpeed` to
     `top * speed_pct`.
   * `IdTableDump`: `mush::E*ID::text_` tables shipped once so the PC learns

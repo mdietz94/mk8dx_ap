@@ -14,10 +14,10 @@ the client answers `{"t":"bridge","host":<ipv4>,"port":17778,"seed":..}`.
 
 | `t` | fields | when |
 |---|---|---|
-| `hello` | `mod_ver, game_ver, build_id, resolved, total, device_id` | on every (re)connect |
+| `hello` | `mod_ver, game_ver, build_id, resolved, total, unresolved, device_id` | on every (re)connect; `unresolved` is a comma-separated list of game functions the mod could not locate |
 | `play_report` | `room, size, truncated, hex` | every nn::prepo PlayReport the game saves (end-of-race records carry Course/Rank/Rule/Engine/Driver/...); `hex` is MessagePack |
 | `race_result` | `seq, course_id, rule, engine, mirror, rank(0-based), kart_index` | `ui::RaceWindow::onFakeGoal` (fallback channel) |
-| `course_name` | `course_id, res` | first time a course id is seen (`CourseInfo::mCourseIconResource`) |
+| `course_name` | `course_id, res` | accepted by the client but not sent by the mod (`ui::CourseInfo` carries no name). Course ids are learned by pairing `race_result` with the `play_report` of the same race |
 | `id_table` | `kind ("driver"/"body"/"tire"/"wing"), entries:[{id,text}]` | once per session after save load |
 | `log` | `level, msg` | every INFO+ log line |
 | `ping` | `ts_ms` | liveness |
