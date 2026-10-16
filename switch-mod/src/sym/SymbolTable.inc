@@ -17,4 +17,5 @@
     { "mush::EBodyID::text_", "_ZN4mush7EBodyID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 E8 24 80 52 E0 03 15 AA", -0x80, 0x0 },
     { "mush::ETireID::text_", "_ZN4mush7ETireID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 C8 0E 80 52 E0 03 15 AA", -0x80, 0x0 },
     { "ui::SetRandomCPU", "_ZN2ui12SetRandomCPUEbbPN4sead9SafeArrayIN4mush9EDriverIDELi12EEE", "", 0x0, 0x4fd6d0 },
+    { "object::KartDirector::prepareBeforeStructure", "_ZN6object12KartDirector22prepareBeforeStructureEPKN4gear11ArgumentObjE", "E0 03 1C 32 88 82 41 B9 68 C2 00 B9", -0x3c, 0x0 },
     { "mush::EWingID::text_", "_ZN4mush7EWingID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA", -0x80, 0x0 },

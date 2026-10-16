@@ -106,9 +106,31 @@ HkTrampoline<std::uint64_t, std::uint64_t, std::uint64_t, std::uint64_t, std::ui
         return ret;
     });
 
+// object::KartDirector::prepareBeforeStructure(const gear::ArgumentObj*) is
+// the race scene's kart-director prepare: by now the UI has assembled the
+// final 12-kart RaceInfo (seen at SetNextCourse(28) time with n=12) and the
+// kart objects have not been built yet. Enforcing here, pre-orig, is the
+// "catch it upstream of the visible state change" point. The earlier hooks
+// (SetNextCourse / SetRandomCPU) all ran before the UI's final copy and had
+// no effect on the race (2026-10-16, race 3: PlayReport still BbLuigi/K_Snk).
+HkTrampoline<std::uint64_t, void*, std::uint64_t, std::uint64_t, std::uint64_t> g_kartPrepare =
+    hk::hook::trampoline([](void* self, std::uint64_t x1, std::uint64_t x2,
+                            std::uint64_t x3) -> std::uint64_t {
+        MK8AP_LOG_INFO("[kart] KartDirector::prepareBeforeStructure: enforcing loadouts pre-orig");
+        enforceLoadouts();
+        return g_kartPrepare.orig(self, x1, x2, x3);
+    });
+
 }  // namespace
 
 void installKartGuardHook() {
+    if (const auto off3 = sym::mainOffset("object::KartDirector::prepareBeforeStructure")) {
+        const auto rc3 = g_kartPrepare.installAtMainOffset(off3);
+        MK8AP_LOG_INFO("[kart] KartDirector::prepareBeforeStructure hook @+0x%llx: %s",
+                       static_cast<unsigned long long>(off3), rc3.succeeded() ? "installed" : "FAILED");
+    } else {
+        MK8AP_LOG_WARN("[kart] KartDirector::prepareBeforeStructure unresolved; scene-level enforcement off");
+    }
     if (const auto off2 = sym::mainOffset("ui::SetRandomCPU")) {
         const auto rc2 = g_setRandomCpu.installAtMainOffset(off2);
         MK8AP_LOG_INFO("[kart] SetRandomCPU hook @+0x%llx: %s", static_cast<unsigned long long>(off2),

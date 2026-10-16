@@ -133,6 +133,15 @@ mangled = "_ZN2ui12SetRandomCPUEbbPN4sead9SafeArrayIN4mush9EDriverIDELi12EEE"
 address = "0x4FD6D0"
 
 [[symbols]]
+# Race-scene director prepare: runs after the UI has assembled the 12-kart
+# RaceInfo and before the kart objects are built from it. Pattern from
+# fishguy6564/MK8DX-Base-Plugin symbols.toml.
+name = "object::KartDirector::prepareBeforeStructure"
+mangled = "_ZN6object12KartDirector22prepareBeforeStructureEPKN4gear11ArgumentObjE"
+pattern = "E0 03 1C 32 88 82 41 B9 68 C2 00 B9"
+offset = "-0x3C"
+
+[[symbols]]
 name = "mush::EWingID::text_"
 mangled = "_ZN4mush7EWingID5text_Ei"
 pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA"
