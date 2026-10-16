@@ -70,6 +70,15 @@ First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
   MemoryResourceAllocationPolicy, IPrepoService>` with no
   `ProcessModifierImpl` suffix (SDK 15+ names differ). `SdkSymbolDump.cpp`
   logs the exact mangled names at boot; both SaveReport hooks install.
+* First race (GP 50cc, Mushroom Cup race 1, 2026-10-16): `ui::SetNextCourse`
+  fired with course id 27 (and 28 for the next race preview), the speed hook
+  read `top=8.325/6.460/6.460` (offsets sane), `onFakeGoal` fired once per
+  RaceWindow (5 windows, every auto-finished kart, not just the player; the
+  hook now keeps only the kart whose KartVehicle is master), `RaceWindow+0xF4`
+  does not hold the kart index on 4.0.0 (reads -1; the window-id derivation
+  is used), ranks are 0-based, and the `match` PlayReport decoded to
+  `Course=Gu_FirstCircuit Rank=1 Rule=GP Engine=50cc`. Course id 27 was
+  learned as Mario Kart Stadium from the hook + report pairing.
 * Ryujinx itself prints every PlayReport as JSON (`ServicePrepo
   ProcessPlayReport`) in its log, which doubles as a cross-check for the
   mod's MessagePack capture during emulator testing.

@@ -180,7 +180,10 @@ class MK8DXContext(CommonContext):
         self._last_hook_course = (msg.course_id, time.time())
         self._pair_course_id()
         r = resolve_hook(msg.course_id, msg.rank, msg.rule, self.state.learned, self._tiers)
-        key = f"hook|{msg.course_id}|{msg.kart_index}"
+        # One hook result per course per 30 s whatever kart it names: the
+        # Switch filters to the local kart, but a stray CPU window must never
+        # be credited as a second finish (it would also advance the GP tracker).
+        key = f"hook|{msg.course_id}"
         now = time.time()
         if now - self._seen_hook.get(key, 0) < 30:
             return  # same race reported twice

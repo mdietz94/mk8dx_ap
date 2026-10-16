@@ -34,6 +34,18 @@ HkTrampoline<std::uint64_t, void*> g_onFakeGoal = hk::hook::trampoline(
             MK8AP_LOG_INFO("[finish] note: RaceWindow+0xF4 kart idx=%d, derived=%d (using derived)",
                            hdr_kart, kart);
         }
+        // 4.0.0 race 1 (2026-10-16): onFakeGoal fires once per RaceWindow,
+        // i.e. for every kart that is auto-finished when the race ends, not
+        // only the local player (5 windows, ranks 0/9/3/10/8 in a 12-kart
+        // GP). Only the local player's kart (KartVehicle+0xD0 isMaster) is a
+        // result; the rest would be credited as the player's finishes.
+        void* vehicle = game::kartVehicle(kart);
+        const bool local = vehicle && game::rd<bool>(vehicle, game::vehicle::kIsMaster);
+        if (!local) {
+            MK8AP_LOG_INFO("[finish] onFakeGoal window=%d kart=%d is not the local player; ignored",
+                           window_id, kart);
+            return g_onFakeGoal.orig(window);
+        }
         const int rank = game::kartRank(kart);
         const int rule = game::currentRule();
         const int engine = game::currentEngineClass();
