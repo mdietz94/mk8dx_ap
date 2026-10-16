@@ -19,4 +19,5 @@
     { "ui::SetRandomCPU", "_ZN2ui12SetRandomCPUEbbPN4sead9SafeArrayIN4mush9EDriverIDELi12EEE", "", 0x0, 0x4fd6d0 },
     { "object::KartDirector::prepareBeforeStructure", "_ZN6object12KartDirector22prepareBeforeStructureEPKN4gear11ArgumentObjE", "E0 03 1C 32 88 82 41 B9 68 C2 00 B9", -0x3c, 0x0 },
     { "gear::GetPlayerManager", "_ZN4gear16GetPlayerManagerEv", "00 00 44 F9 FD 7B C1 A8 C0 03 5F D6 FD 7B BF A9 FD 03 00 91", -0x10, 0x0 },
+    { "ui::Page_CourseBase::isDLC", "_ZN2ui15Page_CourseBase5isDLCENS_4ECupE", "1F 0D 00 71 E8 03 1F 32 E8 03 88 1A", -0x70, 0x0 },
     { "mush::EWingID::text_", "_ZN4mush7EWingID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA", -0x80, 0x0 },

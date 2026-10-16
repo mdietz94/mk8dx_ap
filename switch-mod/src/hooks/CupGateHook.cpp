@@ -113,35 +113,74 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
         // so ECup is 0-based (Mushroom == 0) and equals EGrandPrixID. The
         // upstream header's "Mushroom == 1" reading was wrong for this build.
         const int cupIdx = ecup;
-        // Control_CupButton::mIsLocked lives at +0x3CB (MK8DX-Headers). Passing
-        // DLCState::Locked to setCup changed the drawing only: the cup could
-        // still be entered (2026-10-16). Log what the game sets the flag to for
-        // each state and force it on for AP-locked cups to see whether the
-        // press handler honours it.
-        constexpr std::size_t kIsLocked = 0x3CB;
+        // Passing DLCState::Locked here changes only the drawing (the cup could
+        // still be entered, 2026-10-16); the press is gated by Page_CourseBase::
+        // isDLC below. Kept so the button never shows an AP-locked cup as open.
+        // (Control_CupButton+0x3CB is 1 for every cup on 4.0.0: not a lock flag.)
         if (state >= 0 && cupIdx >= 0 && cupIdx < game::kCupCount &&
             !ap::ApState::instance().isCupAllowed(cupIdx)) {
             const std::int32_t locked = static_cast<std::int32_t>(game::DLCState::Locked);
-            const u64 ret = g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
-            const int was = game::rd<std::uint8_t>(self, kIsLocked);
-            game::wr<std::uint8_t>(self, kIsLocked, 1);
-            static int lock_logged = 0;
-            if (lock_logged < 40) {
-                ++lock_logged;
-                MK8AP_LOG_INFO("[cup] setCup(ecup=%d) state %d -> Locked(%d); mIsLocked was %d, forced 1",
-                               ecup, state, locked, was);
-            }
-            return ret;
+            return g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
         }
-        const u64 ret = g_setCup.orig(self, x1, x2, x3, x4, x5);
-        static int state_logged = 0;
-        if (state_logged < 30) {
-            ++state_logged;
-            MK8AP_LOG_INFO("[cup] setCup(ecup=%d, state=%d) -> mIsLocked=%d", ecup, state,
-                           game::rd<std::uint8_t>(self, kIsLocked));
-        }
-        return ret;
+        return g_setCup.orig(self, x1, x2, x3, x4, x5);
     });
+
+// --- 4. static ui::DLCState Page_CourseBase::isDLC(ui::ECup) ----------------
+// DLCState carries a user-declared destructor, so the AArch64 ABI returns it
+// through memory at the hidden x8 pointer; a C++ lambda cannot see x8, so the
+// hook entry is a 2-instruction asm stub that moves x8 into x1 and jumps to
+// the C++ body. The original is invoked through another stub that reloads x8.
+// Locked(4) is the state the game used for Booster Course Pass waves before
+// release: padlock icon, not selectable, no purchase dialog.
+}  // namespace
+extern "C" std::uint64_t mk8ap_isDlcEntry(std::uint64_t cup);
+extern "C" std::uint64_t mk8ap_callSret(void* fn, std::uint64_t x0, std::uint64_t x8);
+asm(R"(
+    .section .text.mk8ap_isDlcEntry,"ax",%progbits
+    .global mk8ap_isDlcEntry
+    .type mk8ap_isDlcEntry,%function
+mk8ap_isDlcEntry:
+    mov x1, x8
+    b mk8ap_isDlcImpl
+    .size mk8ap_isDlcEntry, .-mk8ap_isDlcEntry
+
+    .section .text.mk8ap_callSret,"ax",%progbits
+    .global mk8ap_callSret
+    .type mk8ap_callSret,%function
+mk8ap_callSret:
+    mov x8, x2
+    mov x16, x0
+    mov x0, x1
+    br x16
+    .size mk8ap_callSret, .-mk8ap_callSret
+)");
+namespace {
+HkTrampoline<std::uint64_t, std::uint64_t> g_isDlc{&mk8ap_isDlcEntry};
+}  // namespace
+extern "C" std::uint64_t mk8ap_isDlcImpl(std::uint64_t x0, std::uint64_t x8) {
+    using namespace mk8ap;
+    using namespace mk8ap::hooks;
+    std::int32_t local = 0;
+    const std::uint64_t ret = mk8ap_callSret(reinterpret_cast<void*>(g_isDlc.orig), x0,
+                                             reinterpret_cast<std::uint64_t>(&local));
+    const int ecup = derefEnum(x0);
+    std::int32_t result = local;
+    if (ecup >= 0 && ecup < game::kCupCount && !ap::ApState::instance().isCupAllowed(ecup)) {
+        result = static_cast<std::int32_t>(game::DLCState::Locked);
+    }
+    static std::atomic<std::uint64_t> logged{0};
+    if (firstTime(logged, ecup) || result != local) {
+        static int n = 0;
+        if (n < 60) {
+            ++n;
+            MK8AP_LOG_INFO("[cup] Page_CourseBase::isDLC(ecup=%d) vanilla=%d -> %d [x8=0x%llx]",
+                           ecup, local, result, static_cast<unsigned long long>(x8));
+        }
+    }
+    if (x8 >= 0x10000) *reinterpret_cast<std::int32_t*>(x8) = result;
+    return ret;
+}
+namespace {
 
 template <typename H>
 void install(H& hook, const char* name) {
@@ -158,6 +197,7 @@ void installCupGateHooks() {
     install(g_isOpen, "gear::FlagAccessor::isOpen");
     install(g_getCupStatus, "gear::DLCManager::getCupStatus");
     install(g_setCup, "ui::Control_CupButton::setCup");
+    install(g_isDlc, "ui::Page_CourseBase::isDLC");
 }
 
 }  // namespace mk8ap::hooks

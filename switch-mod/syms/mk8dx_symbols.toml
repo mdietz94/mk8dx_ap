@@ -151,6 +151,16 @@ pattern = "00 00 44 F9 FD 7B C1 A8 C0 03 5F D6 FD 7B BF A9 FD 03 00 91"
 offset = "-0x10"
 
 [[symbols]]
+# static ui::DLCState Page_CourseBase::isDLC(ui::ECup): the cup-select page's
+# per-cup availability query (feeds Control_CupButton::setCup AND the press
+# handler). DLCState has a user-declared destructor, so it is returned through
+# the hidden x8 pointer; ECup is passed by reference. Pattern from fishguy6564.
+name = "ui::Page_CourseBase::isDLC"
+mangled = "_ZN2ui15Page_CourseBase5isDLCENS_4ECupE"
+pattern = "1F 0D 00 71 E8 03 1F 32 E8 03 88 1A"
+offset = "-0x70"
+
+[[symbols]]
 name = "mush::EWingID::text_"
 mangled = "_ZN4mush7EWingID5text_Ei"
 pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA"
