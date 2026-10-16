@@ -33,6 +33,7 @@ extern "C" void hkMain() {
     MK8AP_LOG_INFO("installing SDK hooks");
     mk8ap::hooks::installSocketInitHook();
     mk8ap::hooks::installPlayReportHooks();
+    mk8ap::hooks::dumpSdkSymbolsOnce();
 
     MK8AP_LOG_INFO("installing game hooks");
     mk8ap::hooks::installSaveLoadHook();

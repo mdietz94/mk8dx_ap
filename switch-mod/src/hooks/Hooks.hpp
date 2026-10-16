@@ -30,4 +30,8 @@ bool ensureSocketInitialized();
 // IdTableDump: enumerate mush::E*ID::text_ and ship the tables once.
 void dumpIdTablesOnce();
 
+// SdkSymbolDump: log nnSdk dynsym names matching IPrepoService/SaveReport
+// so the SDK 4.4.0 cmif proxy mangled names can be read off the boot log.
+void dumpSdkSymbolsOnce();
+
 }  // namespace mk8ap::hooks
