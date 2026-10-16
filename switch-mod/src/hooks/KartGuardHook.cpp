@@ -126,7 +126,8 @@ void enforcePlayers() {
         MK8AP_LOG_INFO("[kart] PlayerManager %p: players=%d local=%d ptrs=%p", pm, n, local, ptrs);
     }
     if (!ptrs) return;
-    const int limit = (local > 0 && local <= count) ? local : count;
+    // Only the local players' slots carry a human selection.
+    const int limit = (local > 0 && local < count) ? local : count;
     for (int i = 0; i < limit; ++i) {
         void* player = ptrs[i];
         if (!player) continue;

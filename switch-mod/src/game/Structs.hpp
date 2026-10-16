@@ -102,7 +102,7 @@ namespace player_manager {
 inline constexpr std::size_t kPlayersNum  = 0x50;
 inline constexpr std::size_t kPlayersPtrs = 0x58;
 inline constexpr std::size_t kLocalPlayerAmount = 0x178;
-inline constexpr int kMaxPlayers = 12;
+inline constexpr int kMaxPlayers = 16;  // observed 16 slots on 4.0.0 (12 karts + spares)
 }  // namespace player_manager
 namespace player {
 inline constexpr std::size_t kKartInfo = 0x210;
