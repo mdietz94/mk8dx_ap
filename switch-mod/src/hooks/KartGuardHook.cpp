@@ -27,11 +27,9 @@ namespace mk8ap::hooks {
 
 namespace {
 
-void enforceLoadouts() {
+void enforceIn(void* ri, const char* which) {
     auto& st = ap::ApState::instance();
-    if (!st.restricting()) return;
-    void* ri = game::getNextRaceInfo();
-    if (!ri) { MK8AP_LOG_WARN("[kart] GetNextRaceInfo() null; cannot enforce"); return; }
+    if (!ri) { MK8AP_LOG_WARN("[kart] %s RaceInfo null; cannot enforce", which); return; }
     const int n = static_cast<int>(game::rd<std::uint32_t>(ri, game::race_info::kPlayerAmount));
     const int count = (n > 0 && n <= game::race_info::kMaxKarts) ? n : game::race_info::kMaxKarts;
     const int localType = game::rd<std::int32_t>(game::kartInfoAt(ri, 0), game::kart_info::kPlayerType);
@@ -42,28 +40,43 @@ void enforceLoadouts() {
         const int body = game::rd<std::int32_t>(ki, game::kart_info::kBodyId);
         const int tire = game::rd<std::int32_t>(ki, game::kart_info::kTireId);
         const int wing = game::rd<std::int32_t>(ki, game::kart_info::kGliderId);
+        if (i == 0) {
+            MK8AP_LOG_INFO("[kart] %s kart0 driver=%d body=%d tire=%d glider=%d type=%d n=%d",
+                           which, drv, body, tire, wing, localType, n);
+        }
         if (!st.isDriverAllowed(drv)) {
             const int d = st.def_driver.load();
-            MK8AP_LOG_INFO("[kart] kart %d driver %d locked -> %d", i, drv, d);
+            MK8AP_LOG_INFO("[kart] %s kart %d driver %d locked -> %d", which, i, drv, d);
             game::wr<std::int32_t>(ki, game::kart_info::kDriverId, d);
             game::wr<std::uint8_t>(ki, game::kart_info::kDriverVariant, 0);
         }
         if (!st.isBodyAllowed(body)) {
             const int d = st.def_body.load();
-            MK8AP_LOG_INFO("[kart] kart %d body %d locked -> %d", i, body, d);
+            MK8AP_LOG_INFO("[kart] %s kart %d body %d locked -> %d", which, i, body, d);
             game::wr<std::int32_t>(ki, game::kart_info::kBodyId, d);
         }
         if (!st.isTireAllowed(tire)) {
             const int d = st.def_tire.load();
-            MK8AP_LOG_INFO("[kart] kart %d tire %d locked -> %d", i, tire, d);
+            MK8AP_LOG_INFO("[kart] %s kart %d tire %d locked -> %d", which, i, tire, d);
             game::wr<std::int32_t>(ki, game::kart_info::kTireId, d);
         }
         if (!st.isWingAllowed(wing)) {
             const int d = st.def_wing.load();
-            MK8AP_LOG_INFO("[kart] kart %d glider %d locked -> %d", i, wing, d);
+            MK8AP_LOG_INFO("[kart] %s kart %d glider %d locked -> %d", which, i, wing, d);
             game::wr<std::int32_t>(ki, game::kart_info::kGliderId, d);
         }
     }
+}
+
+// First real seed (2026-10-16): writes to GetNextRaceInfo() at SetNextCourse
+// did not change the race (PlayReport still named the menu choice), so the
+// current RaceInfo is rewritten too and both are logged to find out which
+// one the race actually reads.
+void enforceLoadouts() {
+    auto& st = ap::ApState::instance();
+    if (!st.restricting()) return;
+    enforceIn(game::getNextRaceInfo(), "next");
+    enforceIn(game::getRaceInfo(), "cur");
 }
 
 HkTrampoline<std::uint64_t, const void*> g_setNextCourse = hk::hook::trampoline(
@@ -78,9 +91,31 @@ HkTrampoline<std::uint64_t, const void*> g_setNextCourse = hk::hook::trampoline(
         return g_setNextCourse.orig(courseInfo);
     });
 
+// ui::SetRandomCPU(bool, bool, sead::SafeArray<EDriverID,12>*) runs at race
+// setup, after the player's selection has been copied into RaceInfo and
+// while the CPU combos are being decided (RoGamer97's CPU Combo Modifier
+// hooks inside it). Enforcing after it returns catches the final table even
+// when SetNextCourse is not called a second time.
+HkTrampoline<std::uint64_t, std::uint64_t, std::uint64_t, std::uint64_t, std::uint64_t> g_setRandomCpu =
+    hk::hook::trampoline([](std::uint64_t x0, std::uint64_t x1, std::uint64_t x2,
+                            std::uint64_t x3) -> std::uint64_t {
+        const std::uint64_t ret = g_setRandomCpu.orig(x0, x1, x2, x3);
+        MK8AP_LOG_INFO("[kart] SetRandomCPU(%d, %d) done; enforcing loadouts",
+                       static_cast<int>(x0 & 1), static_cast<int>(x1 & 1));
+        enforceLoadouts();
+        return ret;
+    });
+
 }  // namespace
 
 void installKartGuardHook() {
+    if (const auto off2 = sym::mainOffset("ui::SetRandomCPU")) {
+        const auto rc2 = g_setRandomCpu.installAtMainOffset(off2);
+        MK8AP_LOG_INFO("[kart] SetRandomCPU hook @+0x%llx: %s", static_cast<unsigned long long>(off2),
+                       rc2.succeeded() ? "installed" : "FAILED");
+    } else {
+        MK8AP_LOG_WARN("[kart] ui::SetRandomCPU unresolved; race-setup enforcement off");
+    }
     const auto off = sym::mainOffset("ui::SetNextCourse");
     if (!off) { MK8AP_LOG_WARN("[kart] ui::SetNextCourse unresolved; loadout guard off"); return; }
     const auto rc = g_setNextCourse.installAtMainOffset(off);

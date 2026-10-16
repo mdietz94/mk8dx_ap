@@ -65,9 +65,16 @@ HkTrampoline<u64, const void*, u64, u64, u64> g_isOpen = hk::hook::trampoline(
             MK8AP_LOG_INFO("[cup] FlagAccessor::isOpen(gp=%d) [x1=0x%llx] vanilla=%d",
                            gpId, static_cast<unsigned long long>(x1), static_cast<int>(vanilla & 1));
         }
+        // EXPERIMENT (2026-10-16): returning false here soft-locked the game
+        // when a locked cup was selected (Deluxe never has closed cups, so the
+        // UI has no path for it). Pass through and log; the button-state
+        // layer (setCup -> Locked) carries the gate alone for this test.
+        static int denials_logged = 0;
         if (gpId >= 0 && gpId < game::kCupCount &&
-            !ap::ApState::instance().isCupAllowed(gpId)) {
-            return 0;  // false
+            !ap::ApState::instance().isCupAllowed(gpId) && denials_logged < 40) {
+            ++denials_logged;
+            MK8AP_LOG_INFO("[cup] isOpen(gp=%d) would deny (passing vanilla=%d)", gpId,
+                           static_cast<int>(vanilla & 1));
         }
         return vanilla;
     });
@@ -108,6 +115,11 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
         if (state >= 0 && cupIdx >= 0 && cupIdx < game::kCupCount &&
             !ap::ApState::instance().isCupAllowed(cupIdx)) {
             const std::int32_t locked = static_cast<std::int32_t>(game::DLCState::Locked);
+            static int lock_logged = 0;
+            if (lock_logged < 40) {
+                ++lock_logged;
+                MK8AP_LOG_INFO("[cup] setCup(ecup=%d) state %d -> Locked(%d)", ecup, state, locked);
+            }
             return g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
         }
         return g_setCup.orig(self, x1, x2, x3, x4, x5);

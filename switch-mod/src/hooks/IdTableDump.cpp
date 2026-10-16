@@ -55,7 +55,10 @@ void dump(const char* kind, const char* (*text)(int), int limit) {
         ap::copyFixed(tbl.entries[tbl.count].text, s);
         ++tbl.count;
     }
-    MK8AP_LOG_INFO("[ids] %s: %zu entries", kind, tbl.count);
+    MK8AP_LOG_INFO("[ids] %s: %zu entries (0=%s 1=%s 2=%s)", kind, tbl.count,
+                   tbl.count > 0 ? tbl.entries[0].text : "-",
+                   tbl.count > 1 ? tbl.entries[1].text : "-",
+                   tbl.count > 2 ? tbl.entries[2].text : "-");
     if (tbl.count) ap::reportIdTable(tbl);
 }
 

@@ -47,8 +47,7 @@ async def test_hello_ack_state_and_dispatch():
     await send({"t": "play_report", "room": "R", "size": 3, "truncated": False, "hex": "de0000"})
     await send({"t": "course_name", "course_id": 3, "res": "tc_Course_Gu_Cake"})
     await send({"t": "id_table", "kind": "driver", "entries": [{"id": 9, "text": "Luigi"}]})
-    st2 = await recv()  # id_table triggers a state push
-    assert st2["t"] == "state" and st2["seq"] == 2
+    # part id tables are logged only (ids come from tables.py): no state push
     await send({"t": "ping", "ts_ms": 77})
     pong = await recv()
     assert pong["t"] == "pong" and pong["ts_ms"] == 77
@@ -59,7 +58,7 @@ async def test_hello_ack_state_and_dispatch():
     assert len(got_results) == 1 and got_results[0].course_id == 3
     assert len(got_reports) == 1 and got_reports[0].payload() == b"\xde\x00\x00"
     assert state.learned.course_for_id(3).name == "Sweet Sweet Canyon"
-    assert state.learned.maps["driver"].id_for("Luigi") == 9
+    assert state.learned.maps["driver"].id_for("Luigi") == 1  # runtime part tables are not learned
 
     writer.close()
     await sw.stop()

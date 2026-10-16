@@ -100,6 +100,8 @@ class LearnedIds:
             log.warning("learned ids: could not read %s (%s)", self.path, e)
             return
         for kind, m in self.maps.items():
+            if kind != "course":
+                continue  # see learn_table: only courses are learned
             m.from_json(data.get(kind, {}))
         log.info("learned ids: loaded %s", {k: len(m.learned) for k, m in self.maps.items()})
 
@@ -118,6 +120,14 @@ class LearnedIds:
 
     # ---- learning ----
     def learn_table(self, kind: str, entries: list[dict]) -> int:
+        if kind in ("driver", "body", "tire", "wing"):
+            # The mush::E*ID::text_ tables are indexed enum+1 (index 0 is
+            # "Invalid") and use short codes (k_skl, big, jgm) that do not
+            # match the PlayReport names, so matching them produced ids that
+            # were off by one (Mario -> 1). tables.py's defaults are the
+            # verified enum values; the runtime tables are logged only.
+            log.info("id_table %s: %d entries received (ids come from tables.py)", kind, len(entries))
+            return 0
         m = self.maps.get(kind)
         if m is None:
             log.warning("learned ids: unknown table kind %r", kind)

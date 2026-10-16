@@ -16,4 +16,5 @@
     { "mush::EDriverID::text_", "_ZN4mush9EDriverID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 3C 80 52 E0 03 15 AA", -0x80, 0x0 },
     { "mush::EBodyID::text_", "_ZN4mush7EBodyID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 E8 24 80 52 E0 03 15 AA", -0x80, 0x0 },
     { "mush::ETireID::text_", "_ZN4mush7ETireID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 C8 0E 80 52 E0 03 15 AA", -0x80, 0x0 },
+    { "ui::SetRandomCPU", "_ZN2ui12SetRandomCPUEbbPN4sead9SafeArrayIN4mush9EDriverIDELi12EEE", "", 0x0, 0x4fd6d0 },
     { "mush::EWingID::text_", "_ZN4mush7EWingID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA", -0x80, 0x0 },

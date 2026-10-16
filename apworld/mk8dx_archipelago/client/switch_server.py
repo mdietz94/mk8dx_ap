@@ -209,6 +209,8 @@ class SwitchServer:
         elif isinstance(msg, IdTableMsg):
             n = self.state.learned.learn_table(msg.kind, msg.entries)
             log.info("id_table %s: %d entries (%d new)", msg.kind, len(msg.entries), n)
+            log.info("id_table %s entries: %s", msg.kind,
+                     ", ".join(f"{e.get('id')}={e.get('text')}" for e in msg.entries))
             if n:
                 await self.push_state()  # masks depend on the learned ids
         elif isinstance(msg, LogMsg):

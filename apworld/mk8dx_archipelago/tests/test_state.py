@@ -60,16 +60,18 @@ def test_slot_data_shuffle_off_allows_everything():
         assert (m.drivers[e.default_id // 32] >> (e.default_id % 32)) & 1
 
 
-def test_learned_ids_override_defaults(tmp_path: Path):
+def test_runtime_part_tables_do_not_override_default_ids(tmp_path: Path):
     L = LearnedIds(tmp_path / "ids.json")
-    # Game says Luigi is id 40 (not the default 1).
-    assert L.learn_table("driver", [{"id": 40, "text": "Luigi"}, {"id": 0, "text": "Mario"}]) == 2
+    # The game's text_ tables are shifted (index 0 = Invalid) and must not
+    # move Luigi off his verified enum id of 1.
+    assert L.learn_table("driver", [{"id": 40, "text": "Luigi"}, {"id": 0, "text": "Invalid"}]) == 0
     st = BridgeState(L)
+    st.ap_conn = "ready"
     st.add_item("Character: Luigi")
     m = st.build_state()
-    assert (m.drivers[40 // 32] >> (40 % 32)) & 1
-    # persisted and reloaded
+    assert (m.drivers[1 // 32] >> (1 % 32)) & 1
+    assert not (m.drivers[40 // 32] >> (40 % 32)) & 1
+    # courses are still learned and persisted
     L2 = LearnedIds(tmp_path / "ids.json")
-    assert L2.maps["driver"].id_for("luigi") == 40
     assert L2.learn_course(3, "tc_Course_Gu_Cake")
     assert L2.course_for_id(3).name == "Sweet Sweet Canyon"

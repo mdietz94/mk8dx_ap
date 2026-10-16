@@ -556,6 +556,14 @@
     "count": 1
   },
   {
+    "name": "Character: Link (Champion's Tunic)",
+    "useful": true,
+    "category": [
+      "Characters"
+    ],
+    "count": 1
+  },
+  {
     "name": "Character: Birdo",
     "useful": true,
     "category": [
@@ -620,6 +628,15 @@
   },
   {
     "name": "Character: Pauline",
+    "useful": true,
+    "category": [
+      "Characters",
+      "Booster Course Pass"
+    ],
+    "count": 1
+  },
+  {
+    "name": "Character: Mii (Booster Course Pass)",
     "useful": true,
     "category": [
       "Characters",

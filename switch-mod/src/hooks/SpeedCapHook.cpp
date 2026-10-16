@@ -58,6 +58,18 @@ HkTrampoline<std::uint64_t, void*> g_onCalc = hk::hook::trampoline(
         auto& st = ap::ApState::instance();
         const int pct = st.speed_pct.load(std::memory_order_relaxed);
         if (st.restricting() && pct < 100) {
+            static bool logged_live = false;
+            if (!logged_live) {
+                logged_live = true;
+                void* ri = game::getRaceInfo();
+                void* ki = ri ? game::kartInfoAt(ri, game::localKartIndex()) : nullptr;
+                MK8AP_LOG_INFO("[speed] clamping to %d%%; live RaceInfo kart0 driver=%d body=%d tire=%d glider=%d",
+                               pct,
+                               ki ? game::rd<std::int32_t>(ki, game::kart_info::kDriverId) : -1,
+                               ki ? game::rd<std::int32_t>(ki, game::kart_info::kBodyId) : -1,
+                               ki ? game::rd<std::int32_t>(ki, game::kart_info::kTireId) : -1,
+                               ki ? game::rd<std::int32_t>(ki, game::kart_info::kGliderId) : -1);
+            }
             for (int i = 0; i < game::race_info::kMaxKarts; ++i) clampKart(i, pct);
         } else if (!g_logged_raw) {
             clampKart(game::localKartIndex(), 100);  // log raw values once anyway

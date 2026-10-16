@@ -130,7 +130,9 @@ COURSE_BY_INTERNAL: dict[str, Course] = {c.internal: c for c in COURSES if c.int
 # ---------------------------------------------------------------------------
 # Drivers. `internal` = mush::EDriverID::text_ / romfs Driver/<name>.szs stem.
 # `default_id` = best-guess enum id (PTDV order on Wii U + Deluxe additions +
-# BCP DrvChr01..08 appended); overridden by the runtime id_table.
+# BCP DrvChr01..08 appended). Numbering verified against RoGamer97's 4.0.0
+# CPU Combo Modifier enum lists (2026-10-16); the runtime text_ tables are
+# shifted by one (index 0 = Invalid) and are NOT used for ids any more.
 # ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
@@ -160,12 +162,16 @@ DRIVERS: list[Entry] = _entries([
     # Deluxe additions
     ("Gold Mario", "GoldMario"), ("Dry Bones", "Karon"), ("Bowser Jr.", "KoopaJr"),
     ("King Boo", "KingTeresa"), ("Inkling Girl", "InklingGirl"), ("Inkling Boy", "InklingBoy"),
+    # EDriverID 43 is Link's Champion's Tunic form: a separate driver id in the
+    # game (RoGamer97 4.0.0 CPU Combo Modifier: DRIVER_BOTW_LINK = 0x2B).
+    ("Link (Champion's Tunic)", "LinkBotW"),
 ]) + _entries([
     # Booster Course Pass (DrvChr01..08 per the character layout tool's ui map)
     ("Birdo", "DrvChr01"), ("Kamek", "DrvChr02"), ("Petey Piranha", "DrvChr03"),
     ("Wiggler", "DrvChr04"), ("Diddy Kong", "DrvChr05"), ("Funky Kong", "DrvChr06"),
     ("Peachette", "DrvChr07"), ("Pauline", "DrvChr08"),
-], start=43, bcp=True)
+    ("Mii (Booster Course Pass)", "DrvMii"),  # EDriverID 52 (DRIVER_MII_BCP = 0x34)
+], start=44, bcp=True)
 
 BODIES: list[Entry] = _entries([
     ("Standard Kart", "K_Std"), ("Pipe Frame", "K_Skeleton"), ("Mach 8", "K_Sport"),
