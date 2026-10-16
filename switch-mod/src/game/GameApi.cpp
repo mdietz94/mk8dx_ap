@@ -14,6 +14,7 @@ using TextFn = const char* (*)(int);
 
 VoidPtrFn g_getRaceInfo = nullptr;
 VoidPtrFn g_getNextRaceInfo = nullptr;
+VoidPtrFn g_getPlayerManager = nullptr;
 VoidPtrFn g_getCurrentGameScene = nullptr;
 IntFn     g_getMyKartIndex = nullptr;
 VoidPtrFn g_getCurrentUserSaveData = nullptr;
@@ -30,6 +31,7 @@ void bindGameApi() {
     g_bound = true;
     g_getRaceInfo = sym::fn<VoidPtrFn>("gear::GetRaceInfo");
     g_getNextRaceInfo = sym::fn<VoidPtrFn>("gear::GetNextRaceInfo");
+    g_getPlayerManager = sym::fn<VoidPtrFn>("gear::GetPlayerManager");
     g_getCurrentGameScene = sym::fn<VoidPtrFn>("gear::FrameworkUtil::getCurrentGameScene");
     g_getMyKartIndex = sym::fn<IntFn>("gear::NetworkUtil::getMyKartIndex");
     g_getCurrentUserSaveData = sym::fn<VoidPtrFn>("gear::GetCurrentUserSaveData");
@@ -48,6 +50,7 @@ void bindGameApi() {
 
 void* getRaceInfo() { return g_getRaceInfo ? g_getRaceInfo() : nullptr; }
 void* getNextRaceInfo() { return g_getNextRaceInfo ? g_getNextRaceInfo() : nullptr; }
+void* getPlayerManager() { return g_getPlayerManager ? g_getPlayerManager() : nullptr; }
 void* getCurrentGameScene() { return g_getCurrentGameScene ? g_getCurrentGameScene() : nullptr; }
 int getMyKartIndex() { return g_getMyKartIndex ? g_getMyKartIndex() : -1; }
 void* getCurrentUserSaveData() { return g_getCurrentUserSaveData ? g_getCurrentUserSaveData() : nullptr; }

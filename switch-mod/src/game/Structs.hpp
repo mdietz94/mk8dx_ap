@@ -95,6 +95,19 @@ inline constexpr std::size_t kCheckerRank = 0x40;
 }  // namespace scene
 
 // ---- object::KartVehicle (MK8DX-Headers object/Kart/KartVehicle.hpp) ------
+// gear::PlayerManager (MK8DX-Headers): sead::PtrArray<Player> at 0x50
+// {s32 num; s32 max; Player** ptrs}, local player count at 0x178.
+// gear::Player: RaceKartInfo mKartInfo at 0x210 (same layout as kart_info).
+namespace player_manager {
+inline constexpr std::size_t kPlayersNum  = 0x50;
+inline constexpr std::size_t kPlayersPtrs = 0x58;
+inline constexpr std::size_t kLocalPlayerAmount = 0x178;
+inline constexpr int kMaxPlayers = 12;
+}  // namespace player_manager
+namespace player {
+inline constexpr std::size_t kKartInfo = 0x210;
+}  // namespace player
+
 namespace vehicle {
 inline constexpr std::size_t kPlayerId = 0xA8;
 inline constexpr std::size_t kBodyId   = 0xB0;

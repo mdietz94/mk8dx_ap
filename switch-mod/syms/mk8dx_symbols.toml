@@ -142,6 +142,15 @@ pattern = "E0 03 1C 32 88 82 41 B9 68 C2 00 B9"
 offset = "-0x3C"
 
 [[symbols]]
+# gear::PlayerManager holds one gear::Player per (local/network) player; each
+# Player carries the RaceKartInfo the UI writes the human selection into
+# (Player+0x210, per MK8DX-Headers). Pattern from fishguy6564's symbols.toml.
+name = "gear::GetPlayerManager"
+mangled = "_ZN4gear16GetPlayerManagerEv"
+pattern = "00 00 44 F9 FD 7B C1 A8 C0 03 5F D6 FD 7B BF A9 FD 03 00 91"
+offset = "-0x10"
+
+[[symbols]]
 name = "mush::EWingID::text_"
 mangled = "_ZN4mush7EWingID5text_Ei"
 pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA"

@@ -15,6 +15,7 @@ void bindGameApi();
 
 void* getRaceInfo();       // gear::GetRaceInfo()
 void* getNextRaceInfo();   // gear::GetNextRaceInfo()
+void* getPlayerManager();  // gear::GetPlayerManager() (nullptr if unresolved)
 void* getCurrentGameScene();
 int   getMyKartIndex();    // -1 offline -> callers clamp to 0
 void* getCurrentUserSaveData();

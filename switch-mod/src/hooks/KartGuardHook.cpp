@@ -72,9 +72,78 @@ void enforceIn(void* ri, const char* which) {
 // did not change the race (PlayReport still named the menu choice), so the
 // current RaceInfo is rewritten too and both are logged to find out which
 // one the race actually reads.
+// Rewrite one RaceKartInfo in place (returns true if anything changed).
+bool enforceKartInfo(void* ki, const char* which, int i) {
+    auto& st = ap::ApState::instance();
+    bool changed = false;
+    const int drv = game::rd<std::int32_t>(ki, game::kart_info::kDriverId);
+    const int body = game::rd<std::int32_t>(ki, game::kart_info::kBodyId);
+    const int tire = game::rd<std::int32_t>(ki, game::kart_info::kTireId);
+    const int wing = game::rd<std::int32_t>(ki, game::kart_info::kGliderId);
+    if (!st.isDriverAllowed(drv)) {
+        const int d = st.def_driver.load();
+        MK8AP_LOG_INFO("[kart] %s %d driver %d locked -> %d", which, i, drv, d);
+        game::wr<std::int32_t>(ki, game::kart_info::kDriverId, d);
+        game::wr<std::uint8_t>(ki, game::kart_info::kDriverVariant, 0);
+        changed = true;
+    }
+    if (!st.isBodyAllowed(body)) {
+        const int d = st.def_body.load();
+        MK8AP_LOG_INFO("[kart] %s %d body %d locked -> %d", which, i, body, d);
+        game::wr<std::int32_t>(ki, game::kart_info::kBodyId, d);
+        changed = true;
+    }
+    if (!st.isTireAllowed(tire)) {
+        const int d = st.def_tire.load();
+        MK8AP_LOG_INFO("[kart] %s %d tire %d locked -> %d", which, i, tire, d);
+        game::wr<std::int32_t>(ki, game::kart_info::kTireId, d);
+        changed = true;
+    }
+    if (!st.isWingAllowed(wing)) {
+        const int d = st.def_wing.load();
+        MK8AP_LOG_INFO("[kart] %s %d glider %d locked -> %d", which, i, wing, d);
+        game::wr<std::int32_t>(ki, game::kart_info::kGliderId, d);
+        changed = true;
+    }
+    return changed;
+}
+
+// The human selection lives in gear::Player::mKartInfo (PlayerManager ->
+// mPlayers[i] + 0x210); the UI copies it into RaceInfo when the race is
+// assembled, and the race kart is built from it. Race 4 (2026-10-16) showed
+// both RaceInfo copies rewritten before the kart director ran and the race
+// STILL using the menu pick, so the Player object is the source of truth.
+void enforcePlayers() {
+    void* pm = game::getPlayerManager();
+    if (!pm) { MK8AP_LOG_WARN("[kart] GetPlayerManager() null; cannot enforce players"); return; }
+    const int n = game::rd<std::int32_t>(pm, game::player_manager::kPlayersNum);
+    const int local = static_cast<int>(game::rd<std::uint32_t>(pm, game::player_manager::kLocalPlayerAmount));
+    void** ptrs = game::rd<void**>(pm, game::player_manager::kPlayersPtrs);
+    const int count = (n > 0 && n <= game::player_manager::kMaxPlayers) ? n : 0;
+    static bool logged = false;
+    if (!logged) {
+        logged = true;
+        MK8AP_LOG_INFO("[kart] PlayerManager %p: players=%d local=%d ptrs=%p", pm, n, local, ptrs);
+    }
+    if (!ptrs) return;
+    const int limit = (local > 0 && local <= count) ? local : count;
+    for (int i = 0; i < limit; ++i) {
+        void* player = ptrs[i];
+        if (!player) continue;
+        void* ki = static_cast<std::uint8_t*>(player) + game::player::kKartInfo;
+        MK8AP_LOG_INFO("[kart] player %d kartinfo driver=%d body=%d tire=%d glider=%d", i,
+                       game::rd<std::int32_t>(ki, game::kart_info::kDriverId),
+                       game::rd<std::int32_t>(ki, game::kart_info::kBodyId),
+                       game::rd<std::int32_t>(ki, game::kart_info::kTireId),
+                       game::rd<std::int32_t>(ki, game::kart_info::kGliderId));
+        enforceKartInfo(ki, "player", i);
+    }
+}
+
 void enforceLoadouts() {
     auto& st = ap::ApState::instance();
     if (!st.restricting()) return;
+    enforcePlayers();
     enforceIn(game::getNextRaceInfo(), "next");
     enforceIn(game::getRaceInfo(), "cur");
 }
