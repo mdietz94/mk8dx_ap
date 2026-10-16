@@ -118,6 +118,8 @@ class MK8DXContext(CommonContext):
 
     async def disconnect(self, allow_autoreconnect: bool = False):
         self.state.ap_conn = "disconnected"
+        # Hand the Switch back to vanilla while no slot is connected.
+        await self.push_state()
         await super().disconnect(allow_autoreconnect)
 
     def _item_name(self, item_id: int) -> str | None:

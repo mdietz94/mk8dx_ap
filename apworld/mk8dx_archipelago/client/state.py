@@ -118,10 +118,16 @@ class BridgeState:
                     return L.id_for_entry(kind, e)
             return 0
 
+        # Restrictions apply only while an AP slot is connected. Before that
+        # (or after a disconnect) the Switch must run vanilla: with no items
+        # received every mask would otherwise collapse to the starting
+        # unlocks (one cup, 60% speed) -- observed on the first 4.0.0 boot
+        # with the client up but no server.
+        enabled = self.enabled and self.ap_conn == "ready"
         self.state_seq += 1
         return StateMsg(
             seq=self.state_seq,
-            enabled=self.enabled,
+            enabled=enabled,
             cups=cups & 0xFFFFFFFF,
             drivers=[m & 0xFFFFFFFF for m in drivers],
             bodies=[m & 0xFFFFFFFF for m in bodies],

@@ -5,8 +5,19 @@ from client.learned import LearnedIds
 from client.state import BridgeState
 
 
+def test_state_is_vanilla_until_ap_slot_connected():
+    st = BridgeState()
+    m = st.build_state()
+    assert not m.enabled and m.seq == 1
+    st.ap_conn = "ready"
+    assert st.build_state().enabled
+    st.ap_conn = "disconnected"
+    assert not st.build_state().enabled
+
+
 def test_default_state_is_starting_loadout():
     st = BridgeState()
+    st.ap_conn = "ready"
     m = st.build_state()
     assert m.enabled and m.seq == 1
     assert m.cups == 1  # Mushroom Cup only
