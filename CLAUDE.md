@@ -73,11 +73,25 @@ by the MK8DX Manual world and the MKWii apworld.
   MemoryResourceAllocationPolicy, IPrepoService>::_nn_sf_sync_SaveReport[WithUser]`
   with no `ProcessModifierImpl` suffix. `SdkSymbolDump.cpp` logs matching
   dynsym names at boot; use it before guessing any other SDK mangled name.
+- **Loadout source of truth is `gear::Player::mKartInfo`** (`Player+0x210` via
+  `GetPlayerManager()`), not `RaceInfo`: the UI copies Player -> RaceInfo when the
+  race is assembled and the karts are built from that copy. Rewriting either
+  RaceInfo at any hook point changed nothing in the race; rewriting the Player's
+  kart info works (KartGuardHook::enforcePlayers). Keep the RaceInfo rewrites as
+  belt-and-braces only.
+- **Cup gate lives in `Page_CourseBase::isDLC`**, a static returning a class with a
+  user-declared destructor -> hidden x8 sret. The hook needs the asm stubs in
+  CupGateHook.cpp; a plain lambda cannot see x8. Do not gate via
+  `FlagAccessor::isOpen` (soft-lock) or via `setCup`'s state (display only).
+  `Locked(4)` = padlock + cursor skips the cup; that is the intended UX.
+- **Engine class is deliberately not restricted** (user decision 2026-10-16): the
+  speed restriction is the top-speed clamp only. Do not add an engine-class gate.
 - **`gear::DLCManager::getCupStatus` is unresolved on 4.0.0** (relaxed
   pattern not unique). Cup gating runs on `FlagAccessor::isOpen` +
   `Control_CupButton::setCup` only.
 - **Ryujinx logs every PlayReport as JSON** (`ServicePrepo ProcessPlayReport`
-  in `Desktopyujinx-1.3.3\Logs`). Use it to cross-check the mod's
+  in `Desktop
+yujinx-1.3.3\Logs`). Use it to cross-check the mod's
   MessagePack capture; real hardware only has the mod's capture.
 
 ## Layout

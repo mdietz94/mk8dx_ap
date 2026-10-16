@@ -79,6 +79,27 @@ First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
   is used), ranks are 0-based, and the `match` PlayReport decoded to
   `Course=Gu_FirstCircuit Rank=1 Rule=GP Engine=50cc`. Course id 27 was
   learned as Mario Kart Stadium from the hook + report pairing.
+* Added after the first live-seed session (2026-10-16), all pattern hits on 4.0.0:
+  `ui::SetRandomCPU` (published `0x4FD6D0`), `object::KartDirector::prepareBeforeStructure`
+  (`+0x13D588`), `gear::GetPlayerManager` (`+0x8BD33C`), `ui::Page_CourseBase::isDLC`
+  (`+0x494CD8`). 20/21 resolve; only `DLCManager::getCupStatus` is still unresolved.
+* **Loadout enforcement**: rewriting `GetNextRaceInfo()`/`GetRaceInfo()` kart infos at
+  `SetNextCourse`, after `SetRandomCPU`, or even pre-orig in
+  `KartDirector::prepareBeforeStructure` never changed the race (PlayReport kept the
+  menu pick). The human selection lives in `gear::Player::mKartInfo` (`Player+0x210`,
+  `PlayerManager+0x50` PtrArray, 16 slots, `+0x178` local count); rewriting it there
+  works. RaceInfo is downstream of it.
+* **Cup gate**: `FlagAccessor::isOpen` returning false soft-locks cup select (Deluxe has
+  no closed-cup UI path). `Control_CupButton::setCup`'s DLCState is display only, and
+  `Control_CupButton+0x3CB` is 1 for every cup (not a lock flag). The working gate is
+  `static DLCState Page_CourseBase::isDLC(ECup)`: DLCState has a user-declared
+  destructor, so it is returned through the hidden x8 pointer and ECup is passed by
+  reference; the hook entry is an asm stub (`mk8ap_isDlcEntry`) that forwards x8.
+  Returning `Locked(4)` (the pre-release Booster Course Pass state) draws a padlock and
+  makes the cup unselectable: the cursor skips it.
+* **Speed**: by user decision (2026-10-16) the engine-class picker is NOT gated; the
+  restriction is the top-speed clamp scaled by Progressive Speed. `engine_max` in the
+  state message stays informational.
 * Ryujinx itself prints every PlayReport as JSON (`ServicePrepo
   ProcessPlayReport`) in its log, which doubles as a cross-check for the
   mod's MessagePack capture during emulator testing.
