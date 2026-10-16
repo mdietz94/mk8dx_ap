@@ -59,6 +59,27 @@ by the MK8DX Manual world and the MKWii apworld.
   speed offsets (SpeedCapHook logs raw floats and disables itself if they
   look wrong), the `RaceKartInfo` rewrite at `SetNextCourse` taking effect.
 
+- **Game "enums" travel by const reference (4.0.0, verified 2026-10-16).**
+  `mush::E*ID`, `ui::ECup`, `ui::DLCState` are class wrappers; hooked
+  functions get a pointer to a 32-bit value in x1/x2. Never declare a
+  pattern-located hook's integer arguments as `int`: forward x1..x5 as
+  `u64`, dereference when the register looks like a pointer, and override
+  by pointing `orig()` at a local copy. Declaring them `int` truncated the
+  pointers and crashed the Prepare Thread at boot (see `CupGateHook.cpp`).
+- **`ui::ECup` is 0-based and equals `EGrandPrixID`** (Mushroom = 0 ...
+  Spiny = 23). The header's "Mushroom = 1" reading is wrong for 4.0.0.
+- **SDK 4.4.0 prepo proxy names.** MK8DX's nnSdk exports
+  `CmifProxyImpl<IPrepoService, CmifDomainProxy<...MessageType 4...>,
+  MemoryResourceAllocationPolicy, IPrepoService>::_nn_sf_sync_SaveReport[WithUser]`
+  with no `ProcessModifierImpl` suffix. `SdkSymbolDump.cpp` logs matching
+  dynsym names at boot; use it before guessing any other SDK mangled name.
+- **`gear::DLCManager::getCupStatus` is unresolved on 4.0.0** (relaxed
+  pattern not unique). Cup gating runs on `FlagAccessor::isOpen` +
+  `Control_CupButton::setCup` only.
+- **Ryujinx logs every PlayReport as JSON** (`ServicePrepo ProcessPlayReport`
+  in `Desktopyujinx-1.3.3\Logs`). Use it to cross-check the mod's
+  MessagePack capture; real hardware only has the mod's capture.
+
 ## Layout
 
 ```

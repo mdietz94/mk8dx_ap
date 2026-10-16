@@ -65,9 +65,11 @@ enum class ItemSlot : std::int32_t {
     Count = 23,
 };
 
-// ui::ECup (course-select cup buttons). Invalid = 0, Mushroom = 1 ... Spiny = 24.
-// AP cup index = ECup - 1 (0..23). EGrandPrixID is assumed to share that
-// 0-based order; CupGateHook logs both so the assumption can be checked.
+// ui::ECup (course-select cup buttons). CONFIRMED on 4.0.0 (boot log
+// 2026-10-16): 0-based, Mushroom = 0 ... Spiny = 23, and identical to
+// mush::EGrandPrixID (isOpen(gp=N) is always paired with setCup(ecup=N)).
+// AP cup index == ECup == EGrandPrixID. Note these "enums" are class
+// wrappers passed BY CONST REFERENCE in the game ABI (see CupGateHook.cpp).
 inline constexpr int kCupCount = 24;
 
 // ui::DLCState (Control_CupButton::setCup second argument)

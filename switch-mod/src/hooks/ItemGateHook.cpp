@@ -34,20 +34,40 @@ bool ownerIsLocal(void* owner) {
     return game::rd<bool>(vehicle, game::vehicle::kIsMaster);
 }
 
-HkTrampoline<std::uint64_t, void*, int, int, bool, bool> g_startSlot = hk::hook::trampoline(
-    [](void* owner, int slot, int item, bool a, bool b) -> std::uint64_t {
+// ABI (4.0.0, 2026-10-16): gear::EItemSlot is a class wrapper passed BY CONST
+// REFERENCE, so x2 is a pointer to the 32-bit item id on the caller's stack
+// (declaring it `int` truncated the pointer and crashed MainThread at the
+// first item roll). x1 (slot) and the two bools are forwarded verbatim; to
+// substitute the item we point orig() at a local copy.
+using u64 = std::uint64_t;
+
+int derefEnum(u64 reg) {
+    if (reg < 0x10000) return -1;
+    return *reinterpret_cast<const std::int32_t*>(reg);
+}
+
+HkTrampoline<u64, void*, u64, u64, u64, u64> g_startSlot = hk::hook::trampoline(
+    [](void* owner, u64 x1, u64 x2, u64 x3, u64 x4) -> u64 {
+        static bool logged_sig = false;
+        const int item = derefEnum(x2);
+        if (!logged_sig) {
+            logged_sig = true;
+            MK8AP_LOG_INFO("[item] startSlot first call: x1=0x%llx x2=0x%llx (item=%d) x3=0x%llx x4=0x%llx",
+                           static_cast<unsigned long long>(x1), static_cast<unsigned long long>(x2), item,
+                           static_cast<unsigned long long>(x3), static_cast<unsigned long long>(x4));
+        }
         auto& st = ap::ApState::instance();
         if (st.restricting() && item >= 0 && !st.isItemAllowed(item)) {
             const bool local = ownerIsLocal(owner);
             if (local || st.cpu_items.load(std::memory_order_relaxed)) {
-                int sub = static_cast<int>(game::ItemSlot::Coin);
-                if (!st.isItemAllowed(sub)) sub = static_cast<int>(game::ItemSlot::None);
+                std::int32_t sub = static_cast<std::int32_t>(game::ItemSlot::Coin);
+                if (!st.isItemAllowed(sub)) sub = static_cast<std::int32_t>(game::ItemSlot::None);
                 MK8AP_LOG_INFO("[item] %s kart rolled locked item %d -> %d",
                                local ? "local" : "cpu", item, sub);
-                item = sub;
+                return g_startSlot.orig(owner, x1, reinterpret_cast<u64>(&sub), x3, x4);
             }
         }
-        return g_startSlot.orig(owner, slot, item, a, b);
+        return g_startSlot.orig(owner, x1, x2, x3, x4);
     });
 
 }  // namespace

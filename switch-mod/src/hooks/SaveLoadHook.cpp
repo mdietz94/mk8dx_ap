@@ -18,10 +18,13 @@ namespace mk8ap::hooks {
 
 namespace {
 
-HkTrampoline<std::uint64_t, void*, int> g_load = hk::hook::trampoline(
-    [](void* self, int slot) -> std::uint64_t {
-        MK8AP_LOG_INFO("[save] SaveDataFile::load(this=%p, %d)", self, slot);
-        const std::uint64_t ret = g_load.orig(self, slot);
+// x1..x3 forwarded as u64 (never truncate a possible by-reference arg).
+HkTrampoline<std::uint64_t, void*, std::uint64_t, std::uint64_t, std::uint64_t> g_load =
+    hk::hook::trampoline([](void* self, std::uint64_t x1, std::uint64_t x2,
+                            std::uint64_t x3) -> std::uint64_t {
+        MK8AP_LOG_INFO("[save] SaveDataFile::load(this=%p, x1=0x%llx)", self,
+                       static_cast<unsigned long long>(x1));
+        const std::uint64_t ret = g_load.orig(self, x1, x2, x3);
         startNetworkingOnce("gear::SaveDataFile::load");
         return ret;
     });

@@ -40,11 +40,39 @@ name through nnrtld (`HkTrampoline::installAtSym`,
 | `gear::NetworkUtil::getMyKartIndex` | address `0x862820` |
 | `ui::RaceWindow::onFakeGoal` | address `0x550168` (Ro hooks `+0xD8` at `0x550240`) |
 | `gear::ItemOwner::startSlot` | address `0x4336C` |
-| `gear::GetNextRaceInfo`, `gear::FlagAccessor::isOpen`, `gear::DLCManager::getCupStatus`, `ui::SetNextCourse`, `ui::Control_CupButton::setCup`, `ui::Control_RaceLapCoin::onCalc_`, `gear::SaveDataFile::load`, `gear::GetCurrentUserSaveData`, `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern (unverified on 4.0.0 until first boot) |
+| `gear::GetNextRaceInfo` | pattern, exact hit `+0x87FCE8` (verified 2026-10-16) |
+| `gear::FlagAccessor::isOpen` | pattern, exact hit `+0x876370`; fires per cup on the title-screen cup grid |
+| `gear::DLCManager::getCupStatus` | pattern **UNRESOLVED** on 4.0.0 (no exact hit, relaxed form not unique). Layer 2 of the cup gate is skipped; layers 1 and 3 cover it |
+| `ui::SetNextCourse` | pattern, RELAXED hit `+0x41FCF8` (the `#0x1744 -> #0x1A44` member move, as predicted) |
+| `ui::Control_CupButton::setCup` | pattern, exact hit `+0x43B9FC` |
+| `ui::Control_RaceLapCoin::onCalc_` | pattern, exact hit `+0x512C84` |
+| `gear::SaveDataFile::load` | pattern, exact hit `+0x8EB2D8`; fires twice at boot |
+| `gear::GetCurrentUserSaveData` | pattern, exact hit `+0x8BD538` |
+| `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern, exact hits `+0xB4FF0 / +0xB5384 / +0x16B86C / +0x13317C`; tables enumerate 54 / 42 / 23 / 16 entries |
 
-`ui::SetNextCourse` is expected to need the relaxed pass: its pattern
-contains `LDRSW X9,[X8,#0x1744]` and Ro's 4.0.0 port shows that member
-moved.
+First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
+`2C336A9BCF79C3040CE506CDD391B578` matched, 16/17 resolved.
+
+### Calling-convention findings from that boot
+
+* `mush::E*ID`, `ui::ECup` and `ui::DLCState` are class wrappers and are
+  passed **by const reference**: the hooked functions receive a pointer to
+  a 32-bit value on the caller's stack in x1/x2. Declaring those arguments
+  as `int` truncated the pointers inside `orig()` and crashed the Prepare
+  Thread at boot. Every pattern-located hook now forwards x1..x5 as `u64`
+  and dereferences only when the register looks like a pointer.
+* `ui::ECup` is **0-based** (Mushroom = 0 ... Spiny = 23) and equal to
+  `mush::EGrandPrixID`: the cup grid calls `isOpen(gp=N)` then
+  `setCup(ecup=N)` for each cup. BCP cups the save does not own arrive as
+  `DLCState` 2 (NotBuy).
+* The nn::prepo IPC proxy symbols on MK8DX's NintendoSDK 4.4.0 are
+  `CmifProxyImpl<IPrepoService, CmifDomainProxy<...MessageType 4...>,
+  MemoryResourceAllocationPolicy, IPrepoService>` with no
+  `ProcessModifierImpl` suffix (SDK 15+ names differ). `SdkSymbolDump.cpp`
+  logs the exact mangled names at boot; both SaveReport hooks install.
+* Ryujinx itself prints every PlayReport as JSON (`ServicePrepo
+  ProcessPlayReport`) in its log, which doubles as a cross-check for the
+  mod's MessagePack capture during emulator testing.
 
 ## What changed in 4.0.0 (from Ro's port)
 

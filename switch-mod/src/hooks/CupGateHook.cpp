@@ -2,27 +2,22 @@
 //
 // Three layers, mirroring the "catch it upstream of the visible state
 // change" rule from smo_archipelago M7:
-//   1. gear::FlagAccessor::isOpen(EGrandPrixID)     -> save-flag query
-//   2. gear::DLCManager::getCupStatus(EGrandPrixID)  -> entitlement query
-//   3. ui::Control_CupButton::setCup(ECup, DLCState) -> what the button draws
+//   1. gear::FlagAccessor::isOpen(const EGrandPrixID&)      -> save-flag query
+//   2. gear::DLCManager::getCupStatus(const EGrandPrixID&)  -> entitlement query
+//   3. ui::Control_CupButton::setCup(const ECup&, const DLCState&) -> button state
 //
-// SIGNATURE SAFETY (4.0.0 first-boot lesson, 2026-10-16): the pattern-located
-// functions were declared with `int` arguments taken from the upstream
-// mangled names. On 4.0.0 the function the setCup pattern lands on receives
-// POINTERS in x1/x2 (its second instruction is `ldr w8, [x20]` with
-// x20 = x1); declaring them `int` truncated the pointers to 32 bits on the
-// way into orig() and faulted on the "Prepare Thread" during boot.
+// CALLING CONVENTION (confirmed on 4.0.0, 2026-10-16): the mush::E*ID /
+// ui::ECup / ui::DLCState "enums" are class wrappers (they carry static
+// text_() members), so they travel BY CONST REFERENCE: x1/x2 are pointers to
+// a 32-bit value on the caller's stack, not the value itself. The first
+// build declared them `int`, truncated the pointers on the way into orig()
+// and faulted on the Prepare Thread at boot. Every hook here now forwards
+// the registers as u64 and dereferences them only when they look like
+// pointers; to override an argument it points orig() at a local copy.
 //
-// Rule now: every pattern-resolved hook takes its integer registers as
-// u64 and forwards them UNCHANGED. The value is interpreted as an enum only
-// when it is plausibly one (small non-negative), and the raw registers are
-// logged once per distinct low bits so the boot log can confirm the real
-// signature before any gating is trusted.
-//
-// EGrandPrixID vs ECup: the public headers leave EGrandPrixID empty. We
-// ASSUME EGrandPrixID == ECup - 1 (Mushroom = 0 ... Spiny = 23) and log
-// every (id -> vanilla answer) pair the first time it is seen so the
-// assumption can be checked against the boot log before trusting it.
+// EGrandPrixID vs ECup: CONFIRMED on 4.0.0 (2026-10-16 boot log) that the
+// two are the same 0-based index (Mushroom = 0 ... Spiny = 23): the title
+// screen's cup grid calls isOpen(gp=N) immediately followed by setCup(ecup=N).
 
 #include "Hooks.hpp"
 
@@ -47,65 +42,74 @@ std::atomic<std::uint64_t> g_logged_cup{0};
 std::atomic<std::uint64_t> g_logged_status{0};
 
 // Returns true the first time `slot` (0..63) is seen.
-bool firstTime(std::atomic<std::uint64_t>& seen, unsigned slot) {
+bool firstTime(std::atomic<std::uint64_t>& seen, int slot) {
+    if (slot < 0) slot = 63;
     const std::uint64_t bitv = 1ULL << (slot & 63);
     return (seen.fetch_or(bitv) & bitv) == 0;
 }
 
-// A register value that is plausibly a small enum rather than a pointer.
-bool looksLikeEnum(u64 v) { return v < 0x100; }
+// Read the 32-bit enum value a by-reference argument points at. Returns
+// -1 when the register does not look like a pointer (so callers never
+// dereference a small immediate by mistake).
+int derefEnum(u64 reg) {
+    if (reg < 0x10000) return -1;
+    return *reinterpret_cast<const std::int32_t*>(reg);
+}
 
-// --- 1. gear::FlagAccessor::isOpen(this, EGrandPrixID) const -> bool -----
-// Pattern-resolved. x1..x3 forwarded as-is; only gates when x1 is a small int.
+// --- 1. gear::FlagAccessor::isOpen(this, const EGrandPrixID&) const -> bool
 HkTrampoline<u64, const void*, u64, u64, u64> g_isOpen = hk::hook::trampoline(
     [](const void* self, u64 x1, u64 x2, u64 x3) -> u64 {
         const u64 vanilla = g_isOpen.orig(self, x1, x2, x3);
-        if (firstTime(g_logged_gp, static_cast<unsigned>(x1 & 0x3f))) {
-            MK8AP_LOG_INFO("[cup] FlagAccessor::isOpen x1=0x%llx x2=0x%llx x3=0x%llx -> 0x%llx",
-                           static_cast<unsigned long long>(x1), static_cast<unsigned long long>(x2),
-                           static_cast<unsigned long long>(x3), static_cast<unsigned long long>(vanilla));
+        const int gpId = derefEnum(x1);
+        if (firstTime(g_logged_gp, gpId)) {
+            MK8AP_LOG_INFO("[cup] FlagAccessor::isOpen(gp=%d) [x1=0x%llx] vanilla=%d",
+                           gpId, static_cast<unsigned long long>(x1), static_cast<int>(vanilla & 1));
         }
-        if (looksLikeEnum(x1)) {
-            const int gpId = static_cast<int>(x1);
-            if (!ap::ApState::instance().isCupAllowed(gpId)) return 0;  // false
+        if (gpId >= 0 && gpId < game::kCupCount &&
+            !ap::ApState::instance().isCupAllowed(gpId)) {
+            return 0;  // false
         }
         return vanilla;
     });
 
-// --- 2. gear::DLCManager::getCupStatus(this, EGrandPrixID) -> DLCStatus --
+// --- 2. gear::DLCManager::getCupStatus(this, const EGrandPrixID&) -> DLCStatus
 HkTrampoline<u64, void*, u64, u64, u64> g_getCupStatus = hk::hook::trampoline(
     [](void* self, u64 x1, u64 x2, u64 x3) -> u64 {
         const u64 vanilla = g_getCupStatus.orig(self, x1, x2, x3);
-        if (firstTime(g_logged_status, static_cast<unsigned>(x1 & 0x3f))) {
-            MK8AP_LOG_INFO("[cup] DLCManager::getCupStatus x1=0x%llx x2=0x%llx -> 0x%llx",
-                           static_cast<unsigned long long>(x1), static_cast<unsigned long long>(x2),
-                           static_cast<unsigned long long>(vanilla));
+        const int gpId = derefEnum(x1);
+        if (firstTime(g_logged_status, gpId)) {
+            MK8AP_LOG_INFO("[cup] DLCManager::getCupStatus(gp=%d) [x1=0x%llx] vanilla=%d",
+                           gpId, static_cast<unsigned long long>(x1), static_cast<int>(vanilla));
         }
-        if (looksLikeEnum(x1)) {
-            const int gpId = static_cast<int>(x1);
-            if (!ap::ApState::instance().isCupAllowed(gpId)) {
-                return static_cast<u64>(static_cast<int>(game::DLCStatus::Locked));
-            }
+        if (gpId >= 0 && gpId < game::kCupCount &&
+            !ap::ApState::instance().isCupAllowed(gpId)) {
+            return static_cast<u64>(static_cast<int>(game::DLCStatus::Locked));
         }
         return vanilla;
     });
 
-// --- 3. ui::Control_CupButton::setCup -------------------------------------
-// OBSERVE ONLY until the 4.0.0 signature is confirmed from the boot log.
-// On 4.0.0 x1 and x2 arrive as pointers at least on the boot-time call path,
-// so the (ECup, DLCState) reading from the upstream mangled name is wrong or
-// incomplete for this address. All of x1..x5 are forwarded verbatim.
+// --- 3. ui::Control_CupButton::setCup(this, const ECup&, const DLCState&) --
+// To lock a cup we hand orig() a pointer to a local DLCState::Locked instead
+// of the caller's value; the caller's object is never written.
 HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampoline(
     [](void* self, u64 x1, u64 x2, u64 x3, u64 x4, u64 x5) -> u64 {
         startNetworkingOnce("ui::Control_CupButton::setCup");
-        if (firstTime(g_logged_cup, static_cast<unsigned>(x1 & 0x3f))) {
-            MK8AP_LOG_INFO("[cup] Control_CupButton::setCup this=%p x1=0x%llx x2=0x%llx x3=0x%llx x4=0x%llx",
-                           self, static_cast<unsigned long long>(x1), static_cast<unsigned long long>(x2),
-                           static_cast<unsigned long long>(x3), static_cast<unsigned long long>(x4));
+        const int ecup = derefEnum(x1);
+        const int state = derefEnum(x2);
+        if (firstTime(g_logged_cup, ecup)) {
+            MK8AP_LOG_INFO("[cup] Control_CupButton::setCup(ecup=%d, state=%d) [x1=0x%llx x2=0x%llx x3=0x%llx]",
+                           ecup, state, static_cast<unsigned long long>(x1),
+                           static_cast<unsigned long long>(x2), static_cast<unsigned long long>(x3));
         }
-        // Gating deliberately disabled until the signature is known. Once
-        // x1/x2 are confirmed to be (ECup, DLCState) on the menu path,
-        // re-enable: if (!isCupAllowed(ecup-1)) x2 = DLCState::Locked.
+        // 4.0.0 boot log: setCup(ecup=N) is always paired with isOpen(gp=N),
+        // so ECup is 0-based (Mushroom == 0) and equals EGrandPrixID. The
+        // upstream header's "Mushroom == 1" reading was wrong for this build.
+        const int cupIdx = ecup;
+        if (state >= 0 && cupIdx >= 0 && cupIdx < game::kCupCount &&
+            !ap::ApState::instance().isCupAllowed(cupIdx)) {
+            const std::int32_t locked = static_cast<std::int32_t>(game::DLCState::Locked);
+            return g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
+        }
         return g_setCup.orig(self, x1, x2, x3, x4, x5);
     });
 

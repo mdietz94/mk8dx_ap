@@ -5,7 +5,9 @@
 // Driver / Body / Tire / Wing (the same record Ryujinx prints as
 // "PlayReport log:"). We capture it below the PlayReport class, at the IPC
 // proxy (CmifProxyImpl<IPrepoService>::_nn_sf_sync_SaveReport[WithUser]),
-// because hooking PlayReport::Save/Add triggers a delayed SDK validator
+// (names as exported by MK8DX's NintendoSDK 4.4.0: CmifDomainProxy /
+// MessageType 4 / no ProcessModifierImpl suffix -- read off the boot log via
+// SdkSymbolDump) because hooking PlayReport::Save/Add triggers a delayed SDK validator
 // abort on another thread (smbw_ap, 2026-05: documented in that repo's
 // handoff). The ctor + SetEventId are safe and only used for logging.
 //
@@ -76,10 +78,10 @@ void installPlayReportHooks() {
            g_setEventId.installAtSym<"_ZN2nn5prepo10PlayReport10SetEventIdEPKc">());
     report("IPrepoService::SaveReport",
            g_saveReport.installAtSym<
-               "_ZN2nn2sf4cmif6client6detail13CmifProxyImplINS_5prepo6detail3ipc13IPrepoServiceENS2_19CmifDomainProxyKindINS0_4hipc6client38Hipc2ClientSessionManagedProxyKindBaseINSB_18Hipc2ProxyKindBaseILNSA_6detail11MessageTypeE6EEEEEEENS0_30MemoryResourceAllocationPolicyES8_NS3_19ProcessModifierImplINS2_21DefaultProxyFilterTagEEEE22_nn_sf_sync_SaveReportERKNS0_7InArrayIcEERKNS0_8InBufferEm">());
+               "_ZN2nn2sf4cmif6client6detail13CmifProxyImplINS_5prepo6detail3ipc13IPrepoServiceENS2_15CmifDomainProxyINS0_4hipc6client38Hipc2ClientSessionManagedProxyKindBaseINSB_18Hipc2ProxyKindBaseILNSA_6detail11MessageTypeE4EEEEEEENS0_30MemoryResourceAllocationPolicyES8_E22_nn_sf_sync_SaveReportERKNS0_7InArrayIcEERKNS0_8InBufferEm">());
     report("IPrepoService::SaveReportWithUser",
            g_saveReportWithUser.installAtSym<
-               "_ZN2nn2sf4cmif6client6detail13CmifProxyImplINS_5prepo6detail3ipc13IPrepoServiceENS2_19CmifDomainProxyKindINS0_4hipc6client38Hipc2ClientSessionManagedProxyKindBaseINSB_18Hipc2ProxyKindBaseILNSA_6detail11MessageTypeE6EEEEEEENS0_30MemoryResourceAllocationPolicyES8_NS3_19ProcessModifierImplINS2_21DefaultProxyFilterTagEEEE30_nn_sf_sync_SaveReportWithUserERKNS_7account3UidERKNS0_7InArrayIcEERKNS0_8InBufferEm">());
+               "_ZN2nn2sf4cmif6client6detail13CmifProxyImplINS_5prepo6detail3ipc13IPrepoServiceENS2_15CmifDomainProxyINS0_4hipc6client38Hipc2ClientSessionManagedProxyKindBaseINSB_18Hipc2ProxyKindBaseILNSA_6detail11MessageTypeE4EEEEEEENS0_30MemoryResourceAllocationPolicyES8_E30_nn_sf_sync_SaveReportWithUserERKNS_7account3UidERKNS0_7InArrayIcEERKNS0_8InBufferEm">());
 }
 
 }  // namespace mk8ap::hooks
