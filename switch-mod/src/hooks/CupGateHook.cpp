@@ -28,6 +28,7 @@
 
 #include "../ap/ApState.hpp"
 #include "../game/Ids.hpp"
+#include "../game/Structs.hpp"
 #include "../sym/PatternResolver.hpp"
 #include "../util/Log.hpp"
 
@@ -112,17 +113,34 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
         // so ECup is 0-based (Mushroom == 0) and equals EGrandPrixID. The
         // upstream header's "Mushroom == 1" reading was wrong for this build.
         const int cupIdx = ecup;
+        // Control_CupButton::mIsLocked lives at +0x3CB (MK8DX-Headers). Passing
+        // DLCState::Locked to setCup changed the drawing only: the cup could
+        // still be entered (2026-10-16). Log what the game sets the flag to for
+        // each state and force it on for AP-locked cups to see whether the
+        // press handler honours it.
+        constexpr std::size_t kIsLocked = 0x3CB;
         if (state >= 0 && cupIdx >= 0 && cupIdx < game::kCupCount &&
             !ap::ApState::instance().isCupAllowed(cupIdx)) {
             const std::int32_t locked = static_cast<std::int32_t>(game::DLCState::Locked);
+            const u64 ret = g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
+            const int was = game::rd<std::uint8_t>(self, kIsLocked);
+            game::wr<std::uint8_t>(self, kIsLocked, 1);
             static int lock_logged = 0;
             if (lock_logged < 40) {
                 ++lock_logged;
-                MK8AP_LOG_INFO("[cup] setCup(ecup=%d) state %d -> Locked(%d)", ecup, state, locked);
+                MK8AP_LOG_INFO("[cup] setCup(ecup=%d) state %d -> Locked(%d); mIsLocked was %d, forced 1",
+                               ecup, state, locked, was);
             }
-            return g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
+            return ret;
         }
-        return g_setCup.orig(self, x1, x2, x3, x4, x5);
+        const u64 ret = g_setCup.orig(self, x1, x2, x3, x4, x5);
+        static int state_logged = 0;
+        if (state_logged < 30) {
+            ++state_logged;
+            MK8AP_LOG_INFO("[cup] setCup(ecup=%d, state=%d) -> mIsLocked=%d", ecup, state,
+                           game::rd<std::uint8_t>(self, kIsLocked));
+        }
+        return ret;
     });
 
 template <typename H>
