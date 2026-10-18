@@ -1,8 +1,10 @@
 // Bridge config — defaults baked in at compile time via CMake.
 //
-// bridge_host is the PC's LAN IP; ApDiscovery uses it as the SEED for the
-// /24 subnet sweep (see ApDiscovery.cpp). Override at configure-time via
-// -DBRIDGE_HOST=... (no default; CMake aborts if missing).
+// Nothing here is network-specific: the mod finds the PC by UDP discovery
+// over loopback and the console's own subnet (see ApDiscovery.cpp), so one
+// build works on every LAN and the release ships it prebuilt.
+// bridge_host is an OPTIONAL developer seed (-DBRIDGE_HOST=<ip>): when set,
+// its /24 is swept as well, for a PC on a different subnet than the console.
 
 #pragma once
 
@@ -10,7 +12,7 @@
 #include <string>
 
 #ifndef BRIDGE_HOST_STRING
-#define BRIDGE_HOST_STRING "192.168.1.10"
+#define BRIDGE_HOST_STRING ""
 #endif
 #ifndef BRIDGE_PORT_VALUE
 #define BRIDGE_PORT_VALUE 17777

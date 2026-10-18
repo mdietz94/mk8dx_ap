@@ -66,7 +66,8 @@ class SwitchServer:
                  on_race_result: RaceResultHandler,
                  on_play_report: PlayReportHandler,
                  build_state: StateProvider,
-                 on_switch_changed: Callable[[], None] | None = None) -> None:
+                 on_switch_changed: Callable[[], None] | None = None,
+                 bundled_mod_ver: str | None = None) -> None:
         self.host = host
         self.port = port
         self.state = state
@@ -75,6 +76,7 @@ class SwitchServer:
         self._on_play_report = on_play_report
         self._build_state = build_state
         self._on_switch_changed = on_switch_changed
+        self.bundled_mod_ver = bundled_mod_ver
         self._server: asyncio.AbstractServer | None = None
         self._writer: asyncio.StreamWriter | None = None
         self._peer: str = ""
@@ -187,6 +189,9 @@ class SwitchServer:
             })
             log.info("switch HELLO mod=%s game=%s build=%s symbols=%d/%d",
                      msg.mod_ver, msg.game_ver, msg.build_id, msg.resolved, msg.total)
+            if self.bundled_mod_ver and msg.mod_ver and msg.mod_ver != self.bundled_mod_ver:
+                log.warning("the Switch runs mod %s but this apworld bundles %s: type /setup "
+                            "to install it, then restart the game", msg.mod_ver, self.bundled_mod_ver)
             if msg.game_ver and msg.game_ver != SUPPORTED_GAME_VERSION:
                 log.warning("switch reports game version %s; this client targets %s",
                             msg.game_ver, SUPPORTED_GAME_VERSION)

@@ -1,0 +1,101 @@
+name: Release
+
+# Builds the release mk8dx.apworld: the Switch mod (LibHakkun + LLVM 19 on
+# Ubuntu, no -DBRIDGE_HOST, so one binary serves every network), bundled
+# under _setup/mod/ with a SHA-256 manifest, then scripts/release_audit.py
+# (IP discipline, bundled-mod integrity, no baked LAN address, version
+# drift) and a .sha256 sidecar. Everything happens in scripts/build_release.py;
+# the same command works locally on Windows (docs/release-process.md).
+#
+#   pull_request touching the mod or packaging: build + audit, artifact only
+#   workflow_dispatch:                         build + audit, artifact only
+#   tag v*.*.*:                                build + audit + GitHub Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+  pull_request:
+    branches: [main]
+    paths:
+      - 'switch-mod/**'
+      - 'apworld/mk8dx_archipelago/_setup/**'
+      - 'scripts/build_release.py'
+      - 'scripts/build_switchmod.py'
+      - 'scripts/install_apworld.py'
+      - 'scripts/patch_hakkun.py'
+      - 'scripts/release_audit.py'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Toolchain (LLVM 19, lld, ninja, Hakkun's Python deps)
+        run: |
+          wget -q https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 19
+          sudo apt-get install -y ninja-build lld-19
+          echo "/usr/lib/llvm-19/bin" >> "$GITHUB_PATH"
+          python -m pip install --upgrade pip
+          python -m pip install lz4 pyelftools mmh3 pytest
+
+      - name: Tool versions
+        run: |
+          clang --version | head -1
+          ld.lld --version
+          cmake --version | head -1
+          ninja --version
+          python --version
+
+      - name: Version must match the tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          ver=$(python -c "import json;print(json.load(open('apworld/mk8dx_archipelago/archipelago.json'))['world_version'])")
+          if [ "v$ver" != "${GITHUB_REF_NAME}" ]; then
+            echo "archipelago.json world_version $ver does not match tag ${GITHUB_REF_NAME}" >&2
+            exit 1
+          fi
+
+      - name: Setup package tests
+        run: python -m pytest -q apworld/mk8dx_archipelago/tests/test_setup.py
+
+      - name: Build mod + apworld, audit, checksum
+        run: python scripts/build_release.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mk8dx-apworld
+          path: |
+            dist/mk8dx.apworld
+            dist/mk8dx.apworld.sha256
+          if-no-files-found: error
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/mk8dx.apworld
+            dist/mk8dx.apworld.sha256
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          body_path: docs/release-notes-template.md

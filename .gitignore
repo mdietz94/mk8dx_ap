@@ -44,3 +44,4 @@ vendor/*/__pycache__/
 
 # Prepackaged libc++ fetched by LibHakkun setup_libcxx_prepackaged.py at build time
 switch-mod/lib/std/
+dist/

@@ -24,6 +24,10 @@ namespace {
 constexpr const char* kNeedles[] = {
     "IPrepoService",
     "SaveReport",
+    // ApDiscovery's self-address lookups (resolved by name at runtime).
+    "GetCurrentIpConfigInfo",
+    "GetCurrentPrimaryIpAddress",
+    "GetSockName",
 };
 constexpr int kMaxLogged = 40;
 constexpr unsigned kMaxSyms = 400000;

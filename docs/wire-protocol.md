@@ -7,8 +7,12 @@ dropped. C++ mirror: `switch-mod/src/ap/ApProtocol.hpp`; Python mirror:
 `apworld/mk8dx_archipelago/client/protocol.py`.
 
 Discovery (UDP, port 17779): the Switch probes `127.0.0.1` and then every
-host of the baked `BRIDGE_HOST` /24 with `{"t":"discover","mod_ver":..}`;
-the client answers `{"t":"bridge","host":<ipv4>,"port":17778,"seed":..}`.
+host of its own subnet (address and mask from `nn::nifm`, falling back to
+the local address of a connected UDP socket; masks wider than /24 are
+narrowed to the console's /24) with `{"t":"discover","mod_ver":..}`; the
+client answers `{"t":"bridge","host":<ipv4>,"port":17778,"seed":..}`. A dev
+build configured with `-DBRIDGE_HOST=<ip>` also sweeps that IP's /24.
+Nothing network-specific is compiled in, so one binary serves every player.
 
 ## Switch -> PC
 
