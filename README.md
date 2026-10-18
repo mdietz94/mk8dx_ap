@@ -10,13 +10,19 @@ reading: the mod talks to the PC client over LAN.
 
 ## Status
 
-Alpha. Built, host-tested, and the PC side is verified end to end over
-loopback. The Switch mod has not yet run against a real 4.0.0 copy; see
-*First run checklist*. `docs/symbols.md` lists which game functions have a
-published 4.0.0 address and which are still located by pattern.
+Alpha, played against a live seed on a real 4.0.0 dump under Ryujinx
+(2026-10-16). Verified in game: boot and symbol resolution (20 of 21
+functions), race results via the game's own PlayReport, Archipelago checks
+and item receipt, item-box gating, character/vehicle enforcement, cup
+locking (padlock, cursor skips the cup) and the top-speed clamp. Not yet
+verified: completing a Grand Prix (Trophy / goal) and real Switch hardware.
+`docs/symbols.md` lists every game function with its 4.0.0 location and the
+on-game findings.
 
 The mod checks the game's build id at boot. On anything other than 4.0.0
-(`2C336A9BCF79C304...`) it logs an error and stays inactive.
+(`2C336A9BCF79C304...`) it logs an error and stays inactive. The engine
+class picker is intentionally not restricted; speed is limited by a
+per-frame top-speed clamp that rises with Progressive Speed items.
 
 ## Layout
 
@@ -62,17 +68,20 @@ complete `goal_cups` cups.
 
 ## First run checklist (on-game verification)
 
-1. Ryujinx log: build id `2C336A9B...`, then one `[sym]` line per game
-   function and `[sym] resolved N/17`. Note any `UNRESOLVED` or
-   `RELAXED pattern` lines; the client also lists what is missing and which
-   feature it affects when the Switch connects.
+1. Ryujinx log: build id `2C336A9B...`, one `[sym]` line per game function
+   and `[sym] resolved 20/21` (`gear::DLCManager::getCupStatus` is the
+   expected `UNRESOLVED`). `grep InvalidAccessHandler` first: a crash prints
+   registers and a guest stack trace.
 2. Reach the menu or load a save: `[net] starting networking`,
    `[conn] CONNECTED`, and the client logs `switch HELLO`.
-3. Race one VS course: the client logs `play_report race: ...` and checks
-   `<course> - Finish`.
-4. Cup select: `[cup]` log lines show `EGrandPrixID` values; confirm they
-   match `ECup - 1` (docs/symbols.md).
-5. `[speed] raw:` line shows sane floats (top speed 0..100).
+3. Race one course: the client logs `play_report race: ...`, learns the
+   course id from the paired `race_result`, and checks `<course> - Finish`.
+4. Cup select: AP-locked cups show a padlock and cannot be selected
+   (`[cup] Page_CourseBase::isDLC(ecup=N) vanilla=5 -> 4`).
+5. Pick a locked character: `[kart] player 0 driver N locked -> M` and the
+   race uses the starting loadout.
+6. `[speed] clamping to N%` once the race starts; `[item] local kart rolled
+   locked item` on a locked roll.
 
 ## Tests
 
