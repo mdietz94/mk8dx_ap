@@ -26,8 +26,10 @@ def save(state: dict[str, Any]) -> None:
     tmp.replace(path)
 
 
-def record_deploy(target: str, root: Path, mod_version: str) -> dict[str, Any]:
+def record_deploy(target: str, root: Path, mod_version: str, bridge_host: str = "") -> dict[str, Any]:
     state = load()
+    if bridge_host:
+        state["bridge_host"] = bridge_host
     state.update({
         "target": target,
         f"{target}_root": str(root),

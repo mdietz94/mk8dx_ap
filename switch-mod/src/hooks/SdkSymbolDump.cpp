@@ -24,10 +24,13 @@ namespace {
 constexpr const char* kNeedles[] = {
     "IPrepoService",
     "SaveReport",
-    // ApDiscovery's self-address lookups (resolved by name at runtime).
-    "GetCurrentIpConfigInfo",
-    "GetCurrentPrimaryIpAddress",
-    "GetSockName",
+    // RomConfigHook's nn::fs targets (resolved by name at runtime).
+    "2fs8MountRom",
+    "2fs12GetEntryType",
+    "2fs8OpenFile",
+    "2fs11GetFileSize",
+    "2fs8ReadFile",
+    "2fs9CloseFile",
 };
 constexpr int kMaxLogged = 40;
 constexpr unsigned kMaxSyms = 400000;

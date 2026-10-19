@@ -7,8 +7,9 @@
 The version is archipelago.json `world_version`; client/__init__.py
 `__version__` must match (the audit fails on drift), and the mod is built
 with -DMK8AP_MOD_VERSION=<version> so the client can tell when the Switch
-runs an older mod. Never pass -DBRIDGE_HOST here: the audit rejects a mod
-with a baked IPv4 address. The GitHub release workflow runs this script.
+runs an older mod. Nothing network-specific is compiled in (the discovery
+seed is the ap_config.json the wizard writes); the audit rejects a mod with
+a baked IPv4 address. The GitHub release workflow runs this script.
 """
 
 from __future__ import annotations
@@ -45,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
     ver = version()
     py = sys.executable
     if not args.skip_build:
-        run([py, "scripts/build_switchmod.py", f"-DMK8AP_MOD_VERSION={ver}", "-DBRIDGE_HOST="])
+        run([py, "scripts/build_switchmod.py", f"-DMK8AP_MOD_VERSION={ver}"])
     DIST.mkdir(exist_ok=True)
     run([py, "scripts/install_apworld.py", "--bundle-mod", "--mod-version", ver, "--output", str(APWORLD)])
     run([py, "scripts/release_audit.py", str(APWORLD)])

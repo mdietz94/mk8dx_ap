@@ -5,9 +5,9 @@ the same as any other Archipelago game: open **MK8DX Client** from the
 Archipelago Launcher and connect.
 
 Time: about five minutes. Nothing is compiled and no game files are read:
-the Switch mod ships ready-made inside `mk8dx.apworld`, and the same file
-works on every network (the mod finds your PC on its own; see
-[changing servers](changing-servers.md)).
+the Switch mod ships ready-made inside `mk8dx.apworld`. Setup copies it and
+writes this PC's LAN address next to it, which the Switch uses to find the
+client (see [changing servers](changing-servers.md)).
 
 ## You need
 
@@ -46,8 +46,16 @@ The Booster Course Pass is optional; generate with
         for you to copy to the SD card later (DBI, FTP, a card reader on
         another PC).
 
+      **This PC's address** is filled in automatically: it goes into
+      `romfs/ap_config.json` next to the mod, and the Switch searches that
+      address's network (its /24) for the client. Change it only if the PC has
+      several network adapters (VPN, WSL, virtual machines) and the detected
+      one is not on the Switch's network. Ryujinx on the same PC does not use
+      it.
+
       The page shows where the files go and what is there now (*not
-      installed*, *mod X installed*, or *differs from the bundled mod*).
+      installed*, *mod X installed, PC address ...*, or *differs from the
+      bundled mod*).
       Click **Install**. If another MK8DX mod's `subsdk9` / `main.npdm` is
       already there, it is kept as `subsdk9.mk8ap-backup` /
       `main.npdm.mk8ap-backup` and **Remove mod** puts it back.
@@ -71,6 +79,9 @@ The Booster Course Pass is optional; generate with
   reports an older mod in its HELLO.
 - **Switching between Ryujinx and a Switch:** run `/setup` and pick the other
   target. Both can stay installed.
+- **The PC moved to another network** (another router, a different subnet):
+  `/setup` > Install again so `ap_config.json` has the new address. The
+  client warns in its log when it notices this.
 
 ## Without the wizard
 
@@ -81,7 +92,7 @@ source install of Archipelago):
 ```
 python -m worlds.mk8dx._setup.cli status
 python -m worlds.mk8dx._setup.cli deploy ryujinx
-python -m worlds.mk8dx._setup.cli deploy sd --root E:/
+python -m worlds.mk8dx._setup.cli deploy sd --root E:/ --bridge-host 192.168.1.20
 python -m worlds.mk8dx._setup.cli remove sd --root E:/
 python -m worlds.mk8dx._setup.cli firewall
 ```
@@ -119,6 +130,7 @@ Archipelago's `logs` folder (`MK8DXClient_*.txt`).
 | `%APPDATA%\MK8DXArchipelago\wizard.log` | wizard log |
 | `%APPDATA%\Ryujinx\mods\contents\0100152000022000\exefs\` | Ryujinx install |
 | `<SD>:\atmosphere\contents\0100152000022000\exefs\` | Switch install |
+| `...\0100152000022000\romfs\ap_config.json` | the PC address the Switch searches (next to each install) |
 | `<Archipelago user dir>\mk8dx_learned_ids.json` | course ids the client learned from your races |
 
 To start over, delete `%APPDATA%\MK8DXArchipelago\`; the wizard opens again on

@@ -9,15 +9,13 @@ include(config/config.cmake)
 # ---------------------------------------------------------------------------
 # Version + bridge defines (land verbatim in HELLO + log lines).
 #
-# The mod finds the PC at runtime (UDP discovery over loopback and the
-# console's own subnet, see ApDiscovery.cpp), so a build carries nothing
-# about the player's network and the release ships it prebuilt.
-# BRIDGE_HOST is an optional developer seed: its /24 is swept as well.
-# Release builds leave it empty (scripts/release_audit.py checks).
+# Nothing about the player's network is compiled in: the discovery sweep
+# seed comes from ap_config.json in the mod's romfs layer, written by the
+# setup wizard (RomConfigHook / ApDiscovery). The release ships one prebuilt
+# binary; scripts/release_audit.py rejects any baked IPv4 literal.
 # ---------------------------------------------------------------------------
 set(MK8DX_VERSION          "4.0.0"         CACHE STRING "Target MK8DX version (the only supported one)")
 set(MK8AP_MOD_VERSION      "0.1.0"         CACHE STRING "Module version baked into HELLO")
-set(BRIDGE_HOST            ""              CACHE STRING "Optional extra /24 to sweep (dev builds only; empty for releases)")
 set(BRIDGE_PORT            17778           CACHE STRING "Bridge TCP port")
 set(BRIDGE_RETRY_MS        3000            CACHE STRING "Reconnect backoff seed (ms)")
 set(BRIDGE_RECV_TIMEOUT_MS 200             CACHE STRING "Per-iteration recv timeout (ms)")
@@ -26,7 +24,6 @@ set(DISCOVERY_PORT         17779           CACHE STRING "UDP discovery probe por
 add_compile_definitions(
     MK8DX_VERSION_STRING="${MK8DX_VERSION}"
     MK8AP_MOD_VERSION_STRING="${MK8AP_MOD_VERSION}"
-    BRIDGE_HOST_STRING="${BRIDGE_HOST}"
     BRIDGE_PORT_VALUE=${BRIDGE_PORT}
     BRIDGE_RETRY_MS_VALUE=${BRIDGE_RETRY_MS}
     BRIDGE_RECV_TIMEOUT_MS_VALUE=${BRIDGE_RECV_TIMEOUT_MS}

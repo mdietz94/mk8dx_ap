@@ -17,8 +17,9 @@ reading: the mod talks to the PC client over LAN.
    on the first run (`/setup` later): pick Ryujinx, a Switch SD card or a
    folder and click **Install**. The Switch mod ships prebuilt inside the
    apworld, verified against a SHA-256 manifest; nothing to compile, no game
-   data to extract, and one binary works on every network (the Switch finds
-   the PC by sweeping its own subnet).
+   data to extract. Setup writes this PC's LAN address next to the mod
+   (`romfs/ap_config.json`) and the Switch sweeps that /24 to find the client,
+   so one binary works on every network.
 3. Start the game (update 4.0.0) and connect the client to your room.
 
 Guides: [first-time setup](docs/first-time-setup.md),
@@ -34,8 +35,8 @@ locking (padlock, cursor skips the cup) and the top-speed clamp. Not yet
 verified: completing a Grand Prix (Trophy / goal) and real Switch hardware.
 The installer (prebuilt mod, setup wizard, release build + audit) was tested
 2026-10-18 from a frozen Archipelago 0.6.7 install: wizard -> Ryujinx deploy
--> game boots -> the mod learns the console address from nifm and finds the
-client by its own-subnet sweep.
+-> game boots -> the mod reads `ap_config.json` at `nn::fs::MountRom` and
+finds the client by sweeping that address's /24.
 `docs/symbols.md` lists every game function with its 4.0.0 location and the
 on-game findings.
 
@@ -68,10 +69,11 @@ python scripts/build_release.py             # release: mod + bundled apworld + a
 Output: `switch-mod/build/exefs/{subsdk9,main.npdm}`; `deploy_mod.py` copies
 them with the wizard's code to
 `%AppData%\Ryujinx\mods\contents\0100152000022000\exefs\` or
-`sd:/atmosphere/contents/0100152000022000/exefs/`. `-DBRIDGE_HOST=<ip>` is
-optional and only adds that IP's /24 to the discovery sweep (PC and Switch on
-different subnets); release builds must not set it (`scripts/release_audit.py`
-rejects a mod with a baked address). Releases: `docs/release-process.md`.
+`sd:/atmosphere/contents/0100152000022000/exefs/`, plus
+`romfs/ap_config.json` with this PC's LAN address (`--bridge-host` to
+override). Nothing network-specific is compiled in
+(`scripts/release_audit.py` rejects a mod with a baked address). Releases:
+`docs/release-process.md`.
 
 Toolchain (Windows): LLVM 19, CMake, Ninja, Python 3.12, msys2 mingw64
 (for sail + host tests). Same as `smo_archipelago`; `build_switchmod.py`

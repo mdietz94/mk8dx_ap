@@ -5,13 +5,13 @@
 //
 //   1. UDP probe -> 127.0.0.1:<port> — covers Ryujinx running on the
 //      same host as the MK8DX Client.
-//   2. UDP unicast sweep over the console's own subnet (address + mask
-//      learned at runtime from nn::nifm, or from a connected UDP socket's
-//      local address; wider than /24 is narrowed to the console's /24).
-//      Every host gets one probe, fired as a tight burst on a single
+//   2. UDP unicast sweep over the /24 of the PC address the setup wizard
+//      wrote to ap_config.json in the mod's romfs layer (read once at
+//      nn::fs::MountRom time by RomConfigHook; the dread_ap scheme). Every
+//      .1..254 host gets one probe, fired as a tight burst on a single
 //      socket. First reply wins. Replaces the 255.255.255.255 broadcast
 //      that travel routers, mesh Wi-Fi extenders, and some VLAN'd setups
-//      silently drop. A dev build's -DBRIDGE_HOST /24 is swept too.
+//      silently drop. No config file means loopback only.
 //
 // On success, fills `out` with the bridge's advertised TCP host:port.
 // On total failure, returns false; the caller retries the whole loop
@@ -45,8 +45,8 @@ inline constexpr std::uint16_t kDefaultDiscoveryPort = 17776;
 // debug overlay (ui::ApDebugConsole) — purely diagnostic, no logic gates
 // on it. Updated by resolveBridge() atomically by spinlock.
 struct DiscoveryReport {
-    std::uint32_t self_ip       = 0;  // console address, host byte order (a.b.c.d -> (a<<24)|b<<16|c<<8|d); 0 = unknown
-    std::uint32_t subnet_mask   = 0;  // from GetCurrentIpConfigInfo; 0 = unknown (sweep assumes /24)
+    std::uint32_t self_ip       = 0;  // sweep seed (ap_config.json), host byte order (a.b.c.d -> (a<<24)|b<<16|c<<8|d); 0 = none
+    std::uint32_t subnet_mask   = 0;  // always /24 when a seed is set
     std::uint16_t probed_count  = 0;  // number of unicast hosts swept on last call
     std::uint16_t replies       = 0;  // number of valid {"t":"bridge",...} replies seen
     char          last_bridge_host[40] = {0};  // last successful reply's host:port

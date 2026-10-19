@@ -14,9 +14,10 @@ Fails (exit 1) on any of:
     not an NSO carrying our module name, main.npdm not for title
     0100152000022000.
   * Privacy / portability: the decompressed mod contains a dotted IPv4
-    literal other than 127.0.0.1 / 0.0.0.0 (a dev build configured with
-    -DBRIDGE_HOST, which would also mean it is not the network-agnostic
-    build), or an absolute home-directory path (C:/Users/<name>, /home/<name>)
+    literal other than 127.0.0.1 / 0.0.0.0 (a hand-patched or old
+    -DBRIDGE_HOST build: the release binary must be network-agnostic; the
+    sweep seed belongs in the deploy-time ap_config.json), or an absolute
+    home-directory path (C:/Users/<name>, /home/<name>)
     in the mod or any text file.
   * Version drift (with the mod): manifest mod_version, archipelago.json
     world_version and client/__init__.py __version__ must agree.
@@ -191,7 +192,7 @@ def audit_zip(path: str, *, require_mod: bool) -> Audit:
         lit = m.group(0)
         if lit not in ALLOWED_IPV4 and all(int(g) <= 255 for g in m.groups()):
             a.fail(f"_setup/mod/subsdk9: IPv4 literal {lit.decode()} baked in "
-                   "(built with -DBRIDGE_HOST? release builds must not set it)")
+                   "(the release binary must be network-agnostic; the seed belongs in ap_config.json)")
     a.scan_home_paths("_setup/mod/subsdk9", blob)
 
     npdm = zf.read(mod["main.npdm"])

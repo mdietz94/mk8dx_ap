@@ -1,6 +1,15 @@
 """Copy the mod to where the game runs.
 
-Three targets, one layout (`<base>/<title id>/exefs/{subsdk9,main.npdm}`):
+Three targets, one layout under `<base>/<title id>/`:
+
+  - `exefs/subsdk9`, `exefs/main.npdm`: the prebuilt mod
+  - `romfs/ap_config.json`: `{"bridge_host": "<this PC's LAN address>"}`.
+    LayeredFS (Atmosphere) / Ryujinx's mod loader add it to the game's
+    RomFS; the mod reads it once when the game mounts its RomFS and sweeps
+    that address's /24 to find the client (the dread_ap scheme). Nothing
+    network-specific is compiled into the binary.
+
+Targets:
 
   - ``ryujinx``: `<Ryujinx data dir>/mods/contents/0100152000022000/exefs/`.
     The data dir is `%APPDATA%/Ryujinx` unless Ryujinx runs portable (a
@@ -18,6 +27,7 @@ restored by ``remove``.
 
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import string
@@ -35,6 +45,7 @@ TARGET_LABELS = {
     "folder": "Folder (copy to the SD card yourself)",
 }
 BACKUP_SUFFIX = ".mk8ap-backup"
+CONFIG_NAME = "ap_config.json"
 
 
 class DeployError(Exception):
@@ -48,15 +59,17 @@ class DeployResult:
     copied: list[Path] = field(default_factory=list)
     unchanged: list[Path] = field(default_factory=list)
     backed_up: list[Path] = field(default_factory=list)
+    bridge_host: str = ""
 
     def summary(self) -> str:
-        parts = [f"Deployed to {self.exefs}"]
+        parts = [f"Deployed to {self.exefs.parent}"]
         if self.copied:
             parts.append(f"wrote {', '.join(p.name for p in self.copied)}")
         if self.unchanged:
             parts.append(f"already current: {', '.join(p.name for p in self.unchanged)}")
         if self.backed_up:
             parts.append(f"kept the previous files as {', '.join(p.name for p in self.backed_up)}")
+        parts.append(f"the Switch will look for this PC at {self.bridge_host} (its /24)")
         return "; ".join(parts)
 
 
@@ -109,6 +122,39 @@ def detect_sd_cards() -> list[Path]:
     return found
 
 
+# ---- the PC address written to ap_config.json -------------------------------
+
+def detect_bridge_host() -> str:
+    """This PC's LAN address, as the client advertises it to the Switch."""
+    try:
+        from ..client.net_util import detect_lan_ip  # inside the apworld
+    except ImportError:
+        from client.net_util import detect_lan_ip  # type: ignore[no-redef]  # source checkout / tests
+    return detect_lan_ip()
+
+
+def is_plausible_ipv4(s: str) -> bool:
+    parts = s.split(".")
+    return len(parts) == 4 and all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
+
+def check_bridge_host(host: str) -> str:
+    host = host.strip()
+    if not is_plausible_ipv4(host):
+        raise DeployError(f"'{host}' is not an IPv4 address like 192.168.1.20")
+    if host.startswith("127.") or host == "0.0.0.0":
+        raise DeployError(f"{host} is not reachable from a Switch; enter this PC's LAN address")
+    return host
+
+
+def read_config(target: str, root: Path) -> dict:
+    try:
+        data = json.loads((romfs_dir(target, root) / CONFIG_NAME).read_text(encoding="utf-8-sig"))
+        return data if isinstance(data, dict) else {}
+    except (OSError, ValueError, DeployError):
+        return {}
+
+
 # ---- layout ----------------------------------------------------------------
 
 def exefs_dir(target: str, root: Path) -> Path:
@@ -117,6 +163,10 @@ def exefs_dir(target: str, root: Path) -> Path:
     if target in ("sd", "folder"):
         return Path(root) / "atmosphere" / "contents" / TITLE_ID / "exefs"
     raise DeployError(f"unknown deploy target {target!r} (expected one of {', '.join(TARGETS)})")
+
+
+def romfs_dir(target: str, root: Path) -> Path:
+    return exefs_dir(target, root).parent / "romfs"
 
 
 def _check_root(target: str, root: Path | None) -> Path:
@@ -137,10 +187,14 @@ def _check_root(target: str, root: Path | None) -> Path:
 
 # ---- deploy / status / remove ----------------------------------------------
 
-def deploy(bundle: ModBundle, target: str, root: Path | None) -> DeployResult:
+def deploy(bundle: ModBundle, target: str, root: Path | None,
+           bridge_host: str | None = None) -> DeployResult:
+    """Copy the mod and write ap_config.json. `bridge_host` defaults to this
+    PC's detected LAN address."""
     root = _check_root(target, root)
+    host = check_bridge_host(bridge_host if bridge_host else detect_bridge_host())
     dest = exefs_dir(target, root)
-    result = DeployResult(target=target, exefs=dest)
+    result = DeployResult(target=target, exefs=dest, bridge_host=host)
     try:
         dest.mkdir(parents=True, exist_ok=True)
     except OSError as e:
@@ -167,7 +221,21 @@ def deploy(bundle: ModBundle, target: str, root: Path | None) -> DeployResult:
         if sha256_bytes(out.read_bytes()) != bundle.sha256(name):
             raise DeployError(f"{out} does not match after copying (drive full or removed?)")
         result.copied.append(out)
+    _write_config(romfs_dir(target, root) / CONFIG_NAME, host)
     return result
+
+
+def _write_config(path: Path, host: str) -> None:
+    data = json.dumps({"bridge_host": host}, separators=(",", ":")).encode("utf-8")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_name(path.name + ".mk8ap-tmp")
+        tmp.write_bytes(data)
+        os.replace(tmp, path)
+    except OSError as e:
+        raise DeployError(f"could not write {path}: {e}") from e
+    if path.read_bytes() != data:
+        raise DeployError(f"{path} does not match after writing (drive full or removed?)")
 
 
 def _is_ours(subsdk9: bytes) -> bool:
@@ -190,6 +258,7 @@ class TargetStatus:
     exefs: Path
     state: str  # "missing" | "current" | "different"
     detail: str = ""
+    bridge_host: str = ""  # from ap_config.json, if present
 
 
 def status(bundle: ModBundle | None, target: str, root: Path | None) -> TargetStatus:
@@ -205,17 +274,23 @@ def status(bundle: ModBundle | None, target: str, root: Path | None) -> TargetSt
         return TargetStatus(exefs=dest, state="different", detail="installed (no bundled mod to compare)")
     stale = [n for n in MOD_FILES
              if n not in present or sha256_bytes(present[n].read_bytes()) != bundle.sha256(n)]
+    host = str(read_config(target, root).get("bridge_host", ""))
     if stale:
-        return TargetStatus(exefs=dest, state="different",
+        return TargetStatus(exefs=dest, state="different", bridge_host=host,
                             detail=f"{' and '.join(stale)} {'differs' if len(stale) == 1 else 'differ'} "
                                    f"from the bundled mod {bundle.version}")
-    return TargetStatus(exefs=dest, state="current", detail=f"mod {bundle.version} installed")
+    if not host:
+        return TargetStatus(exefs=dest, state="different",
+                            detail=f"mod {bundle.version} installed but ap_config.json is missing")
+    return TargetStatus(exefs=dest, state="current", bridge_host=host,
+                        detail=f"mod {bundle.version} installed, PC address {host}")
 
 
 def remove(target: str, root: Path | None) -> list[str]:
     """Delete our files at the target and restore any backups. Returns lines
     describing what happened."""
-    dest = exefs_dir(target, _check_root(target, root))
+    root = _check_root(target, root)
+    dest = exefs_dir(target, root)
     if _foreign_install(dest):
         return [f"left {dest} alone: the mod there is not MK8DX Archipelago"]
     lines = []
@@ -231,9 +306,17 @@ def remove(target: str, root: Path | None) -> list[str]:
                 lines.append(f"removed {out}")
         except OSError as e:
             raise DeployError(f"could not remove {out}: {e}") from e
-    try:
-        if dest.is_dir() and not any(dest.iterdir()):
-            dest.rmdir()
-    except OSError:
-        pass
+    cfg = romfs_dir(target, root) / CONFIG_NAME
+    if cfg.is_file():
+        try:
+            cfg.unlink()
+            lines.append(f"removed {cfg}")
+        except OSError as e:
+            raise DeployError(f"could not remove {cfg}: {e}") from e
+    for d in (dest, cfg.parent):
+        try:
+            if d.is_dir() and not any(d.iterdir()):
+                d.rmdir()
+        except OSError:
+            pass
     return lines or [f"nothing to remove at {dest}"]

@@ -1,7 +1,8 @@
 name: Release
 
 # Builds the release mk8dx.apworld: the Switch mod (LibHakkun + LLVM 19 on
-# Ubuntu, no -DBRIDGE_HOST, so one binary serves every network), bundled
+# Ubuntu; nothing network-specific compiled in, so one binary serves every
+# network), bundled
 # under _setup/mod/ with a SHA-256 manifest, then scripts/release_audit.py
 # (IP discipline, bundled-mod integrity, no baked LAN address, version
 # drift) and a .sha256 sidecar. Everything happens in scripts/build_release.py;

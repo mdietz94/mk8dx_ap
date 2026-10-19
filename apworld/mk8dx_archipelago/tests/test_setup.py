@@ -56,6 +56,7 @@ def mod_dir(tmp_path: Path) -> Path:
 def appdata(tmp_path: Path, monkeypatch) -> Path:
     root = tmp_path / "appdata"
     monkeypatch.setenv("MK8AP_APPDATA_ROOT", str(root))
+    monkeypatch.setattr(deploy, "detect_bridge_host", lambda: "192.168.1.20")
     return root
 
 
@@ -105,9 +106,37 @@ def test_deploy_layouts(tmp_path: Path, mod_dir: Path, target: str, rel: str) ->
     assert res.exefs == root / rel
     assert (root / rel / "subsdk9").read_bytes() == b.files["subsdk9"]
     assert {p.name for p in res.copied} == {"subsdk9", "main.npdm"}
-    assert deploy.status(b, target, root).state == "current"
-    again = deploy.deploy(b, target, root)
+    cfg = root / rel.replace("exefs", "romfs") / "ap_config.json"
+    assert json.loads(cfg.read_text()) == {"bridge_host": "192.168.1.20"}
+    st = deploy.status(b, target, root)
+    assert st.state == "current" and st.bridge_host == "192.168.1.20"
+    again = deploy.deploy(b, target, root, "10.0.0.7")
     assert not again.copied and len(again.unchanged) == 2
+    assert json.loads(cfg.read_text()) == {"bridge_host": "10.0.0.7"}
+
+
+def test_detect_bridge_host_uses_client_net_util(monkeypatch) -> None:
+    monkeypatch.undo()  # the real detection, via client.net_util
+    from client.net_util import detect_lan_ip
+    assert deploy.detect_bridge_host() == detect_lan_ip()
+
+
+def test_status_flags_missing_config(tmp_path: Path, mod_dir: Path) -> None:
+    root = tmp_path / "sd"
+    root.mkdir()
+    b = load_from_dir(mod_dir)
+    deploy.deploy(b, "sd", root)
+    (deploy.romfs_dir("sd", root) / "ap_config.json").unlink()
+    st = deploy.status(b, "sd", root)
+    assert st.state == "different" and "ap_config.json" in st.detail
+
+
+@pytest.mark.parametrize("bad", ["192.168.1", "300.1.1.1", "pc.local", "127.0.0.1", "0.0.0.0"])
+def test_bad_bridge_host_is_rejected(tmp_path: Path, mod_dir: Path, bad: str) -> None:
+    root = tmp_path / "f"
+    with pytest.raises(deploy.DeployError):
+        deploy.deploy(load_from_dir(mod_dir), "folder", root, bad)
+    assert not (root / "atmosphere").exists()
 
 
 def test_ryujinx_portable_folder_is_followed(tmp_path: Path, mod_dir: Path) -> None:
@@ -151,8 +180,10 @@ def test_remove_ours_cleans_up(tmp_path: Path, mod_dir: Path) -> None:
     root = tmp_path / "ryu"
     root.mkdir()
     deploy.deploy(load_from_dir(mod_dir), "ryujinx", root)
-    deploy.remove("ryujinx", root)
-    assert not (root / "mods" / "contents" / "0100152000022000" / "exefs").exists()
+    lines = deploy.remove("ryujinx", root)
+    title = root / "mods" / "contents" / "0100152000022000"
+    assert not (title / "exefs").exists() and not (title / "romfs").exists()
+    assert any("ap_config.json" in line for line in lines)
 
 
 def test_deploy_errors_are_readable(tmp_path: Path, mod_dir: Path) -> None:
@@ -169,9 +200,11 @@ def test_deploy_errors_are_readable(tmp_path: Path, mod_dir: Path) -> None:
 
 def test_cli_deploy_status_remove(tmp_path: Path, mod_dir: Path, capsys) -> None:
     root = tmp_path / "staging"
-    assert cli.main(["deploy", "folder", "--root", str(root), "--from-dir", str(mod_dir)]) == 0
+    assert cli.main(["deploy", "folder", "--root", str(root), "--from-dir", str(mod_dir),
+                     "--bridge-host", "172.16.4.9"]) == 0
     st = state.load()
     assert st["target"] == "folder" and st["deployed_version"] == "local"
+    assert st["bridge_host"] == "172.16.4.9"
     assert st["folder_root"] == str(root)
     assert not state.is_first_run()
     assert cli.main(["status"]) == 0

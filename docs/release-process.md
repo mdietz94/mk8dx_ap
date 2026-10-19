@@ -7,11 +7,12 @@ One file, `mk8dx.apworld`, plus `mk8dx.apworld.sha256`. Inside the zip:
 | Path | Source |
 |---|---|
 | `mk8dx/...` | `apworld/mk8dx_archipelago/` minus `tests/`, caches, logs, learned-id files |
-| `mk8dx/_setup/mod/subsdk9`, `main.npdm` | the Switch mod, built by `scripts/build_switchmod.py` with no `-DBRIDGE_HOST` |
+| `mk8dx/_setup/mod/subsdk9`, `main.npdm` | the Switch mod, built by `scripts/build_switchmod.py` |
 | `mk8dx/_setup/mod/manifest.json` | mod version (= `world_version`), title id, git commit, SHA-256 + size of each file |
 
-The mod is prebuilt because nothing in it is player-specific: it finds the PC
-by UDP discovery on the console's own subnet. It contains only this
+The mod is prebuilt because nothing in it is player-specific: the PC address
+it sweeps comes from `romfs/ap_config.json`, written at deploy time. It
+contains only this
 repository's code, LibHakkun, and a few dozen bytes per game function as
 search patterns (the same kind of data every public MK8DX patch carries). No
 Nintendo code, assets or keys.
@@ -45,8 +46,7 @@ python scripts/build_release.py --publish  # same, then gh release create (tag m
 
 Windows needs the toolchain from the README (LLVM 19, CMake, Ninja, msys2
 mingw64 g++). `--skip-build` re-bundles `switch-mod/build/exefs` without
-rebuilding; only use it on a build made by this script (a `-DBRIDGE_HOST` dev
-build fails the audit).
+rebuilding.
 
 ## The audit (`scripts/release_audit.py`)
 
@@ -67,8 +67,8 @@ It fails on:
   NSO with module name `mk8dx_archipelago`, `main.npdm` not for title
   `0100152000022000`.
 - **Network-agnostic build:** the NSO's segments are LZ4-decompressed and
-  scanned; any dotted IPv4 literal other than `127.0.0.1` / `0.0.0.0` means a
-  `-DBRIDGE_HOST` build.
+  scanned; any dotted IPv4 literal other than `127.0.0.1` / `0.0.0.0` means
+  something network-specific was compiled in.
 - **Privacy:** an absolute home path (`C:\Users\<name>`, `/home/<name>`) in
   the mod or in any shipped text file.
 - **Version drift:** manifest `mod_version`, `world_version`, `__version__`.

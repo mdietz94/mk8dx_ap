@@ -1,12 +1,15 @@
 # Installing on a real Switch (Atmosphere)
 
-The mod is an Atmosphere exefs patch: two files in
-`sd:/atmosphere/contents/0100152000022000/exefs/`. The setup wizard writes them
+The mod is an Atmosphere exefs patch, two files in
+`sd:/atmosphere/contents/0100152000022000/exefs/`, plus one LayeredFS file,
+`.../romfs/ap_config.json`, holding the PC's LAN address. The setup wizard writes them
 for you ([first-time-setup.md](first-time-setup.md)); this page covers what is
 specific to a console.
 
 > **Status:** the mod has been verified under Ryujinx only. Real hardware has
-> not been tested yet (discovery sweep, nifm, socket pool on-console). Reports
+> not been tested yet (discovery sweep, LayeredFS config read, socket pool
+> on-console). The discovery scheme itself is the one dread_ap uses on real
+> hardware. Reports
 > welcome.
 
 ## Requirements
@@ -34,17 +37,20 @@ The files land at:
 ```
 sd:/atmosphere/contents/0100152000022000/exefs/subsdk9
 sd:/atmosphere/contents/0100152000022000/exefs/main.npdm
+sd:/atmosphere/contents/0100152000022000/romfs/ap_config.json
 ```
 
 ## How the Switch finds the PC
 
-Nothing about your network is built into the mod. At the title screen it asks
-the console for its own IP address and netmask, then sends one small UDP probe
-(port 17779) to every address on that subnet; the MK8DX Client answers with
-the PC's address, and the Switch connects to it on TCP 17778. It retries with
-backoff (1, 2, 5, 10, 30 s) until the client is running. So the PC can change
-address, and you can change rooms or servers, without reinstalling anything.
-A subnet larger than /24 is narrowed to the console's own /24.
+Nothing about your network is built into the mod. The wizard writes the PC's
+LAN address into `romfs/ap_config.json`; when the game mounts its RomFS the
+mod reads it, and then sends one small UDP probe (port 17779) to every address
+in that /24 (for 192.168.1.20: 192.168.1.1 to .254). The MK8DX Client answers
+with its current address and the Switch connects on TCP 17778. It retries with
+backoff (1, 2, 5, 10, 30 s) until the client is running. So the PC can get a
+different address on the same network, and you can change rooms or servers,
+without reinstalling. Only moving the PC to a different network (another
+/24) needs `/setup` > Install again.
 
 ## Do not play online with the mod
 
@@ -62,8 +68,10 @@ folder) cannot run at the same time. The wizard keeps the other mod's files as
 ## Troubleshooting
 
 - **Client never shows `Switch: connected`.** Check the firewall step and that
-  the network is Private. A VPN on the PC can move it onto another subnet:
-  disconnect it. Mesh / travel routers that isolate wireless clients block
+  the network is Private. Check the address in `romfs/ap_config.json` is on
+  the Switch's network (System Settings > Internet shows the Switch's
+  address; the first three numbers must match). A VPN on the PC can make the
+  wizard detect the wrong adapter: correct the address and Install again. Mesh / travel routers that isolate wireless clients block
   the probe; try the PC on Ethernet to the same router.
 - **The game boots but nothing happens.** The mod is inactive on any version
   other than 4.0.0. Check the update under *System Settings > Data
