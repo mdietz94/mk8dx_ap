@@ -9,24 +9,19 @@ include(config/config.cmake)
 # ---------------------------------------------------------------------------
 # Version + bridge defines (land verbatim in HELLO + log lines).
 #
-# BRIDGE_HOST is the LAN IP of the PC running the MK8DX Client. ApDiscovery
-# uses it as the SEED for the /24 unicast sweep (see ApDiscovery.cpp): the
-# PC may have moved to a neighbouring address after a DHCP renumber and the
-# sweep still finds it. No default; fatal on missing.
+# The mod finds the PC at runtime (UDP discovery over loopback and the
+# console's own subnet, see ApDiscovery.cpp), so a build carries nothing
+# about the player's network and the release ships it prebuilt.
+# BRIDGE_HOST is an optional developer seed: its /24 is swept as well.
+# Release builds leave it empty (scripts/release_audit.py checks).
 # ---------------------------------------------------------------------------
 set(MK8DX_VERSION          "4.0.0"         CACHE STRING "Target MK8DX version (the only supported one)")
 set(MK8AP_MOD_VERSION      "0.1.0"         CACHE STRING "Module version baked into HELLO")
-set(BRIDGE_HOST            ""              CACHE STRING "PC LAN IP - subnet sweep seed (REQUIRED; pass -DBRIDGE_HOST=<ip>)")
+set(BRIDGE_HOST            ""              CACHE STRING "Optional extra /24 to sweep (dev builds only; empty for releases)")
 set(BRIDGE_PORT            17778           CACHE STRING "Bridge TCP port")
 set(BRIDGE_RETRY_MS        3000            CACHE STRING "Reconnect backoff seed (ms)")
 set(BRIDGE_RECV_TIMEOUT_MS 200             CACHE STRING "Per-iteration recv timeout (ms)")
 set(DISCOVERY_PORT         17779           CACHE STRING "UDP discovery probe port")
-
-if(NOT BRIDGE_HOST)
-    message(FATAL_ERROR
-        "BRIDGE_HOST is not set. Pass the PC's LAN IP at configure time:\n"
-        "    python scripts/build_switchmod.py -DBRIDGE_HOST=192.168.x.x")
-endif()
 
 add_compile_definitions(
     MK8DX_VERSION_STRING="${MK8DX_VERSION}"

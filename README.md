@@ -8,6 +8,22 @@ item-box items and top speed are locked until the matching AP items arrive.
 Runs on Ryujinx and on a modded Switch (Atmosphere). No emulator memory
 reading: the mod talks to the PC client over LAN.
 
+## Install (players)
+
+1. Download `mk8dx.apworld` from the
+   [releases](https://github.com/mdietz94/mk8dx_ap/releases) into Archipelago's
+   `custom_worlds` folder.
+2. Open **MK8DX Client** from the Archipelago Launcher. The setup wizard opens
+   on the first run (`/setup` later): pick Ryujinx, a Switch SD card or a
+   folder and click **Install**. The Switch mod ships prebuilt inside the
+   apworld, verified against a SHA-256 manifest; nothing to compile, no game
+   data to extract, and one binary works on every network (the Switch finds
+   the PC by sweeping its own subnet).
+3. Start the game (update 4.0.0) and connect the client to your room.
+
+Guides: [first-time setup](docs/first-time-setup.md),
+[real Switch](docs/install-switch.md), [changing servers](docs/changing-servers.md).
+
 ## Status
 
 Alpha, played against a live seed on a real 4.0.0 dump under Ryujinx
@@ -16,6 +32,10 @@ functions), race results via the game's own PlayReport, Archipelago checks
 and item receipt, item-box gating, character/vehicle enforcement, cup
 locking (padlock, cursor skips the cup) and the top-speed clamp. Not yet
 verified: completing a Grand Prix (Trophy / goal) and real Switch hardware.
+The installer (prebuilt mod, setup wizard, release build + audit) was tested
+2026-10-18 from a frozen Archipelago 0.6.7 install: wizard -> Ryujinx deploy
+-> game boots -> the mod learns the console address from nifm and finds the
+client by its own-subnet sweep.
 `docs/symbols.md` lists every game function with its 4.0.0 location and the
 on-game findings.
 
@@ -30,7 +50,8 @@ per-frame top-speed clamp that rises with Progressive Speed items.
 |---|---|
 | `apworld/mk8dx_archipelago/` | the apworld (Manual-template generator + data) and the Kivy client under `client/` |
 | `switch-mod/` | LibHakkun subsdk9: resolved hooks + TCP bridge |
-| `scripts/` | `build_switchmod.py`, `install_apworld.py`, `run_client.py`, `gen_apworld_data.py`, `gen_symbol_table.py`, `make_pattern.py`, `switch_smoke_test.py`, `ap_generate.py`, `ap_server.py` |
+| `apworld/mk8dx_archipelago/_setup/` | setup wizard (Kivy), headless CLI, deploy targets, bundled-mod verification |
+| `scripts/` | `build_switchmod.py`, `build_release.py`, `install_apworld.py`, `release_audit.py`, `deploy_mod.py`, `run_client.py`, `gen_apworld_data.py`, `gen_symbol_table.py`, `make_pattern.py`, `switch_smoke_test.py`, `ap_generate.py`, `ap_server.py` |
 | `docs/` | architecture, wire protocol, symbol provenance, porting notes |
 | `vendor/Archipelago` | Archipelago submodule (pinned) |
 
@@ -39,12 +60,18 @@ per-frame top-speed clamp that rises with Progressive Speed items.
 ```bash
 git submodule update --init --recursive
 python scripts/gen_symbol_table.py          # only after editing syms/*.toml
-python scripts/build_switchmod.py -DBRIDGE_HOST=<your PC LAN IP>
+python scripts/build_switchmod.py           # no network settings needed
+python scripts/deploy_mod.py ryujinx        # or: sd --root E:/  |  folder --root <dir>  |  status
+python scripts/build_release.py             # release: mod + bundled apworld + audit + sha256 -> dist/
 ```
 
-Output: `switch-mod/build/exefs/{subsdk9,main.npdm}`. Deploy to
-`%AppData%\Ryujinx\mods\contents\0100152000022000\exefs\` (Ryujinx) or
-`sd:/atmosphere/contents/0100152000022000/exefs/` (Switch).
+Output: `switch-mod/build/exefs/{subsdk9,main.npdm}`; `deploy_mod.py` copies
+them with the wizard's code to
+`%AppData%\Ryujinx\mods\contents\0100152000022000\exefs\` or
+`sd:/atmosphere/contents/0100152000022000/exefs/`. `-DBRIDGE_HOST=<ip>` is
+optional and only adds that IP's /24 to the discovery sweep (PC and Switch on
+different subnets); release builds must not set it (`scripts/release_audit.py`
+rejects a mod with a baked address). Releases: `docs/release-process.md`.
 
 Toolchain (Windows): LLVM 19, CMake, Ninja, Python 3.12, msys2 mingw64
 (for sail + host tests). Same as `smo_archipelago`; `build_switchmod.py`
@@ -53,7 +80,7 @@ applies the LibHakkun Windows patches automatically.
 ## Play
 
 ```bash
-python scripts/install_apworld.py           # -> vendor/Archipelago/custom_worlds/mk8dx.apworld
+python scripts/install_apworld.py           # -> vendor/Archipelago/custom_worlds/mk8dx.apworld (add --bundle-mod for the wizard)
 python vendor/Archipelago/Launcher.py       # Generate with a "Mario Kart 8 Deluxe" yaml, host, then "MK8DX Client"
 # or, without the Launcher (dev / headless):
 .venv/Scripts/python scripts/run_client.py --connect localhost:38281 --name Mario [--nogui]

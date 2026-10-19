@@ -63,6 +63,22 @@ class MK8DXManager(GameManager):
             logging.getLogger("MK8DX").exception("panel refresh failed")
 
 
+def _mod_line(ctx: "MK8DXContext") -> str:
+    try:
+        from .._setup import state as setup_state
+        st = setup_state.load()
+    except Exception:  # noqa: BLE001
+        st = {}
+    bundled = ctx.switch.bundled_mod_ver if ctx.switch is not None else None
+    deployed = st.get("deployed_version")
+    if not deployed:
+        return "[color=#ff9800]not installed[/color] - type /setup" if bundled else "(source build)"
+    txt = f"{deployed} on {st.get('target', '?')}"
+    if bundled and deployed != bundled:
+        txt += f"  [color=#ff9800]bundled {bundled}: type /setup[/color]"
+    return txt
+
+
 def _format_status(ctx: "MK8DXContext") -> str:
     st = ctx.state
     s = st.summary()
@@ -72,6 +88,7 @@ def _format_status(ctx: "MK8DXContext") -> str:
     if sw.get("mod_ver"):
         sw_txt += f"  mod {sw.get('mod_ver')} / game {sw.get('game_ver')} / symbols {sw.get('resolved')}/{sw.get('total')}"
     parts.append(f"[b]Switch[/b]: {sw_txt}")
+    parts.append(f"[b]Mod[/b]: {_mod_line(ctx)}")
     parts.append(f"[b]Top speed[/b]: {s['speed_pct']}%  ({st.count(tables.PROGRESSIVE_SPEED)}/{st.speed_stages} stages)")
     cups = [c.name for c in tables.CUPS if st.has(tables.cup_item(c)) or c.name == tables.STARTING_CUP]
     parts.append(f"[b]Cups[/b] ({len(cups)}): " + (", ".join(cups) if cups else "[i]none[/i]"))

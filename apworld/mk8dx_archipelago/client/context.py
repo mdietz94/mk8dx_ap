@@ -43,6 +43,12 @@ class MK8DXCommandProcessor(ClientCommandProcessor):
         asyncio.create_task(self.ctx.push_state())
         return True
 
+    def _cmd_setup(self) -> bool:
+        """Open the setup wizard: install or update the Switch mod (Ryujinx, SD card or folder)."""
+        self.output("opening the setup wizard in a new window")
+        self.ctx.open_setup_wizard()
+        return True
+
     def _cmd_mk8_races(self) -> bool:
         """List the last few race events."""
         for ev in self.ctx.state.recent_races[-10:]:
@@ -246,6 +252,15 @@ class MK8DXContext(CommonContext):
             self._goal_sent = True
             log.info("goal reached: %d/%d cups completed", have, need)
             await self.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+
+    # ---- setup wizard ----
+    def open_setup_wizard(self) -> None:
+        try:
+            from worlds.LauncherComponents import launch_subprocess
+            from .. import run_setup_wizard
+            launch_subprocess(run_setup_wizard, name="MK8DXSetup")
+        except Exception as e:  # noqa: BLE001
+            log.error("could not open the setup wizard: %s", e)
 
     # ---- GUI ----
     def run_gui(self) -> None:

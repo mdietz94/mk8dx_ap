@@ -420,11 +420,11 @@ def main() -> int:
     os.makedirs(BUILD_DIR)
 
     # Extra cmake args (after the script name) are forwarded to the configure
-    # call. Pass at minimum `-DBRIDGE_HOST=<PC LAN IP>` (no default; CMake
-    # aborts if missing). ApDiscovery uses that IP's /24 as the unicast sweep
-    # range — the actual SMOClient might be on a neighbouring octet after a
-    # DHCP renumber, the sweep covers that.
-    #   python scripts/build_switchmod.py -DBRIDGE_HOST=192.168.1.42
+    # call. None are required: the mod discovers the PC on the console's own
+    # subnet. `-DBRIDGE_HOST=<ip>` adds that IP's /24 to the sweep (a PC on a
+    # different subnet than the console); release builds must not set it.
+    #   python scripts/build_switchmod.py
+    #   python scripts/build_switchmod.py -DBRIDGE_HOST=192.168.1.42 -DMK8AP_MOD_VERSION=0.2.0
     cmake_extra = sys.argv[1:]
     cfg = subprocess.run(
         [cmake, "-S", SWITCH_MOD, "-B", BUILD_DIR, "-G", "Ninja",

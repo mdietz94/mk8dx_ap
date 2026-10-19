@@ -90,5 +90,10 @@ jobs:
             switch-mod/tests/test_pattern.cpp switch-mod/src/sym/PatternResolver.cpp \
             -Iswitch-mod/src -o test_pattern
           ./test_pattern
+      - name: Build + run test_subnet
+        run: |
+          g++ -std=c++20 -Wall -Wextra -O0 -g -DMK8AP_HOST_TEST \
+            switch-mod/tests/test_subnet.cpp -Iswitch-mod/src -o test_subnet
+          ./test_subnet
       - name: Symbol table freshness
         run: python3 scripts/gen_symbol_table.py --check

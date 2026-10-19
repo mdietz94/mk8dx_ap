@@ -7,7 +7,6 @@ import settings
 from worlds.generic.Rules import forbid_items_for_player
 from worlds.LauncherComponents import (
     Component,
-    SuffixIdentifier,
     components,
     Type,
     launch as launch_or_subprocess,
@@ -378,7 +377,17 @@ def launch_mk8dx_client(*args):
     launch_or_subprocess(client_launch, name="MK8DXClient", args=args)
 
 
+def run_setup_wizard() -> None:
+    """Subprocess entry for the setup wizard (`/setup`, and the client's
+    first run). Module level so multiprocessing can pickle it by name."""
+    from ._setup.wizard import run_wizard
+    run_wizard()
+
+
 def add_client_to_launcher() -> None:
+    # No file_identifier: the mod needs nothing per seed, so there is no
+    # patch file to open. (smo_archipelago generated one and archipelago.gg
+    # then presented it as a "patch" players had to download.)
     for c in components:
         if c.display_name == CLIENT_DISPLAY_NAME:
             return
@@ -386,8 +395,9 @@ def add_client_to_launcher() -> None:
         CLIENT_DISPLAY_NAME,
         func=launch_mk8dx_client,
         component_type=Type.CLIENT,
-        file_identifier=SuffixIdentifier('.mk8dxap'),
         game_name=game_name,
+        description="Bridges a Switch or Ryujinx running Mario Kart 8 Deluxe to Archipelago. "
+                    "Type /setup in it to install the Switch mod.",
     ))
 
 
