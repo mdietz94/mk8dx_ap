@@ -33,7 +33,9 @@ Nintendo code, assets or keys.
 `.github/workflows/release.yml` then builds the mod on Ubuntu (LLVM 19 from
 apt.llvm.org), runs `scripts/build_release.py`, and publishes a GitHub
 Release with both files and `docs/release-notes-template.md` as the body.
-Tags containing `-` (`v0.2.0-rc1`) become pre-releases. The workflow also
+Tags containing `-` (`v0.2.0-rc1`, `v0.1.0-alpha1`) become pre-releases; the
+part before the `-` must equal `world_version` (Archipelago's version field
+takes plain numbers only, so the suffix lives only in the tag). The workflow also
 runs, without publishing, on pull requests that touch the mod or packaging,
 and on manual dispatch (download the `mk8dx-apworld` artifact to inspect).
 
