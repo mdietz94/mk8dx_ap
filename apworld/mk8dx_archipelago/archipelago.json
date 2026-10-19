@@ -2,7 +2,7 @@
     "compatible_version": 7,
     "version": 7,
     "game": "Mario Kart 8 Deluxe",
-    "world_version": "0.1.0",
+    "world_version": "0.1.1",
     "minimum_ap_version": "0.6.0",
     "authors": ["Max Dietz"]
 }

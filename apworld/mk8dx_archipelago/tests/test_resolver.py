@@ -14,6 +14,28 @@ def test_course_for_internal_variants():
     assert course_for_internal("Nope_Zzz") is None
 
 
+def test_every_course_has_a_unique_internal_name():
+    # A course with no internal name can never be checked: the PlayReport
+    # cannot resolve it and the hook channel never learns its id.
+    internals = [c.internal for c in tables.COURSES]
+    assert all(internals), [c.name for c in tables.COURSES if not c.internal]
+    assert len(set(internals)) == len(internals)
+    for c in tables.COURSES:
+        assert course_for_internal(c.internal) is c
+
+
+def test_bcp_and_seasonal_course_strings():
+    # PlayReport "Course" strings as the game writes them.
+    assert course_for_internal("Cnsw_31").name == "Tour London Loop"
+    assert course_for_internal("Cnsw_43").name == "Wii DK Summit"
+    assert course_for_internal("Cnsw_67").name == "SNES Bowser Castle 3"
+    assert course_for_internal("Gsfc_DonutsPlain3").name == "SNES Donut Plains 3"
+    assert course_for_internal("Du_Animal_Winter").name == "Animal Crossing"
+    rep = RaceReport(course="Cnsw_31", rank=1, finish_reason="Finish", rule="GP", end_time="1")
+    assert resolve_report(rep).locations == ["Tour London Loop - Finish", "Tour London Loop - Top 3",
+                                             "Tour London Loop - Win"]
+
+
 def test_rule_from_text():
     assert rule_from_text("VS") == RULE_VS
     assert rule_from_text("GrandPrix") == RULE_GRAND_PRIX
