@@ -90,7 +90,7 @@ def _format_status(ctx: "MK8DXContext") -> str:
     parts.append(f"[b]Switch[/b]: {sw_txt}")
     parts.append(f"[b]Mod[/b]: {_mod_line(ctx)}")
     parts.append(f"[b]Top speed[/b]: {s['speed_pct']}%  ({st.count(tables.PROGRESSIVE_SPEED)}/{st.speed_stages} stages)")
-    cups = [c.name for c in tables.CUPS if st.has(tables.cup_item(c)) or c.name == tables.STARTING_CUP]
+    cups = [c.name for c in tables.CUPS if st.has(tables.cup_item(c)) or c.name == st.starting_cup]
     parts.append(f"[b]Cups[/b] ({len(cups)}): " + (", ".join(cups) if cups else "[i]none[/i]"))
     if st.shuffle_characters:
         drivers = [e.name for e in tables.DRIVERS if st.has(tables.driver_item(e)) or e.name == tables.STARTING_DRIVER]

@@ -12,7 +12,8 @@ import logging
 PROGRESSIVE_SPEED = "Progressive Speed"
 TROPHY = "Trophy"
 CUP_CATEGORY = "Cups"
-STARTING_CUP = "Mushroom Cup"
+# First one present in the item pool is precollected (base game, then BCP).
+STARTING_CUPS = ("Mushroom Cup", "Golden Dash Cup")
 
 
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -20,7 +21,7 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 
 
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
-    # Number of cup-completion locations actually in this seed (BCP toggle);
+    # Number of cup-completion locations actually in this seed (course_selection);
     # GoalTrophies() clamps the goal to it.
     world.cup_completion_count = sum(
         1 for loc in multiworld.get_locations(player)
@@ -32,18 +33,29 @@ def before_create_items_starting(item_pool: list, world: World, multiworld: Mult
     return item_pool
 
 
+def _precollect(item, item_pool: list, world: World, multiworld: MultiWorld) -> None:
+    multiworld.push_precollected(item)
+    item_pool.remove(item)
+    world.start_inventory[item.name] = world.start_inventory.get(item.name, 0) + 1
+
+
 def before_create_items_filler(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
-    # Extra starting cups: starting_cups - 1 random cups beyond Mushroom Cup.
+    # Starting cup: Mushroom Cup, or Golden Dash Cup when course_selection
+    # leaves the base cups out (the first cup present in the pool).
+    world.starting_cup = next((n for n in STARTING_CUPS if any(i.name == n for i in item_pool)), STARTING_CUPS[0])
+    for it in item_pool:
+        if it.name == world.starting_cup:
+            _precollect(it, item_pool, world, multiworld)
+            break
+
+    # Extra starting cups: starting_cups - 1 random cups beyond the first.
     extra = int(get_option_value(multiworld, player, "starting_cups")) - 1
     if extra > 0:
         cups = [i for i in item_pool
-                if CUP_CATEGORY in world.item_name_to_item.get(i.name, {}).get("category", [])
-                and i.name != STARTING_CUP]
+                if CUP_CATEGORY in world.item_name_to_item.get(i.name, {}).get("category", [])]
         world.random.shuffle(cups)
         for it in cups[:extra]:
-            multiworld.push_precollected(it)
-            item_pool.remove(it)
-            world.start_inventory[it.name] = world.start_inventory.get(it.name, 0) + 1
+            _precollect(it, item_pool, world, multiworld)
 
     # Progressive Speed count follows the option.
     stages = int(get_option_value(multiworld, player, "speed_stages"))
@@ -95,6 +107,7 @@ def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld,
 
 def after_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
     slot_data["cup_completion_count"] = getattr(world, "cup_completion_count", 0)
+    slot_data["starting_cup"] = getattr(world, "starting_cup", STARTING_CUPS[0])
     slot_data["goal_trophies"] = max(1, min(int(get_option_value(multiworld, player, "goal_cups")),
                                             slot_data["cup_completion_count"] or 1))
     return slot_data

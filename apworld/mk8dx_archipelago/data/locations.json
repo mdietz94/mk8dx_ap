@@ -3,7 +3,8 @@
     "name": "Complete Mushroom Cup (Grand Prix)",
     "region": "Mushroom Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -13,7 +14,8 @@
     "name": "Complete Flower Cup (Grand Prix)",
     "region": "Flower Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -23,7 +25,8 @@
     "name": "Complete Star Cup (Grand Prix)",
     "region": "Star Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -33,7 +36,8 @@
     "name": "Complete Special Cup (Grand Prix)",
     "region": "Special Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -43,7 +47,8 @@
     "name": "Complete Shell Cup (Grand Prix)",
     "region": "Shell Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -53,7 +58,8 @@
     "name": "Complete Banana Cup (Grand Prix)",
     "region": "Banana Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -63,7 +69,8 @@
     "name": "Complete Leaf Cup (Grand Prix)",
     "region": "Leaf Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -73,7 +80,8 @@
     "name": "Complete Lightning Cup (Grand Prix)",
     "region": "Lightning Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -83,7 +91,8 @@
     "name": "Complete Egg Cup (Grand Prix)",
     "region": "Egg Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -93,7 +102,8 @@
     "name": "Complete Triforce Cup (Grand Prix)",
     "region": "Triforce Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -103,7 +113,8 @@
     "name": "Complete Crossing Cup (Grand Prix)",
     "region": "Crossing Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -113,7 +124,8 @@
     "name": "Complete Bell Cup (Grand Prix)",
     "region": "Bell Cup",
     "category": [
-      "Cup Completion"
+      "Cup Completion",
+      "Base Game"
     ],
     "place_item": [
       "Trophy"
@@ -256,7 +268,8 @@
     "region": "Mushroom Cup",
     "category": [
       "Courses",
-      "Mushroom Cup"
+      "Mushroom Cup",
+      "Base Game"
     ]
   },
   {
@@ -265,6 +278,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -274,6 +288,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -283,7 +298,8 @@
     "region": "Mushroom Cup",
     "category": [
       "Courses",
-      "Mushroom Cup"
+      "Mushroom Cup",
+      "Base Game"
     ]
   },
   {
@@ -292,6 +308,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -301,6 +318,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -310,7 +328,8 @@
     "region": "Mushroom Cup",
     "category": [
       "Courses",
-      "Mushroom Cup"
+      "Mushroom Cup",
+      "Base Game"
     ]
   },
   {
@@ -319,6 +338,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -328,6 +348,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -337,7 +358,8 @@
     "region": "Mushroom Cup",
     "category": [
       "Courses",
-      "Mushroom Cup"
+      "Mushroom Cup",
+      "Base Game"
     ]
   },
   {
@@ -346,6 +368,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -355,6 +378,7 @@
     "category": [
       "Courses",
       "Mushroom Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -364,7 +388,8 @@
     "region": "Flower Cup",
     "category": [
       "Courses",
-      "Flower Cup"
+      "Flower Cup",
+      "Base Game"
     ]
   },
   {
@@ -373,6 +398,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -382,6 +408,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -391,7 +418,8 @@
     "region": "Flower Cup",
     "category": [
       "Courses",
-      "Flower Cup"
+      "Flower Cup",
+      "Base Game"
     ]
   },
   {
@@ -400,6 +428,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -409,6 +438,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -418,7 +448,8 @@
     "region": "Flower Cup",
     "category": [
       "Courses",
-      "Flower Cup"
+      "Flower Cup",
+      "Base Game"
     ]
   },
   {
@@ -427,6 +458,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -436,6 +468,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -445,7 +478,8 @@
     "region": "Flower Cup",
     "category": [
       "Courses",
-      "Flower Cup"
+      "Flower Cup",
+      "Base Game"
     ]
   },
   {
@@ -454,6 +488,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -463,6 +498,7 @@
     "category": [
       "Courses",
       "Flower Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -472,7 +508,8 @@
     "region": "Star Cup",
     "category": [
       "Courses",
-      "Star Cup"
+      "Star Cup",
+      "Base Game"
     ]
   },
   {
@@ -481,6 +518,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -490,6 +528,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -499,7 +538,8 @@
     "region": "Star Cup",
     "category": [
       "Courses",
-      "Star Cup"
+      "Star Cup",
+      "Base Game"
     ]
   },
   {
@@ -508,6 +548,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -517,6 +558,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -526,7 +568,8 @@
     "region": "Star Cup",
     "category": [
       "Courses",
-      "Star Cup"
+      "Star Cup",
+      "Base Game"
     ]
   },
   {
@@ -535,6 +578,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -544,6 +588,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -553,7 +598,8 @@
     "region": "Star Cup",
     "category": [
       "Courses",
-      "Star Cup"
+      "Star Cup",
+      "Base Game"
     ]
   },
   {
@@ -562,6 +608,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -571,6 +618,7 @@
     "category": [
       "Courses",
       "Star Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -580,7 +628,8 @@
     "region": "Special Cup",
     "category": [
       "Courses",
-      "Special Cup"
+      "Special Cup",
+      "Base Game"
     ]
   },
   {
@@ -589,6 +638,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -598,6 +648,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -607,7 +658,8 @@
     "region": "Special Cup",
     "category": [
       "Courses",
-      "Special Cup"
+      "Special Cup",
+      "Base Game"
     ]
   },
   {
@@ -616,6 +668,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -625,6 +678,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -634,7 +688,8 @@
     "region": "Special Cup",
     "category": [
       "Courses",
-      "Special Cup"
+      "Special Cup",
+      "Base Game"
     ]
   },
   {
@@ -643,6 +698,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -652,6 +708,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -661,7 +718,8 @@
     "region": "Special Cup",
     "category": [
       "Courses",
-      "Special Cup"
+      "Special Cup",
+      "Base Game"
     ]
   },
   {
@@ -670,6 +728,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -679,6 +738,7 @@
     "category": [
       "Courses",
       "Special Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -688,7 +748,8 @@
     "region": "Shell Cup",
     "category": [
       "Courses",
-      "Shell Cup"
+      "Shell Cup",
+      "Base Game"
     ]
   },
   {
@@ -697,6 +758,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -706,6 +768,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -715,7 +778,8 @@
     "region": "Shell Cup",
     "category": [
       "Courses",
-      "Shell Cup"
+      "Shell Cup",
+      "Base Game"
     ]
   },
   {
@@ -724,6 +788,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -733,6 +798,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -742,7 +808,8 @@
     "region": "Shell Cup",
     "category": [
       "Courses",
-      "Shell Cup"
+      "Shell Cup",
+      "Base Game"
     ]
   },
   {
@@ -751,6 +818,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -760,6 +828,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -769,7 +838,8 @@
     "region": "Shell Cup",
     "category": [
       "Courses",
-      "Shell Cup"
+      "Shell Cup",
+      "Base Game"
     ]
   },
   {
@@ -778,6 +848,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -787,6 +858,7 @@
     "category": [
       "Courses",
       "Shell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -796,7 +868,8 @@
     "region": "Banana Cup",
     "category": [
       "Courses",
-      "Banana Cup"
+      "Banana Cup",
+      "Base Game"
     ]
   },
   {
@@ -805,6 +878,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -814,6 +888,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -823,7 +898,8 @@
     "region": "Banana Cup",
     "category": [
       "Courses",
-      "Banana Cup"
+      "Banana Cup",
+      "Base Game"
     ]
   },
   {
@@ -832,6 +908,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -841,6 +918,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -850,7 +928,8 @@
     "region": "Banana Cup",
     "category": [
       "Courses",
-      "Banana Cup"
+      "Banana Cup",
+      "Base Game"
     ]
   },
   {
@@ -859,6 +938,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -868,6 +948,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -877,7 +958,8 @@
     "region": "Banana Cup",
     "category": [
       "Courses",
-      "Banana Cup"
+      "Banana Cup",
+      "Base Game"
     ]
   },
   {
@@ -886,6 +968,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -895,6 +978,7 @@
     "category": [
       "Courses",
       "Banana Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -904,7 +988,8 @@
     "region": "Leaf Cup",
     "category": [
       "Courses",
-      "Leaf Cup"
+      "Leaf Cup",
+      "Base Game"
     ]
   },
   {
@@ -913,6 +998,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -922,6 +1008,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -931,7 +1018,8 @@
     "region": "Leaf Cup",
     "category": [
       "Courses",
-      "Leaf Cup"
+      "Leaf Cup",
+      "Base Game"
     ]
   },
   {
@@ -940,6 +1028,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -949,6 +1038,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -958,7 +1048,8 @@
     "region": "Leaf Cup",
     "category": [
       "Courses",
-      "Leaf Cup"
+      "Leaf Cup",
+      "Base Game"
     ]
   },
   {
@@ -967,6 +1058,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -976,6 +1068,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -985,7 +1078,8 @@
     "region": "Leaf Cup",
     "category": [
       "Courses",
-      "Leaf Cup"
+      "Leaf Cup",
+      "Base Game"
     ]
   },
   {
@@ -994,6 +1088,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1003,6 +1098,7 @@
     "category": [
       "Courses",
       "Leaf Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1012,7 +1108,8 @@
     "region": "Lightning Cup",
     "category": [
       "Courses",
-      "Lightning Cup"
+      "Lightning Cup",
+      "Base Game"
     ]
   },
   {
@@ -1021,6 +1118,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1030,6 +1128,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1039,7 +1138,8 @@
     "region": "Lightning Cup",
     "category": [
       "Courses",
-      "Lightning Cup"
+      "Lightning Cup",
+      "Base Game"
     ]
   },
   {
@@ -1048,6 +1148,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1057,6 +1158,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1066,7 +1168,8 @@
     "region": "Lightning Cup",
     "category": [
       "Courses",
-      "Lightning Cup"
+      "Lightning Cup",
+      "Base Game"
     ]
   },
   {
@@ -1075,6 +1178,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1084,6 +1188,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1093,7 +1198,8 @@
     "region": "Lightning Cup",
     "category": [
       "Courses",
-      "Lightning Cup"
+      "Lightning Cup",
+      "Base Game"
     ]
   },
   {
@@ -1102,6 +1208,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1111,6 +1218,7 @@
     "category": [
       "Courses",
       "Lightning Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1120,7 +1228,8 @@
     "region": "Egg Cup",
     "category": [
       "Courses",
-      "Egg Cup"
+      "Egg Cup",
+      "Base Game"
     ]
   },
   {
@@ -1129,6 +1238,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1138,6 +1248,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1147,7 +1258,8 @@
     "region": "Egg Cup",
     "category": [
       "Courses",
-      "Egg Cup"
+      "Egg Cup",
+      "Base Game"
     ]
   },
   {
@@ -1156,6 +1268,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1165,6 +1278,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1174,7 +1288,8 @@
     "region": "Egg Cup",
     "category": [
       "Courses",
-      "Egg Cup"
+      "Egg Cup",
+      "Base Game"
     ]
   },
   {
@@ -1183,6 +1298,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1192,6 +1308,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1201,7 +1318,8 @@
     "region": "Egg Cup",
     "category": [
       "Courses",
-      "Egg Cup"
+      "Egg Cup",
+      "Base Game"
     ]
   },
   {
@@ -1210,6 +1328,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1219,6 +1338,7 @@
     "category": [
       "Courses",
       "Egg Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1228,7 +1348,8 @@
     "region": "Triforce Cup",
     "category": [
       "Courses",
-      "Triforce Cup"
+      "Triforce Cup",
+      "Base Game"
     ]
   },
   {
@@ -1237,6 +1358,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1246,6 +1368,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1255,7 +1378,8 @@
     "region": "Triforce Cup",
     "category": [
       "Courses",
-      "Triforce Cup"
+      "Triforce Cup",
+      "Base Game"
     ]
   },
   {
@@ -1264,6 +1388,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1273,6 +1398,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1282,7 +1408,8 @@
     "region": "Triforce Cup",
     "category": [
       "Courses",
-      "Triforce Cup"
+      "Triforce Cup",
+      "Base Game"
     ]
   },
   {
@@ -1291,6 +1418,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1300,6 +1428,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1309,7 +1438,8 @@
     "region": "Triforce Cup",
     "category": [
       "Courses",
-      "Triforce Cup"
+      "Triforce Cup",
+      "Base Game"
     ]
   },
   {
@@ -1318,6 +1448,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1327,6 +1458,7 @@
     "category": [
       "Courses",
       "Triforce Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1336,7 +1468,8 @@
     "region": "Crossing Cup",
     "category": [
       "Courses",
-      "Crossing Cup"
+      "Crossing Cup",
+      "Base Game"
     ]
   },
   {
@@ -1345,6 +1478,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1354,6 +1488,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1363,7 +1498,8 @@
     "region": "Crossing Cup",
     "category": [
       "Courses",
-      "Crossing Cup"
+      "Crossing Cup",
+      "Base Game"
     ]
   },
   {
@@ -1372,6 +1508,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1381,6 +1518,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1390,7 +1528,8 @@
     "region": "Crossing Cup",
     "category": [
       "Courses",
-      "Crossing Cup"
+      "Crossing Cup",
+      "Base Game"
     ]
   },
   {
@@ -1399,6 +1538,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1408,6 +1548,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1417,7 +1558,8 @@
     "region": "Crossing Cup",
     "category": [
       "Courses",
-      "Crossing Cup"
+      "Crossing Cup",
+      "Base Game"
     ]
   },
   {
@@ -1426,6 +1568,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1435,6 +1578,7 @@
     "category": [
       "Courses",
       "Crossing Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1444,7 +1588,8 @@
     "region": "Bell Cup",
     "category": [
       "Courses",
-      "Bell Cup"
+      "Bell Cup",
+      "Base Game"
     ]
   },
   {
@@ -1453,6 +1598,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1462,6 +1608,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1471,7 +1618,8 @@
     "region": "Bell Cup",
     "category": [
       "Courses",
-      "Bell Cup"
+      "Bell Cup",
+      "Base Game"
     ]
   },
   {
@@ -1480,6 +1628,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1489,6 +1638,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1498,7 +1648,8 @@
     "region": "Bell Cup",
     "category": [
       "Courses",
-      "Bell Cup"
+      "Bell Cup",
+      "Base Game"
     ]
   },
   {
@@ -1507,6 +1658,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1516,6 +1668,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"
@@ -1525,7 +1678,8 @@
     "region": "Bell Cup",
     "category": [
       "Courses",
-      "Bell Cup"
+      "Bell Cup",
+      "Base Game"
     ]
   },
   {
@@ -1534,6 +1688,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Top 3"
     ]
   },
@@ -1543,6 +1698,7 @@
     "category": [
       "Courses",
       "Bell Cup",
+      "Base Game",
       "Win"
     ],
     "requires": "{HasWinSpeed()}"

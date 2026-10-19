@@ -4,7 +4,7 @@ description: MK8DX loopback test seed (single slot)
 
 Mario Kart 8 Deluxe:
   accessibility: minimal
-  include_booster_course_pass: true
+  course_selection: both
   include_top3_locations: true
   include_win_locations: true
   shuffle_characters: true

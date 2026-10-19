@@ -22,6 +22,7 @@ import tables  # noqa: E402  (imported from client/ as a top-level module)
 
 DATA = APWORLD / "data"
 BCP = "Booster Course Pass"
+BASE = "Base Game"   # base-game cups and courses; BCP / BASE gated by course_selection
 
 
 def build() -> dict[str, object]:
@@ -29,7 +30,9 @@ def build() -> dict[str, object]:
     locations: list[dict] = []
     regions: dict[str, dict] = {}
     categories: dict[str, dict] = {
-        BCP: {"yaml_option": ["include_booster_course_pass"]},
+        # Enabled by hooks/Helpers.py from the course_selection Choice.
+        BASE: {},
+        BCP: {},
         "Top 3": {"yaml_option": ["include_top3_locations"]},
         "Win": {"yaml_option": ["include_win_locations"]},
         "Characters": {"yaml_option": ["shuffle_characters"]},
@@ -39,7 +42,7 @@ def build() -> dict[str, object]:
 
     # ---- cups: one region + one unlock item + one completion location each
     for cup in tables.CUPS:
-        cats = ["Cups"] + ([BCP] if cup.bcp else [])
+        cats = ["Cups", BCP if cup.bcp else BASE]
         items.append({"name": tables.cup_item(cup), "progression": True, "category": cats, "count": 1})
         regions[cup.name] = {
             "requires": f"|{tables.cup_item(cup)}|",
@@ -49,14 +52,14 @@ def build() -> dict[str, object]:
         locations.append({
             "name": tables.cup_complete_location(cup),
             "region": cup.name,
-            "category": ["Cup Completion"] + ([BCP] if cup.bcp else []),
+            "category": ["Cup Completion", BCP if cup.bcp else BASE],
             "place_item": [tables.TROPHY],
         })
 
     # ---- courses: Finish / Top 3 / Win
     for course in tables.COURSES:
         cup = tables.CUPS[course.cup]
-        base_cats = ["Courses", cup.name] + ([BCP] if cup.bcp else [])
+        base_cats = ["Courses", cup.name, BCP if cup.bcp else BASE]
         locations.append({
             "name": tables.course_location(course, "Finish"),
             "region": cup.name,

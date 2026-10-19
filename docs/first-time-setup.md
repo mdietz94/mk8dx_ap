@@ -19,7 +19,7 @@ client (see [changing servers](changing-servers.md)).
 | The PC and the Switch on the **same network** | Not needed for Ryujinx on the same PC. |
 
 The Booster Course Pass is optional; generate with
-`include_booster_course_pass: false` if your save does not own it.
+`course_selection: base_game` if your save does not own it.
 
 ## Steps
 

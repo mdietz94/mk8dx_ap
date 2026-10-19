@@ -1,9 +1,6 @@
 {
-  "Booster Course Pass": {
-    "yaml_option": [
-      "include_booster_course_pass"
-    ]
-  },
+  "Base Game": {},
+  "Booster Course Pass": {},
   "Top 3": {
     "yaml_option": [
       "include_top3_locations"

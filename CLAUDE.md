@@ -67,8 +67,8 @@ Ryujinx also prints every PlayReport as JSON (`ServicePrepo
 ProcessPlayReport`): a free cross-check for the mod's MessagePack capture.
 The `ap_generate` output is a zip; unzip it to get the `.archipelago`.
 `run_client.py` prints harmless `Could not load world` errors for other
-worlds' missing deps. Generate seeds with `include_booster_course_pass:
-false` unless the save owns the BCP (the user's does not).
+worlds' missing deps. Generate seeds with `course_selection:
+base_game` unless the save owns the BCP (the user's does not).
 
 ## Load-bearing design points
 
