@@ -3,7 +3,8 @@
     "name": "Mushroom Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -11,7 +12,8 @@
     "name": "Flower Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -19,7 +21,8 @@
     "name": "Star Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -27,7 +30,8 @@
     "name": "Special Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -35,7 +39,8 @@
     "name": "Shell Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -43,7 +48,8 @@
     "name": "Banana Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -51,7 +57,8 @@
     "name": "Leaf Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -59,7 +66,8 @@
     "name": "Lightning Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -67,7 +75,8 @@
     "name": "Egg Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -75,7 +84,8 @@
     "name": "Triforce Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -83,7 +93,8 @@
     "name": "Crossing Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },
@@ -91,7 +102,8 @@
     "name": "Bell Cup",
     "progression": true,
     "category": [
-      "Cups"
+      "Cups",
+      "Base Game"
     ],
     "count": 1
   },

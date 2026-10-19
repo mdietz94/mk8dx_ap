@@ -236,6 +236,7 @@ STARTING_TIRE = "Standard"
 STARTING_GLIDER = "Super Glider"
 STARTING_ITEMS = ("Mushroom", "Banana", "Coin")
 STARTING_CUP = "Mushroom Cup"
+BCP_STARTING_CUP = "Golden Dash Cup"   # course_selection: booster_course_pass
 
 
 def cup_item(cup: Cup) -> str:

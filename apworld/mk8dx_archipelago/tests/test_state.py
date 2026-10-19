@@ -75,3 +75,11 @@ def test_runtime_part_tables_do_not_override_default_ids(tmp_path: Path):
     L2 = LearnedIds(tmp_path / "ids.json")
     assert L2.learn_course(3, "tc_Course_Gu_Cake")
     assert L2.course_for_id(3).name == "Sweet Sweet Canyon"
+
+
+def test_bcp_only_starting_cup_from_slot_data():
+    st = BridgeState()
+    st.ap_conn = "ready"
+    st.apply_slot_data({"starting_cup": tables.BCP_STARTING_CUP})
+    golden_dash = next(c for c in tables.CUPS if c.name == tables.BCP_STARTING_CUP)
+    assert st.build_state().cups == 1 << golden_dash.index  # Mushroom Cup stays locked

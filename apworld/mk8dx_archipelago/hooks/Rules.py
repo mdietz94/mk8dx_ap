@@ -7,6 +7,7 @@ from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from ..Helpers import get_option_value
+from .Helpers import BOTH, course_selection
 
 PROGRESSIVE_SPEED = "Progressive Speed"
 TROPHY = "Trophy"
@@ -27,7 +28,7 @@ def _goal_trophies(world: World, multiworld: MultiWorld, player: int) -> int:
     want = int(get_option_value(multiworld, player, "goal_cups"))
     available = getattr(world, "cup_completion_count", None)
     if available is None:
-        available = 24 if get_option_value(multiworld, player, "include_booster_course_pass") else 12
+        available = 24 if course_selection(multiworld, player) == BOTH else 12
     return max(1, min(want, available))
 
 

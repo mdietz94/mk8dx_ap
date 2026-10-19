@@ -49,6 +49,7 @@ class BridgeState:
         self.speed_stages = 3
         self.min_speed_pct = 60
         self.cpu_items = False
+        self.starting_cup = tables.STARTING_CUP
 
     # ---- items ----
     def add_item(self, name: str, count: int = 1) -> None:
@@ -70,6 +71,7 @@ class BridgeState:
         self.speed_stages = int(slot_data.get("speed_stages", 3))
         self.min_speed_pct = int(slot_data.get("min_speed_percent", 60))
         self.cpu_items = bool(slot_data.get("restrict_cpu_items", False))
+        self.starting_cup = str(slot_data.get("starting_cup", tables.STARTING_CUP))
 
     # ---- restriction snapshot ----
     def speed_pct(self) -> int:
@@ -97,7 +99,7 @@ class BridgeState:
 
         cups = 0
         for cup in tables.CUPS:
-            if self.has(tables.cup_item(cup)) or cup.name == tables.STARTING_CUP:
+            if self.has(tables.cup_item(cup)) or cup.name == self.starting_cup:
                 cups |= 1 << cup.index
         items = 0
         for e in tables.ITEMS:

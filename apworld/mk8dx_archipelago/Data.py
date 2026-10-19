@@ -30,8 +30,8 @@ game_table: dict = {
     "filler_item_name": "Coin Bonus",
     "death_link": False,
     # Precollected at generation (Manual-template `starting_items` blocks).
+    # The starting cup depends on course_selection: hooks/World.py.
     "starting_items": [
-        {"items": ["Mushroom Cup"]},
         {"items": ["Character: Mario"]},
         {"items": ["Kart: Standard Kart", "Tires: Standard", "Glider: Super Glider"]},
         {"items": ["Item: Mushroom", "Item: Banana", "Item: Coin"]},

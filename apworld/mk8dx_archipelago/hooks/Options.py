@@ -5,10 +5,21 @@ from Options import FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, Ra
 from ..Helpers import is_option_enabled, get_option_value
 
 
-class IncludeBoosterCoursePass(DefaultOnToggle):
-    """Include the 48 Booster Course Pass courses (and their 12 cups). Requires
-    owning the DLC."""
-    display_name = "Include Booster Course Pass"
+class CourseSelection(Choice):
+    """Which courses are in the seed.
+
+    base_game: the 48 base courses (12 cups). You start with Mushroom Cup.
+    booster_course_pass: only the 48 Booster Course Pass courses (12 cups)
+        and the BCP characters. You start with Golden Dash Cup.
+    both: all 96 courses (24 cups) and the BCP characters.
+
+    The two BCP choices require owning the DLC. Weight the choices to roll
+    one at random, e.g. base_game: 50, booster_course_pass: 50."""
+    display_name = "Course selection"
+    option_base_game = 0
+    option_booster_course_pass = 1
+    option_both = 2
+    default = 2
 
 
 class IncludeTop3Locations(DefaultOnToggle):
@@ -93,7 +104,7 @@ class StartingCups(Range):
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
-    options["include_booster_course_pass"] = IncludeBoosterCoursePass
+    options["course_selection"] = CourseSelection
     options["include_top3_locations"] = IncludeTop3Locations
     options["include_win_locations"] = IncludeWinLocations
     options["shuffle_characters"] = ShuffleCharacters
