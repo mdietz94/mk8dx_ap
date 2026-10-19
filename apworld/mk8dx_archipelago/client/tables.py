@@ -82,7 +82,7 @@ COURSES: list[Course] = (
              ("Bowser's Castle", "Gu_BowserCastle"), ("Rainbow Road", "Gu_RainbowRoad")]) +
     _cup(4, [("Wii Moo Moo Meadows", "Gwii_MooMooMeadows"), ("GBA Mario Circuit", "Gagb_MarioCircuit"),
              ("DS Cheep Cheep Beach", "Gds_PukupukuBeach"), ("N64 Toad's Turnpike", "G64_KinopioHighway")]) +
-    _cup(5, [("GCN Dry Dry Desert", "Ggc_DryDryDesert"), ("SNES Donut Plains 3", "Gsfc_DonutPlains3"),
+    _cup(5, [("GCN Dry Dry Desert", "Ggc_DryDryDesert"), ("SNES Donut Plains 3", "Gsfc_DonutsPlain3"),
              ("N64 Royal Raceway", "G64_PeachCircuit"), ("3DS DK Jungle", "G3ds_DKJungle")]) +
     _cup(6, [("DS Wario Stadium", "Gds_WarioStadium"), ("GCN Sherbet Land", "Ggc_SherbetLand"),
              ("3DS Music Park", "G3ds_MusicPark"), ("N64 Yoshi Valley", "G64_YoshiValley")]) +
@@ -96,32 +96,33 @@ COURSES: list[Course] = (
               ("Wild Woods", "Du_Woods"), ("Animal Crossing", "Du_Animal")]) +
     _cup(11, [("3DS Neo Bowser City", "D3ds_NeoBowserCity"), ("GBA Ribbon Road", "Dagb_RibbonRoad"),
               ("Super Bell Subway", "Du_Metro"), ("Big Blue", "Du_BigBlue")]) +
-    # Booster Course Pass. Internal stems are "Cnsw_NN"; the numbering is
-    # not public in full, so these are learned at runtime (see learned.py).
+    # Booster Course Pass. Internal stems are "Cnsw_<wave><slot>": wave 1..6,
+    # slot 1..8 in cup-menu order (slots 1-4 = the wave's first cup). Names per
+    # NextendoNetwork/Ryujinx-Nextendo NextendoMk8Courses.cs (PlayReport table).
     _cup(12, [("Tour Paris Promenade", "Cnsw_11"), ("3DS Toad Circuit", "Cnsw_12"),
               ("N64 Choco Mountain", "Cnsw_13"), ("Wii Coconut Mall", "Cnsw_14")]) +
     _cup(13, [("Tour Tokyo Blur", "Cnsw_15"), ("DS Shroom Ridge", "Cnsw_16"),
               ("GBA Sky Garden", "Cnsw_17"), ("Ninja Hideaway", "Cnsw_18")]) +
-    _cup(14, [("Tour New York Minute", ""), ("SNES Mario Circuit 3", ""),
-              ("N64 Kalimari Desert", ""), ("DS Waluigi Pinball", "")]) +
-    _cup(15, [("Tour Sydney Sprint", ""), ("GBA Snow Land", ""),
-              ("Wii Mushroom Gorge", ""), ("Sky-High Sundae", "")]) +
-    _cup(16, [("Tour London Loop", ""), ("GBA Boo Lake", ""),
-              ("3DS Rock Rock Mountain", ""), ("Wii Maple Treeway", "")]) +
-    _cup(17, [("Tour Berlin Byways", ""), ("DS Peach Gardens", ""),
-              ("Merry Mountain", ""), ("3DS Rainbow Road", "")]) +
-    _cup(18, [("Tour Amsterdam Drift", ""), ("GBA Riverside Park", ""),
-              ("Wii DK Summit", ""), ("Yoshi's Island", "")]) +
-    _cup(19, [("Tour Bangkok Rush", ""), ("DS Mario Circuit", ""),
-              ("GCN Waluigi Stadium", ""), ("Tour Singapore Speedway", "")]) +
-    _cup(20, [("Tour Athens Dash", ""), ("GCN Daisy Cruiser", ""),
-              ("Wii Moonview Highway", ""), ("Squeaky Clean Sprint", "")]) +
-    _cup(21, [("Tour Los Angeles Laps", ""), ("GBA Sunset Wilds", ""),
-              ("Wii Koopa Cape", ""), ("Tour Vancouver Velocity", "")]) +
-    _cup(22, [("Tour Rome Avanti", ""), ("GCN DK Mountain", ""),
-              ("Wii Daisy Circuit", ""), ("Piranha Plant Cove", "")]) +
-    _cup(23, [("Tour Madrid Drive", ""), ("3DS Rosalina's Ice World", ""),
-              ("SNES Bowser Castle 3", ""), ("Wii Rainbow Road", "Cnsw_68")])
+    _cup(14, [("Tour New York Minute", "Cnsw_21"), ("SNES Mario Circuit 3", "Cnsw_22"),
+              ("N64 Kalimari Desert", "Cnsw_23"), ("DS Waluigi Pinball", "Cnsw_24")]) +
+    _cup(15, [("Tour Sydney Sprint", "Cnsw_25"), ("GBA Snow Land", "Cnsw_26"),
+              ("Wii Mushroom Gorge", "Cnsw_27"), ("Sky-High Sundae", "Cnsw_28")]) +
+    _cup(16, [("Tour London Loop", "Cnsw_31"), ("GBA Boo Lake", "Cnsw_32"),
+              ("3DS Rock Rock Mountain", "Cnsw_33"), ("Wii Maple Treeway", "Cnsw_34")]) +
+    _cup(17, [("Tour Berlin Byways", "Cnsw_35"), ("DS Peach Gardens", "Cnsw_36"),
+              ("Merry Mountain", "Cnsw_37"), ("3DS Rainbow Road", "Cnsw_38")]) +
+    _cup(18, [("Tour Amsterdam Drift", "Cnsw_41"), ("GBA Riverside Park", "Cnsw_42"),
+              ("Wii DK Summit", "Cnsw_43"), ("Yoshi's Island", "Cnsw_44")]) +
+    _cup(19, [("Tour Bangkok Rush", "Cnsw_45"), ("DS Mario Circuit", "Cnsw_46"),
+              ("GCN Waluigi Stadium", "Cnsw_47"), ("Tour Singapore Speedway", "Cnsw_48")]) +
+    _cup(20, [("Tour Athens Dash", "Cnsw_51"), ("GCN Daisy Cruiser", "Cnsw_52"),
+              ("Wii Moonview Highway", "Cnsw_53"), ("Squeaky Clean Sprint", "Cnsw_54")]) +
+    _cup(21, [("Tour Los Angeles Laps", "Cnsw_55"), ("GBA Sunset Wilds", "Cnsw_56"),
+              ("Wii Koopa Cape", "Cnsw_57"), ("Tour Vancouver Velocity", "Cnsw_58")]) +
+    _cup(22, [("Tour Rome Avanti", "Cnsw_61"), ("GCN DK Mountain", "Cnsw_62"),
+              ("Wii Daisy Circuit", "Cnsw_63"), ("Piranha Plant Cove", "Cnsw_64")]) +
+    _cup(23, [("Tour Madrid Drive", "Cnsw_65"), ("3DS Rosalina's Ice World", "Cnsw_66"),
+              ("SNES Bowser Castle 3", "Cnsw_67"), ("Wii Rainbow Road", "Cnsw_68")])
 )
 
 COURSE_BY_NAME: dict[str, Course] = {c.name: c for c in COURSES}

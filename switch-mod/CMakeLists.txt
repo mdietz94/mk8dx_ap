@@ -15,7 +15,7 @@ include(config/config.cmake)
 # binary; scripts/release_audit.py rejects any baked IPv4 literal.
 # ---------------------------------------------------------------------------
 set(MK8DX_VERSION          "4.0.0"         CACHE STRING "Target MK8DX version (the only supported one)")
-set(MK8AP_MOD_VERSION      "0.1.0"         CACHE STRING "Module version baked into HELLO")
+set(MK8AP_MOD_VERSION      "0.1.1"         CACHE STRING "Module version baked into HELLO")
 set(BRIDGE_PORT            17778           CACHE STRING "Bridge TCP port")
 set(BRIDGE_RETRY_MS        3000            CACHE STRING "Reconnect backoff seed (ms)")
 set(BRIDGE_RECV_TIMEOUT_MS 200             CACHE STRING "Per-iteration recv timeout (ms)")
