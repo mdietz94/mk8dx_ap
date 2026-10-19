@@ -1,12 +1,14 @@
 """Setup for the MK8DX Archipelago Switch mod.
 
 The release `mk8dx.apworld` carries a PREBUILT mod (`_setup/mod/subsdk9`,
-`main.npdm`, `manifest.json`). One binary serves every player because the
-mod finds the PC by UDP discovery on the console's own subnet; nothing about
-the player's network is compiled in. So setup is only: pick where the game
-runs (Ryujinx, a Switch SD card, or a folder you copy to the SD yourself),
-verify the bundled files against the manifest, copy them, and optionally open
-the Windows Firewall ports. No toolchain, no build, no game data extraction.
+`main.npdm`, `manifest.json`). One binary serves every player because
+nothing about the player's network is compiled in: deploy writes
+`romfs/ap_config.json` = {"bridge_host": <this PC's LAN address>} next to
+the mod, and the mod sweeps that address's /24 (the dread_ap scheme). So
+setup is only: pick where the game runs (Ryujinx, a Switch SD card, or a
+folder you copy to the SD yourself), confirm the PC address, verify the
+bundled files against the manifest, copy them, and optionally open the
+Windows Firewall ports. No toolchain, no build, no game data extraction.
 
 Modules (each importable without Kivy or Archipelago):
 

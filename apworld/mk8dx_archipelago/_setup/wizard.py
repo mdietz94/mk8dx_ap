@@ -5,8 +5,10 @@ the first time the client starts on a machine. Three pages:
 
   1. Welcome  — requirements, and the bundled mod's version (verified
                 against its manifest before anything else happens).
-  2. Install  — pick Ryujinx / SD card / folder, see what is installed
-                there now, Install (or Remove).
+  2. Install  — pick Ryujinx / SD card / folder and confirm this PC's LAN
+                address (written to ap_config.json next to the mod; the
+                Switch sweeps its /24), see what is installed there now,
+                Install (or Remove).
   3. Done     — what to do next for that target; for a real Switch, the
                 Windows Firewall step.
 
@@ -95,6 +97,11 @@ def run_wizard() -> None:
         "roots": {t: saved.get(f"{t}_root", "") for t in deploy.TARGETS},
         "result": None,
     }
+    try:
+        detected_host = deploy.detect_bridge_host()
+    except Exception as e:  # noqa: BLE001
+        wizard_log(f"LAN address detection failed: {e!r}")
+        detected_host = ""
     if not ws["roots"]["ryujinx"]:
         ws["roots"]["ryujinx"] = str(deploy.detect_ryujinx() or "")
     if not ws["roots"]["sd"]:
@@ -143,7 +150,7 @@ def run_wizard() -> None:
         "  - Ryujinx on this PC, or a Switch running Atmosphere on the same network as this PC\n\n"
         "[b]Good to know[/b]\n"
         "  - Nothing is compiled and no game files are read: the mod ships ready-made in the "
-        "apworld and works on any network.\n"
+        "apworld; setup only copies it and records this PC's address for the Switch.\n"
         "  - Do not play online with the mod installed on a real Switch. 'Remove' on the next "
         "page takes it out again.\n"
         "  - Re-run setup ([b]/setup[/b] in the client) after updating the apworld."))
@@ -182,6 +189,17 @@ def run_wizard() -> None:
     b2.add_widget(path_row)
     drives_row = BoxLayout(size_hint_y=None, height=dp(40), spacing=dp(6))
     b2.add_widget(drives_row)
+    host_row = BoxLayout(size_hint_y=None, height=dp(40), spacing=dp(6))
+    host_row.add_widget(text("This PC's address:", height=40, size_hint_x=0.3))
+    host_input = TextInput(multiline=False, size_hint_x=0.4,
+                           text=saved.get("bridge_host") or detected_host)
+    host_row.add_widget(host_input)
+    host_row.add_widget(button("Detect", lambda: setattr(host_input, "text", deploy.detect_bridge_host()),
+                               size_hint_x=0.3))
+    b2.add_widget(host_row)
+    b2.add_widget(text("[size=13sp]The Switch finds the MK8DX Client by searching this address's network. "
+                       "Detected automatically; change it only if this PC has several network adapters "
+                       "(VPN, WSL, virtual machines). Ryujinx on this PC does not need it.[/size]", height=40))
     status_label = text("", height=60)
     b2.add_widget(status_label)
     b2.add_widget(Widget())
@@ -251,7 +269,7 @@ def run_wizard() -> None:
         error_label.text = ""
         try:
             assert bundle is not None
-            result = deploy.deploy(bundle, t, root)
+            result = deploy.deploy(bundle, t, root, host_input.text.strip() or None)
         except deploy.DeployError as e:
             error_label.text = f"[color=#ff5252]{e}[/color]"
             wizard_log(f"deploy {t} {root} FAILED: {e}")
@@ -260,7 +278,7 @@ def run_wizard() -> None:
             error_label.text = f"[color=#ff5252]Unexpected error: {e!r} (details in {wizard_log_path()})[/color]"
             wizard_log(f"deploy {t} {root} CRASHED:\n{traceback.format_exc()}")
             return
-        state.record_deploy(t, root, bundle.version)
+        state.record_deploy(t, root, bundle.version, result.bridge_host)
         ws["result"] = result
         wizard_log(f"deploy {t}: {result.summary()}")
         show_done()

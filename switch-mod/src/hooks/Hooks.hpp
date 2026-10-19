@@ -8,7 +8,8 @@ namespace mk8ap::hooks {
 
 // SDK-level hooks (resolved by name through nnrtld; no game symbols needed)
 void installSocketInitHook();   // nn::socket::Initialize observer
-void installPlayReportHooks();  // nn::prepo IPC SaveReport capture (race results)
+void installPlayReportHooks();
+void installRomConfigHook();    // nn::fs::MountRom -> read ap_config.json (discovery seed)  // nn::prepo IPC SaveReport capture (race results)
 
 // Game hooks (resolved by sym::PatternResolver)
 void installSaveLoadHook();     // gear::SaveDataFile::load -> start networking

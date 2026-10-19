@@ -12,8 +12,7 @@ The zip is named `mk8dx.apworld`, so Archipelago imports the world as
 `--bundle-mod` adds `mk8dx/_setup/mod/{subsdk9,main.npdm,manifest.json}`
 from `switch-mod/build/exefs/` (or `--mod-dir`). The manifest carries the
 mod version and each file's SHA-256; the setup wizard verifies both before
-deploying. A release must be built without -DBRIDGE_HOST; run
-scripts/release_audit.py on the result (scripts/build_release.py does all of
+deploying. Run scripts/release_audit.py on the result (scripts/build_release.py does all of
 this in one go).
 """
 

@@ -38,14 +38,14 @@ Installer (2026-10-18): the release `mk8dx.apworld` bundles a PREBUILT mod
 (`_setup/mod/`, SHA-256 manifest); the Kivy wizard (`/setup`, auto-opens on
 the client's first run) deploys it to Ryujinx / SD card / folder. Verified
 from the frozen AP 0.6.7 install in `C:\ProgramData\Archipelago` (wizard,
-Ryujinx deploy, Kart tab) and in game: `console address ... via nifm
-GetCurrentIpConfigInfo`, own-subnet sweep finds the client. The Ubuntu
+Ryujinx deploy, Kart tab) and in game: `MountRom(content)` ->
+`content:/ap_config.json: bridge_host=...` -> sweep finds the client. The Ubuntu
 release workflow has not run yet (first run is the PR that adds it).
 
 ## How to test (the loop that produced every finding so far)
 
 ```pwsh
-# 1. build + deploy the mod (no -DBRIDGE_HOST needed; discovery is runtime)
+# 1. build + deploy the mod (deploy also writes romfs/ap_config.json with this PC's LAN IP)
 python scripts\build_switchmod.py
 python scripts\deploy_mod.py ryujinx      # the wizard's deploy code, from switch-mod/build/exefs
 # 2. (re)install the apworld, then host a seed and run the headless client
@@ -159,17 +159,17 @@ false` unless the save owns the BCP (the user's does not).
   PlayReport hook (`hooks::startNetworkingOnce`). Never from `hkMain`.
   `SocketInitHook` initialises `nn::socket` itself only if the game has
   not; discovery is loopback first, then a /24 unicast sweep.
-* **Discovery needs no build-time IP.** `ApDiscovery` learns the console's
-  address + mask at runtime (`nn::nifm::GetCurrentIpConfigInfo`, then
-  `GetCurrentPrimaryIpAddress`, then a connected UDP socket's
-  `GetSockName`; all via `hk::ro::lookupSymbol`, never plain externs) and
-  sweeps that subnet after loopback (wider than /24 is narrowed to the
-  console's /24; math in `ApSubnet.hpp`, host test `test_subnet.cpp`).
-  The 4.0.0 SDK exports exactly `_ZN2nn4nifm22GetCurrentIpConfigInfoEP7in_addrS2_S2_S2_S2_`,
-  `_ZN2nn4nifm26GetCurrentPrimaryIpAddressEP7in_addr`,
-  `_ZN2nn6socket11GetSockNameEiP8sockaddrPj` (SdkSymbolDump). `-DBRIDGE_HOST`
-  is an optional extra /24 for dev builds; that is what makes ONE prebuilt
-  binary possible, so never make it required again.
+* **Discovery = the dread_ap scheme (user decision 2026-10-19).** Deploy
+  writes `<title>/romfs/ap_config.json` = `{"bridge_host":"<PC LAN IP>"}`
+  (detected, editable in the wizard / `--bridge-host`). `RomConfigHook`
+  trampolines `nn::fs::MountRom` (MK8DX mounts `content`) and reads
+  `content:/ap_config.json` ONCE, on that game thread, closing every handle
+  (Dread hit a save-breaking 2002-6455 FileNotClosed abort reading on a
+  worker thread). `ApDiscovery` probes loopback, then sweeps the seed's /24;
+  it never calls nn::fs and never asks the console for its own address
+  (nifm / getsockname are unproven on real hardware; Dread's seed is
+  proven). No compile-time `BRIDGE_HOST` any more. The nn::fs read functions
+  are `lookupSymbol`'d (4.0.0 names verified via SdkSymbolDump).
 * **Release = prebuilt mod in the apworld.** `scripts/build_release.py`
   (CI: `.github/workflows/release.yml`, Ubuntu + LLVM 19) builds with
   `-DMK8AP_MOD_VERSION=<world_version>`, bundles via
@@ -191,7 +191,8 @@ false` unless the save owns the BCP (the user's does not).
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,
   and the goal (`goal_cups` Trophies).
 * Real Switch hardware (Atmosphere): only Ryujinx so far. Discovery sweep,
-  nifm request path and the socket pool have not been exercised on-console.
+  nifm request path, the socket pool and the LayeredFS ap_config.json read
+  have not been exercised on-console.
 * `restrict_cpu_items`, multiplayer (local players > 1), VS / Time Trials
   flows beyond one GP race, Booster Course Pass cups (user's save lacks it).
 * `KartGuard` with a non-default `def_*` (so far only Mario / Standard).
@@ -206,7 +207,7 @@ apworld/mk8dx_archipelago/   __init__.py (MK8DXWorld + Launcher Component + run_
                              client/{main,context,gui,switch_server,discovery,protocol,play_report,
                                      learned,resolver,state,tables,net_util,logging_setup}.py,
                              _setup/{bundle,deploy,state,firewall,cli,wizard}.py (mod/ only in release zips),
-                             tests/ (54 pass + 7 skipped: live-AP ones need MK8AP_LIVE_AP=1, lz4 test needs lz4)
+                             tests/ (61 pass + 7 skipped: live-AP ones need MK8AP_LIVE_AP=1, lz4 test needs lz4)
 switch-mod/                  CMakeLists.txt, config/, syms/mk8dx_symbols.toml, sys/ (LibHakkun submodule,
                              Windows patches applied at build by scripts/patch_hakkun.py),
                              src/main.cpp, src/sym/{PatternResolver,SymbolTable.inc},

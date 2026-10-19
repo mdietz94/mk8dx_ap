@@ -3,7 +3,7 @@ players who prefer a terminal.
 
     python -m worlds.mk8dx._setup.cli status
     python -m worlds.mk8dx._setup.cli deploy ryujinx [--root DIR]
-    python -m worlds.mk8dx._setup.cli deploy sd --root E:/
+    python -m worlds.mk8dx._setup.cli deploy sd --root E:/ [--bridge-host 192.168.1.20]
     python -m worlds.mk8dx._setup.cli deploy folder --root C:/staging
     python -m worlds.mk8dx._setup.cli deploy ryujinx --from-dir switch-mod/build/exefs
     python -m worlds.mk8dx._setup.cli remove ryujinx
@@ -67,11 +67,11 @@ def cmd_deploy(args) -> int:
     root = Path(args.root) if args.root else default_root(args.target)
     try:
         bundle = _bundle(args.from_dir)
-        result = deploy.deploy(bundle, args.target, root)
+        result = deploy.deploy(bundle, args.target, root, args.bridge_host)
     except (BundleError, deploy.DeployError) as e:
         print(f"FAIL: {e}", file=sys.stderr)
         return 1
-    state.record_deploy(args.target, root, bundle.version)
+    state.record_deploy(args.target, root, bundle.version, result.bridge_host)
     print(f"OK: mod {bundle.version}: {result.summary()}")
     return 0
 
@@ -105,6 +105,7 @@ def build_parser() -> argparse.ArgumentParser:
     d.add_argument("target", choices=deploy.TARGETS)
     d.add_argument("--root", help="Ryujinx data dir / SD root / folder (default: detected or last used)")
     d.add_argument("--from-dir", help="deploy a local build (e.g. switch-mod/build/exefs) instead of the bundled mod")
+    d.add_argument("--bridge-host", help="this PC's LAN address for ap_config.json (default: detected)")
     d.set_defaults(fn=cmd_deploy)
     r = sub.add_parser("remove", help="remove the mod (restores whatever it replaced)")
     r.add_argument("target", choices=deploy.TARGETS)

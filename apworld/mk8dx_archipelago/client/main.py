@@ -87,6 +87,14 @@ def _setup_nudge(ctx: MK8DXContext, bundled: str | None) -> None:
     elif st.get("deployed_version") != bundled:
         log.warning("installed Switch mod %s (%s) is not the bundled %s: type /setup to update it",
                     st.get("deployed_version"), st.get("target"), bundled)
+    # The Switch sweeps the /24 of the address written at setup time.
+    seed = str(st.get("bridge_host") or "")
+    if seed and st.get("target") in ("sd", "folder"):
+        from .net_util import detect_lan_ip
+        now = detect_lan_ip()
+        if now.rsplit(".", 1)[0] != seed.rsplit(".", 1)[0]:
+            log.warning("this PC is now %s but the Switch mod searches %s's network: type /setup "
+                        "and Install again so the Switch can find this PC", now, seed)
 
 
 def _learned_path(override: str | None) -> Path:
