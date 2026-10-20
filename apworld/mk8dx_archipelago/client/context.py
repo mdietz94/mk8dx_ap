@@ -76,7 +76,10 @@ class MK8DXContext(CommonContext):
         # same race within a few seconds of each other.
         self._last_hook_course: tuple[int, float] | None = None
         self._last_report_course: tuple[str, float] | None = None
-        self._goal_sent = False
+        # (seed, slot) that reached the goal. CommonContext.finished_game makes
+        # CommonClient re-send CLIENT_GOAL on every Connected, so it must not
+        # carry over to a different slot connected from the same client.
+        self._goal_key: tuple[str, str] | None = None
         self._tiers: tuple[str, ...] = tables.LOCATION_TIERS
 
     # ---- AP plumbing ----
@@ -84,6 +87,8 @@ class MK8DXContext(CommonContext):
         if password_requested and not self.password:
             await super().server_auth(password_requested)
         await self.get_username()
+        if self._goal_key != (str(self.seed_name or ""), str(self.auth or "")):
+            self.finished_game = False
         await self.send_connect()
 
     def on_package(self, cmd: str, args: dict) -> None:
@@ -98,12 +103,16 @@ class MK8DXContext(CommonContext):
                 if not (t == "Top 3" and not self.slot_data.get("include_top3_locations", True))
                 and not (t == "Win" and not self.slot_data.get("include_win_locations", True)))
             self.state.clear_items()
+            # The server's list is complete: drop checks from a previous slot.
+            self.state.checked_locations.clear()
             for loc_id in args.get("checked_locations", []):
                 name = self.location_names.lookup_in_game(loc_id) if hasattr(self.location_names, "lookup_in_game") else self.location_names.get(loc_id)
                 if name:
                     self.state.checked_locations.add(name)
             log.info("connected as %s (seed %s); tiers=%s", self.state.slot, self.state.seed, self._tiers)
             asyncio.create_task(self.push_state())
+            # Cups completed in an earlier session may already meet the goal.
+            asyncio.create_task(self._maybe_goal())
         elif cmd == "ReceivedItems":
             if args.get("index", 0) == 0:
                 self.state.clear_items()
@@ -241,7 +250,7 @@ class MK8DXContext(CommonContext):
         await self._maybe_goal()
 
     async def _maybe_goal(self) -> None:
-        if self._goal_sent:
+        if self.finished_game:
             return
         need = int(self.slot_data.get("goal_trophies", 0) or 0)
         if need <= 0:
@@ -249,7 +258,10 @@ class MK8DXContext(CommonContext):
         have = sum(1 for n in self.state.checked_locations
                    if n.startswith("Complete ") and n.endswith("(Grand Prix)"))
         if have >= need:
-            self._goal_sent = True
+            # Set before sending: if the socket is down, send_msgs drops the
+            # message and CommonClient re-sends CLIENT_GOAL on reconnect.
+            self.finished_game = True
+            self._goal_key = (str(self.seed_name or ""), str(self.auth or ""))
             log.info("goal reached: %d/%d cups completed", have, need)
             await self.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
 
