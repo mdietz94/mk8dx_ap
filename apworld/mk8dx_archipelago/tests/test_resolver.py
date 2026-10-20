@@ -27,8 +27,12 @@ def test_every_course_has_a_unique_internal_name():
 def test_bcp_and_seasonal_course_strings():
     # PlayReport "Course" strings as the game writes them.
     assert course_for_internal("Cnsw_31").name == "Tour London Loop"
-    assert course_for_internal("Cnsw_43").name == "Wii DK Summit"
-    assert course_for_internal("Cnsw_67").name == "SNES Bowser Castle 3"
+    # Waves 3-6 are not numbered in cup-menu order.
+    assert course_for_internal("Cnsw_42").name == "Wii DK Summit"
+    assert course_for_internal("Cnsw_43").name == "DS Mario Circuit"
+    assert course_for_internal("Cnsw_57").name == "SNES Bowser Castle 3"
+    assert course_for_internal("Cnsw_62").name == "Wii Maple Treeway"
+    assert course_for_internal("Cnsw_65").name == "Tour Athens Dash"
     assert course_for_internal("Gsfc_DonutsPlain3").name == "SNES Donut Plains 3"
     assert course_for_internal("Du_Animal_Winter").name == "Animal Crossing"
     rep = RaceReport(course="Cnsw_31", rank=1, finish_reason="Finish", rule="GP", end_time="1")

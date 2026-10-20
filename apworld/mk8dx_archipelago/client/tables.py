@@ -96,9 +96,10 @@ COURSES: list[Course] = (
               ("Wild Woods", "Du_Woods"), ("Animal Crossing", "Du_Animal")]) +
     _cup(11, [("3DS Neo Bowser City", "D3ds_NeoBowserCity"), ("GBA Ribbon Road", "Dagb_RibbonRoad"),
               ("Super Bell Subway", "Du_Metro"), ("Big Blue", "Du_BigBlue")]) +
-    # Booster Course Pass. Internal stems are "Cnsw_<wave><slot>": wave 1..6,
-    # slot 1..8 in cup-menu order (slots 1-4 = the wave's first cup). Names per
-    # NextendoNetwork/Ryujinx-Nextendo NextendoMk8Courses.cs (PlayReport table).
+    # Booster Course Pass. Internal stems are "Cnsw_<nn>"; waves 1-2 happen to
+    # run 11..28 in cup-menu order, waves 3-6 do NOT (e.g. Maple Treeway is
+    # Cnsw_62, Athens Dash Cnsw_65). Stems per the community "Mario Kart 8
+    # Deluxe Information Dump" Courses sheet (Internal Name / Menu UI DLC01..48).
     _cup(12, [("Tour Paris Promenade", "Cnsw_11"), ("3DS Toad Circuit", "Cnsw_12"),
               ("N64 Choco Mountain", "Cnsw_13"), ("Wii Coconut Mall", "Cnsw_14")]) +
     _cup(13, [("Tour Tokyo Blur", "Cnsw_15"), ("DS Shroom Ridge", "Cnsw_16"),
@@ -107,22 +108,22 @@ COURSES: list[Course] = (
               ("N64 Kalimari Desert", "Cnsw_23"), ("DS Waluigi Pinball", "Cnsw_24")]) +
     _cup(15, [("Tour Sydney Sprint", "Cnsw_25"), ("GBA Snow Land", "Cnsw_26"),
               ("Wii Mushroom Gorge", "Cnsw_27"), ("Sky-High Sundae", "Cnsw_28")]) +
-    _cup(16, [("Tour London Loop", "Cnsw_31"), ("GBA Boo Lake", "Cnsw_32"),
-              ("3DS Rock Rock Mountain", "Cnsw_33"), ("Wii Maple Treeway", "Cnsw_34")]) +
-    _cup(17, [("Tour Berlin Byways", "Cnsw_35"), ("DS Peach Gardens", "Cnsw_36"),
+    _cup(16, [("Tour London Loop", "Cnsw_31"), ("GBA Boo Lake", "Cnsw_33"),
+              ("3DS Rock Rock Mountain", "Cnsw_34"), ("Wii Maple Treeway", "Cnsw_62")]) +
+    _cup(17, [("Tour Berlin Byways", "Cnsw_35"), ("DS Peach Gardens", "Cnsw_32"),
               ("Merry Mountain", "Cnsw_37"), ("3DS Rainbow Road", "Cnsw_38")]) +
-    _cup(18, [("Tour Amsterdam Drift", "Cnsw_41"), ("GBA Riverside Park", "Cnsw_42"),
-              ("Wii DK Summit", "Cnsw_43"), ("Yoshi's Island", "Cnsw_44")]) +
-    _cup(19, [("Tour Bangkok Rush", "Cnsw_45"), ("DS Mario Circuit", "Cnsw_46"),
-              ("GCN Waluigi Stadium", "Cnsw_47"), ("Tour Singapore Speedway", "Cnsw_48")]) +
-    _cup(20, [("Tour Athens Dash", "Cnsw_51"), ("GCN Daisy Cruiser", "Cnsw_52"),
-              ("Wii Moonview Highway", "Cnsw_53"), ("Squeaky Clean Sprint", "Cnsw_54")]) +
-    _cup(21, [("Tour Los Angeles Laps", "Cnsw_55"), ("GBA Sunset Wilds", "Cnsw_56"),
-              ("Wii Koopa Cape", "Cnsw_57"), ("Tour Vancouver Velocity", "Cnsw_58")]) +
-    _cup(22, [("Tour Rome Avanti", "Cnsw_61"), ("GCN DK Mountain", "Cnsw_62"),
-              ("Wii Daisy Circuit", "Cnsw_63"), ("Piranha Plant Cove", "Cnsw_64")]) +
-    _cup(23, [("Tour Madrid Drive", "Cnsw_65"), ("3DS Rosalina's Ice World", "Cnsw_66"),
-              ("SNES Bowser Castle 3", "Cnsw_67"), ("Wii Rainbow Road", "Cnsw_68")])
+    _cup(18, [("Tour Amsterdam Drift", "Cnsw_41"), ("GBA Riverside Park", "Cnsw_47"),
+              ("Wii DK Summit", "Cnsw_42"), ("Yoshi's Island", "Cnsw_44")]) +
+    _cup(19, [("Tour Bangkok Rush", "Cnsw_55"), ("DS Mario Circuit", "Cnsw_43"),
+              ("GCN Waluigi Stadium", "Cnsw_36"), ("Tour Singapore Speedway", "Cnsw_45")]) +
+    _cup(20, [("Tour Athens Dash", "Cnsw_65"), ("GCN Daisy Cruiser", "Cnsw_46"),
+              ("Wii Moonview Highway", "Cnsw_63"), ("Squeaky Clean Sprint", "Cnsw_58")]) +
+    _cup(21, [("Tour Los Angeles Laps", "Cnsw_48"), ("GBA Sunset Wilds", "Cnsw_53"),
+              ("Wii Koopa Cape", "Cnsw_52"), ("Tour Vancouver Velocity", "Cnsw_61")]) +
+    _cup(22, [("Tour Rome Avanti", "Cnsw_54"), ("GCN DK Mountain", "Cnsw_56"),
+              ("Wii Daisy Circuit", "Cnsw_66"), ("Piranha Plant Cove", "Cnsw_64")]) +
+    _cup(23, [("Tour Madrid Drive", "Cnsw_51"), ("3DS Rosalina's Ice World", "Cnsw_67"),
+              ("SNES Bowser Castle 3", "Cnsw_57"), ("Wii Rainbow Road", "Cnsw_68")])
 )
 
 COURSE_BY_NAME: dict[str, Course] = {c.name: c for c in COURSES}
