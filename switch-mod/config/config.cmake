@@ -20,8 +20,8 @@ set(IS_32_BIT FALSE)
 set(TARGET_IS_STATIC FALSE)
 set(MODULE_NAME mk8dx_archipelago)
 # Mario Kart 8 Deluxe. 3.0.4+ is a native 64-bit build (3.0.3 and below are
-# ARM32 and cannot load an AArch64 subsdk). Target: 4.0.0 only, main build
-# id 2C336A9BCF79C3040CE506CDD391B578; the module stays inactive elsewhere.
+# ARM32 and cannot load an AArch64 subsdk). Target: 4.0.1 only, main build
+# id 158C0C7399AABD7BF83795C2EF3484C7; the module stays inactive elsewhere.
 set(TITLE_ID 0x0100152000022000)
 # subsdk9 is the Atmosphere exefs slot the module lands in.
 set(MODULE_BINARY subsdk9)

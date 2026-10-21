@@ -1,8 +1,10 @@
 # Symbols: how the mod finds game functions, and where the data comes from
 
-The mod supports exactly one game build: **MK8DX 4.0.0**, main build id
-`2C336A9BCF79C3040CE506CDD391B578`. On any other build `hkMain` logs an
-error and installs nothing.
+The mod supports exactly one game build: **MK8DX 4.0.1**, main build id
+`158C0C7399AABD7BF83795C2EF3484C7`. On any other build (4.0.0 included:
+`2C336A9BCF79C3040CE506CDD391B578`) `hkMain` logs an error and installs
+nothing. The mod targeted 4.0.0 until 2026-10-21; 4.0.0 support was
+dropped rather than kept alongside (user decision: latest version only).
 
 MK8DX ships no symbols. `switch-mod/syms/mk8dx_symbols.toml` lists every
 game function the mod hooks or calls. `src/sym/PatternResolver.cpp` locates
@@ -10,7 +12,7 @@ each one at boot:
 
 | Locator | Used for | How |
 |---|---|---|
-| `address` | functions with a published 4.0.0 address | used as-is |
+| `address` | functions with a published 4.0.1 address | used as-is |
 | `pattern` + `offset`, exact | everything else | byte pattern scanned over main `.text` at instruction alignment; must match once |
 | `pattern`, relaxed | when the exact bytes miss | branch distances, ADRP pages and struct-offset immediates wildcarded; must match exactly once |
 
@@ -31,24 +33,48 @@ this table: they are exported by the game / sdk modules and resolved by
 name through nnrtld (`HkTrampoline::installAtSym`,
 `--unresolved-symbols=ignore-all`).
 
-## Current table (4.0.0)
+## Current table (4.0.1)
 
-| Function | Locator |
-|---|---|
-| `gear::GetRaceInfo` | address `0x87FCD0` |
-| `gear::FrameworkUtil::getCurrentGameScene` | address `0x7F7AC0` |
-| `gear::NetworkUtil::getMyKartIndex` | address `0x862820` |
-| `ui::RaceWindow::onFakeGoal` | address `0x550168` (Ro hooks `+0xD8` at `0x550240`) |
-| `gear::ItemOwner::startSlot` | address `0x4336C` |
-| `gear::GetNextRaceInfo` | pattern, exact hit `+0x87FCE8` (verified 2026-10-16) |
-| `gear::FlagAccessor::isOpen` | pattern, exact hit `+0x876370`; fires per cup on the title-screen cup grid |
-| `gear::DLCManager::getCupStatus` | pattern **UNRESOLVED** on 4.0.0 (no exact hit, relaxed form not unique). Layer 2 of the cup gate is skipped; layers 1 and 3 cover it |
-| `ui::SetNextCourse` | pattern, RELAXED hit `+0x41FCF8` (the `#0x1744 -> #0x1A44` member move, as predicted) |
-| `ui::Control_CupButton::setCup` | pattern, exact hit `+0x43B9FC` |
-| `ui::Control_RaceLapCoin::onCalc_` | pattern, exact hit `+0x512C84` |
-| `gear::SaveDataFile::load` | pattern, exact hit `+0x8EB2D8`; fires twice at boot |
-| `gear::GetCurrentUserSaveData` | pattern, exact hit `+0x8BD538` |
-| `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern, exact hits `+0xB4FF0 / +0xB5384 / +0x16B86C / +0x13317C`; tables enumerate 54 / 42 / 23 / 16 entries |
+Boot on a real 4.0.1 dump (XCI base + v1507328 update, Ryujinx 1.3.3,
+2026-10-21): build id `158C0C7399AABD7BF83795C2EF3484C7` matched, 20/21
+resolved, every hook installed, client handshake OK. Every pattern hit
+moved by the same per-region delta as Ro's published addresses (last
+column), which is how the pattern hits were checked to be the right
+functions.
+
+| Function | Locator (4.0.1) | 4.0.0 | Delta |
+|---|---|---|---|
+| `gear::GetRaceInfo` | address `0x86F7BC` | `0x87FCD0` | -0x10514 |
+| `gear::FrameworkUtil::getCurrentGameScene` | address `0x7E7434` | `0x7F7AC0` | -0x1068C |
+| `gear::NetworkUtil::getMyKartIndex` | address `0x852234` | `0x862820` | -0x105EC |
+| `ui::RaceWindow::onFakeGoal` | address `0x5502F0` (Ro hooks `+0xD8` at `0x5503C8`) | `0x550168` | +0x188 |
+| `gear::ItemOwner::startSlot` | address `0x43374` | `0x4336C` | +0x8 |
+| `ui::SetRandomCPU` | address `0x4FD858` (Ro hooks `+0x2140` at `0x4FF998`) | `0x4FD6D0` | +0x188 |
+| `gear::GetNextRaceInfo` | pattern, exact hit `+0x86F7D4` | `+0x87FCE8` | -0x10514 |
+| `gear::FlagAccessor::isOpen` | pattern, exact hit `+0x865E7C`; fires per cup on the title-screen cup grid | `+0x876370` | -0x104F4 |
+| `gear::DLCManager::getCupStatus` | pattern **UNRESOLVED** (no exact hit, relaxed form not unique; same on 4.0.0). Layer 2 of the cup gate is skipped; layers 1 and 3 cover it | - | - |
+| `ui::SetNextCourse` | pattern, RELAXED hit `+0x41FE64` (the 3.0.5 `#0x1744 -> #0x1A44` member move) | `+0x41FCF8` | +0x16C |
+| `ui::Control_CupButton::setCup` | pattern, exact hit `+0x43BB68` | `+0x43B9FC` | +0x16C |
+| `ui::Control_RaceLapCoin::onCalc_` | pattern, exact hit `+0x512E0C` | `+0x512C84` | +0x188 |
+| `gear::SaveDataFile::load` | pattern, exact hit `+0x8DADC4`; fires twice at boot | `+0x8EB2D8` | -0x10514 |
+| `gear::GetCurrentUserSaveData` | pattern, exact hit `+0x8AD024` | `+0x8BD538` | -0x10514 |
+| `gear::GetPlayerManager` | pattern, exact hit `+0x8ACE28` | `+0x8BD33C` | -0x10514 |
+| `ui::Page_CourseBase::isDLC` | pattern, exact hit `+0x494E44` | `+0x494CD8` | +0x16C |
+| `object::KartDirector::prepareBeforeStructure` | pattern, exact hit `+0x13D778` | `+0x13D588` | +0x1F0 |
+| `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern, exact hits `+0xB51E0 / +0xB5574 / +0x16BA5C / +0x13336C`; tables enumerate 54 / 42 / 23 / 16 entries (as on 4.0.0) | `+0xB4FF0 / +0xB5384 / +0x16B86C / +0x13317C` | +0x1F0 |
+
+## What changed in 4.0.1 (from Ro's port)
+
+Checked against every 4.0.0 / 4.0.1 `source.s` pair on 2026-10-21 (30
+pairs): with addresses masked, the sources are identical except one GOT
+slot (`ADRP #0x1306000; LDR X0, [X0, #0xE78 -> #0xE70]`, a `sead::Random`
+pointer the mod does not use). No struct offset or pointer chain the mod
+uses changed. Code moved by region: about `+0x8` low in `.text`, `+0x16C`
+to `+0x1F0` in the UI / object code, `-0x105xx` from roughly `0x7E0000`
+up. Relative layout inside the hooked functions is unchanged (Ro's
+`onFakeGoal + 0xD8` and `SetRandomCPU + 0x2140` hook offsets are the same).
+
+## Findings from the 4.0.0 sessions (still apply: 4.0.1 code is the same)
 
 First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
 `2C336A9BCF79C3040CE506CDD391B578` matched, 16/17 resolved.
@@ -126,7 +152,7 @@ Checked against every 3.0.5 / 4.0.0 `source.s` pair on 2026-09-27:
 
 * Addresses and pointer chains: commented ASM of
   [RoGamer97/ASM-Cheats-and-Patches](https://github.com/RoGamer97/ASM-Cheats-and-Patches)
-  (`Switch/Mario Kart 8 Deluxe/4.0.0/*/source.s`). Those patches are
+  (`Switch/Mario Kart 8 Deluxe/4.0.1/*/source.s`). Those patches are
   CC BY-NC-ND; only addresses and function names are used, no code.
 * Porting method: Ro's stream "Porting MK8D patches to v4.0.0 (Tutorial
   and Tips)" (2026-09-25). See `docs/porting-notes.md`.
@@ -139,7 +165,7 @@ Checked against every 3.0.5 / 4.0.0 `source.s` pair on 2026-09-27:
 
 ## Replacing a pattern with an address
 
-Once a 4.0.0 dump is on disk, any pattern-only entry can be pinned:
+Once a 4.0.1 dump is on disk, any pattern-only entry can be pinned:
 
 1. Boot once and read the resolved offset from the log, or find the
    function in Ghidra / IDA.

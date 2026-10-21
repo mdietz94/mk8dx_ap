@@ -7,7 +7,7 @@
    Ryujinx, your Switch's SD card, or a folder, and click **Install**. The
    Switch mod ships ready-made inside the apworld: nothing to compile, no
    game files to extract; setup records this PC's address for the Switch.
-3. Start Mario Kart 8 Deluxe (update **4.0.0**) and connect the client to your room.
+3. Start Mario Kart 8 Deluxe (update **4.0.1**) and connect the client to your room.
 
 Guides: [first-time setup](https://github.com/mdietz94/mk8dx_ap/blob/main/docs/first-time-setup.md),
 [Switch install](https://github.com/mdietz94/mk8dx_ap/blob/main/docs/install-switch.md),

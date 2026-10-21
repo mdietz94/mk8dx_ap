@@ -109,7 +109,8 @@ int main() {
     CHECK(resolveEntry(far, text.data(), text.size(), how) == -1 && how == How::Unresolved);
 
     // Build id pin
-    CHECK(isSupportedBuildId("2C336A9BCF79C3040CE506CDD391B578"));
+    CHECK(isSupportedBuildId("158C0C7399AABD7BF83795C2EF3484C7"));
+    CHECK(!isSupportedBuildId("2C336A9BCF79C3040CE506CDD391B578"));  // 4.0.0
     CHECK(!isSupportedBuildId("FE941ED5BA14BE5D505698DA1BBF4FE7"));  // 3.0.5
     CHECK(!isSupportedBuildId(""));
     CHECK(!isSupportedBuildId(nullptr));
@@ -134,6 +135,6 @@ int main() {
     CHECK(with_addr >= 5);
 
     if (g_fail) { std::printf("%d failure(s)\n", g_fail); return 1; }
-    std::printf("test_pattern OK (%d table rows, %d with published 4.0.0 addresses)\n", rows_n, with_addr);
+    std::printf("test_pattern OK (%d table rows, %d with published 4.0.1 addresses)\n", rows_n, with_addr);
     return 0;
 }

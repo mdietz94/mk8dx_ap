@@ -1,7 +1,7 @@
 # Mario Kart 8 Deluxe for Archipelago
 
 An [Archipelago](https://archipelago.gg) world for **Mario Kart 8 Deluxe**
-(Nintendo Switch, version **4.0.0 only**) with a Switch-side mod: race
+(Nintendo Switch, version **4.0.1 only**) with a Switch-side mod: race
 results are reported automatically and cups, characters, vehicle parts,
 item-box items and top speed are locked until the matching AP items arrive.
 
@@ -20,7 +20,7 @@ reading: the mod talks to the PC client over LAN.
    data to extract. Setup writes this PC's LAN address next to the mod
    (`romfs/ap_config.json`) and the Switch sweeps that /24 to find the client,
    so one binary works on every network.
-3. Start the game (update 4.0.0) and connect the client to your room.
+3. Start the game (update 4.0.1) and connect the client to your room.
 
 Guides: [first-time setup](docs/first-time-setup.md),
 [real Switch](docs/install-switch.md), [changing servers](docs/changing-servers.md).
@@ -37,11 +37,14 @@ The installer (prebuilt mod, setup wizard, release build + audit) was tested
 2026-10-18 from a frozen Archipelago 0.6.7 install: wizard -> Ryujinx deploy
 -> game boots -> the mod reads `ap_config.json` at `nn::fs::MountRom` and
 finds the client by sweeping that address's /24.
-`docs/symbols.md` lists every game function with its 4.0.0 location and the
+Moved to game update 4.0.1 on 2026-10-21 (boot, 20 of 21 symbols, every
+hook installed and the client handshake re-checked on 4.0.1; races were
+played on 4.0.0, whose code 4.0.1 keeps unchanged apart from addresses).
+`docs/symbols.md` lists every game function with its 4.0.1 location and the
 on-game findings.
 
-The mod checks the game's build id at boot. On anything other than 4.0.0
-(`2C336A9BCF79C304...`) it logs an error and stays inactive. The engine
+The mod checks the game's build id at boot. On anything other than 4.0.1
+(`158C0C7399AABD7B...`, so 4.0.0 too) it logs an error and stays inactive. The engine
 class picker is intentionally not restricted; speed is limited by a
 per-frame top-speed clamp that rises with Progressive Speed items.
 

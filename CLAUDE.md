@@ -4,7 +4,8 @@ Fast-load brief for the **Mario Kart 8 Deluxe** Archipelago project. Sibling
 of `smo_archipelago` and `smbw_ap` (same two-tier shape: LibHakkun subsdk9
 on the Switch, Kivy client inside the apworld on the PC). Everything in
 "Verified on the real game" below was observed on a real 4.0.0 dump under
-Ryujinx 1.3.3 on 2026-10-16; everything in "Not yet verified" has not been.
+Ryujinx 1.3.3 on 2026-10-16 (boot / symbols / hooks / handshake re-checked
+on 4.0.1 on 2026-10-21); everything in "Not yet verified" has not been.
 
 | Identifier | Value |
 |---|---|
@@ -12,7 +13,7 @@ Ryujinx 1.3.3 on 2026-10-16; everything in "Not yet verified" has not been.
 | apworld zip | `mk8dx.apworld` (imports as `worlds.mk8dx`; host.yaml key `mk8dx_options`) |
 | In-repo folder | `apworld/mk8dx_archipelago/` |
 | Title id | `0100152000022000` |
-| Target version | **4.0.0 only** (main build id `2C336A9BCF79C3040CE506CDD391B578`). User decision 2026-09-27: no 3.0.5 support, no provision for later versions ("there will be no future version"). The mod stays inactive on any other build. |
+| Target version | **4.0.1 only** (main build id `158C0C7399AABD7BF83795C2EF3484C7`). User decision 2026-10-21: support only the latest update, no 4.0.0 compatibility (4.0.0 = `2C336A9BCF79C3040CE506CDD391B578` was the target until then; 3.0.5 never). The mod stays inactive on any other build. |
 | Ports | TCP 17778 (bridge), UDP 17779 (discovery). SMO uses 17777/17776. |
 
 ## Never commit Nintendo IP
@@ -23,9 +24,10 @@ addresses are fine (they are the same data every public patch carries).
 Course / character names are the community-standard names already used
 by the MK8DX Manual world and the MKWii apworld. The user's game dump lives
 outside the repo (`Desktop\ROMs\Switch\Mario Kart 8 Deluxe\`, XCI base +
-v1441792 update NSP) and must stay there.
+v1507328 = 4.0.1 update NSP; Ryujinx's selected update is in
+`%APPDATA%/Ryujinx/games/0100152000022000/updates.json`) and must stay there.
 
-## Status (2026-10-18)
+## Status (2026-10-21)
 
 Alpha, and the first version that has been played against a live seed.
 Thirteen commits; `git log` is the change narrative, `docs/symbols.md` the
@@ -33,6 +35,14 @@ on-game findings. Verified in game: boot, 20/21 symbols, race results
 (both channels), AP checks and item receipt, item gate, loadout gate, cup
 gate, speed clamp engaging. Not verified: Grand Prix completion (Trophy)
 and goal, and anything on real Switch hardware (Ryujinx only so far).
+
+4.0.1 (2026-10-21): Ro's 4.0.1 sources are the 4.0.0 ones with addresses
+moved (one unused GOT slot aside), so only the six `address` entries
+changed. Verified on 4.0.1 in Ryujinx: build id match, 20/21 symbols (each
+pattern hit moved by the same per-region delta as Ro's addresses), every
+hook installed, ap_config.json read, client handshake + state, the
+title-screen demo race ran the KartDirector / SetRandomCPU hooks without a
+crash. Races, gates and checks have not been re-played on 4.0.1.
 
 Installer (2026-10-18): the release `mk8dx.apworld` bundles a PREBUILT mod
 (`_setup/mod/`, SHA-256 manifest); the Kivy wizard (`/setup`, auto-opens on
@@ -73,16 +83,16 @@ base_game` unless the save owns the BCP (the user's does not).
 ## Load-bearing design points
 
 * **One build, checked at boot.** `sym::resolveAll()` reads main's build
-  id; if it is not 4.0.0, `hkMain` returns before installing anything.
+  id; if it is not 4.0.1, `hkMain` returns before installing anything.
 * **No symbols, no sail.** `switch-mod/syms/mk8dx_symbols.toml` ->
   `scripts/gen_symbol_table.py` -> `src/sym/SymbolTable.inc` (committed;
   re-run the script after editing the toml). Entries have a published
-  4.0.0 `address` (RoGamer97's 4.0.0 patch sources) or a `pattern`
+  4.0.1 `address` (RoGamer97's 4.0.1 patch sources) or a `pattern`
   (fishguy6564/MK8DX-Base-Plugin `symbols.toml`, authored on 3.0.5, 1739
   lines, many more functions than we use: fetch it when a new hook target
   is needed). The resolver tries exact bytes, then a relaxed form (branch
   distances and struct-offset immediates wildcarded) that must match
-  exactly once. 20/21 resolve on 4.0.0; only `DLCManager::getCupStatus`
+  exactly once. 20/21 resolve on 4.0.1 (and did on 4.0.0); only `DLCManager::getCupStatus`
   does not (relaxed form not unique). Addresses: `docs/symbols.md`.
 * **Hooks are function-entry trampolines** (`HkTrampoline`,
   `installAtMainOffset`). 4.0.0's register reshuffles inside functions do
@@ -188,6 +198,7 @@ base_game` unless the save owns the BCP (the user's does not).
 
 ## Not yet verified
 
+* Anything past boot on 4.0.1 (races, gates, checks: see Status).
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,
   and the goal (`goal_cups` Trophies).
 * Real Switch hardware (Atmosphere): only Ryujinx so far. Discovery sweep,
@@ -221,8 +232,8 @@ scripts/                     build_switchmod.py, build_release.py, release_audit
                              run_client.py, gen_apworld_data.py, gen_symbol_table.py, make_pattern.py,
                              switch_smoke_test.py, ap_generate.py, ap_server.py
 docs/                        first-time-setup.md, install-switch.md, changing-servers.md, release-process.md,
-                             architecture.md, wire-protocol.md, symbols.md (4.0.0 table + on-game findings),
-                             porting-notes.md (Ro's 3.0.5 -> 4.0.0 method)
+                             architecture.md, wire-protocol.md, symbols.md (4.0.1 table + on-game findings),
+                             porting-notes.md (Ro's 3.0.5 -> 4.0.0 method, 4.0.0 -> 4.0.1)
 vendor/Archipelago           submodule pinned at 799e0b7; custom_worlds/mk8dx.apworld is gitignored
 ```
 
@@ -245,8 +256,8 @@ environment: write edit scripts to the scratchpad or use the Write tool.
 
 ## External references
 
-* RoGamer97/ASM-Cheats-and-Patches `Switch/Mario Kart 8 Deluxe/4.0.0/`:
-  commented ASM with 4.0.0 addresses and full enum lists (CPU Combo
+* RoGamer97/ASM-Cheats-and-Patches `Switch/Mario Kart 8 Deluxe/4.0.1/`
+  (and `4.0.0/`): commented ASM with per-version addresses and full enum lists (CPU Combo
   Modifier). Fetch files with `gh api .../contents/<path> --jq .content |
   base64 -d`; a plain clone fails on Windows path lengths.
 * fishguy6564/MK8DX-Base-Plugin `symbols.toml` (patterns) and

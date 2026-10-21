@@ -1,7 +1,7 @@
 // MK8DX Archipelago subsdk entry point (LibHakkun).
 //
 // hkMain runs at module load, before the game's own init:
-//   1. check the build id is 4.0.0 and resolve game symbols (sym::resolveAll);
+//   1. check the build id is 4.0.1 and resolve game symbols (sym::resolveAll);
 //      on any other build the mod stays inactive
 //   2. bind the game API function pointers
 //   3. install SDK hooks (socket init observer, PlayReport capture)
@@ -25,7 +25,7 @@ extern "C" void hkMain() {
     mk8ap::sym::resolveAll();
     if (!mk8ap::sym::isSupportedBuild()) {
         MK8AP_LOG_ERROR("=== hkMain END: unsupported game build, mod inactive "
-                        "(update Mario Kart 8 Deluxe to 4.0.0) ===");
+                        "(update Mario Kart 8 Deluxe to 4.0.1) ===");
         return;
     }
     mk8ap::game::bindGameApi();

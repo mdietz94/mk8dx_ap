@@ -28,13 +28,13 @@ from .bundle import BundleError, ModBundle, load_bundled
 
 NEXT_STEPS = {
     "ryujinx": ("Close Mario Kart 8 Deluxe completely if it is running, then start it again "
-                "from Ryujinx (mods load when the game starts). Make sure the 4.0.0 update is "
+                "from Ryujinx (mods load when the game starts). Make sure the 4.0.1 update is "
                 "installed (right-click the game > Manage Title Updates)."),
     "sd": ("Eject the SD card, put it back in the Switch and boot Atmosphere. Start Mario Kart "
-           "8 Deluxe (update 4.0.0). The Switch and this PC must be on the same network."),
+           "8 Deluxe (update 4.0.1). The Switch and this PC must be on the same network."),
     "folder": ("Copy the 'atmosphere' folder from the chosen folder to the root of the Switch's "
                "SD card (merge with the existing one), then boot Mario Kart 8 Deluxe (update "
-               "4.0.0) under Atmosphere. The Switch and this PC must be on the same network."),
+               "4.0.1) under Atmosphere. The Switch and this PC must be on the same network."),
 }
 CONNECT_TEXT = ("Then open the MK8DX Client from the Archipelago Launcher and connect to your room. "
                 "The client shows 'Switch: connected' once the game reaches the title screen.")

@@ -5,7 +5,7 @@ Two tiers, same shape as `smo_archipelago` / `smbw_ap`:
 ```
 Switch / Ryujinx                                   PC
 +-------------------------------+   TCP :17778   +---------------------------+   websocket   +-----------+
-| MK8DX 4.0.0 + subsdk9 (mod)   | <------------> | MK8DX Client (Kivy)       | <-----------> | AP server |
+| MK8DX 4.0.1 + subsdk9 (mod)   | <------------> | MK8DX Client (Kivy)       | <-----------> | AP server |
 |  hooks -> ApState rings       |   line JSON    |  SwitchServer + Discovery |               +-----------+
 |  ApClient worker (nn::socket) |   UDP :17779   |  MK8DXContext (CommonCtx) |
 +-------------------------------+                +---------------------------+
@@ -13,7 +13,7 @@ Switch / Ryujinx                                   PC
 
 ## Switch mod (`switch-mod/`, LibHakkun subsdk9)
 
-* `hkMain` checks the build id is 4.0.0 (otherwise the mod stays
+* `hkMain` checks the build id is 4.0.1 (otherwise the mod stays
   inactive), resolves game symbols (`sym/PatternResolver`), binds
   `game/GameApi`, installs SDK hooks (socket init observer, PlayReport IPC
   capture) and game hooks. Networking starts from the first

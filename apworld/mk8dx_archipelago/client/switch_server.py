@@ -21,7 +21,7 @@ from .state import BridgeState
 
 log = logging.getLogger("MK8DX")
 
-SUPPORTED_GAME_VERSION = "4.0.0"
+SUPPORTED_GAME_VERSION = "4.0.1"
 
 # Which feature each game function backs (mirrors switch-mod/src/hooks/).
 _SYMBOL_FEATURES = {
