@@ -24,8 +24,8 @@ int main() {
     {
         Hello h{};
         copyFixed(h.mod_ver, "0.1.0");
-        copyFixed(h.game_ver, "4.0.0");
-        copyFixed(h.build_id, "2C336A9BCF79C3040CE506CDD391B578");
+        copyFixed(h.game_ver, "4.0.1");
+        copyFixed(h.build_id, "158C0C7399AABD7BF83795C2EF3484C7");
         copyFixed(h.unresolved, "ui::SetNextCourse");
         h.resolved = 16; h.total = 17;
         mk8ap::util::json::LineBuffer line;

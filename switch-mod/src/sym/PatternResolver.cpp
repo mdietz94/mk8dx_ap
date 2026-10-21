@@ -126,7 +126,7 @@ std::int64_t scan(const std::uint8_t* hay, std::size_t len,
 }
 
 bool isSupportedBuildId(const char* hex) {
-    return hex && std::strncmp(hex, kBuildId400, 16) == 0;
+    return hex && std::strncmp(hex, kBuildId, 16) == 0;
 }
 
 std::int64_t resolveEntry(const Entry& e, const std::uint8_t* text,
@@ -232,9 +232,9 @@ void resolveAll() {
                    static_cast<std::size_t>(text.size()),
                    g_build_hex[0] ? g_build_hex : "(unknown)");
     if (!g_supported) {
-        MK8AP_LOG_ERROR("[sym] this is not MK8DX 4.0.0 (expected build id %s...). "
-                        "The mod only supports 4.0.0; no hooks will be installed.",
-                        kBuildId400);
+        MK8AP_LOG_ERROR("[sym] this is not MK8DX 4.0.1 (expected build id %s...). "
+                        "The mod only supports 4.0.1; no hooks will be installed.",
+                        kBuildId);
         return;
     }
 
@@ -258,7 +258,7 @@ void resolveAll() {
             // Informational: tells us how well the 3.0.5-era patterns carry
             // over, i.e. how much to trust the pattern-only entries.
             if (pattern_rel < 0) {
-                MK8AP_LOG_INFO("[sym]   (its pattern did not match 4.0.0)");
+                MK8AP_LOG_INFO("[sym]   (its pattern did not match 4.0.1)");
             } else {
                 MK8AP_LOG_WARN("[sym]   its pattern resolved to +0x%llx instead; "
                                "published address used",

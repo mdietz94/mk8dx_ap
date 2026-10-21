@@ -1,9 +1,10 @@
 // Offset-based accessors for the handful of game structures we read or
-// write, for MK8DX 4.0.0. Offsets come from fishguy6564/MK8DX-Headers
+// write, for MK8DX 4.0.x. Offsets come from fishguy6564/MK8DX-Headers
 // (64-bit branch) and the RoGamer97 4.0.0 patch sources, which use every
 // chain and offset below (checked 2026-09-27). The layout changes 4.0.0
 // made (object::DriverKart members +8, UI page ids +1) are in structures
-// this mod does not touch.
+// this mod does not touch. 4.0.1 (the current target) changed none of
+// them: Ro's 4.0.1 sources match 4.0.0 apart from addresses (2026-10-21).
 //
 // Deliberately NOT full struct mirrors: a wrong padding byte in a mirrored
 // 0x600-byte class silently shifts every later field, whereas a named

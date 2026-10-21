@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 
 TITLE_ID = "0100152000022000"
-GAME_VERSION = "4.0.0"
+GAME_VERSION = "4.0.1"
 # Files the mod consists of, in deploy order.
 MOD_FILES = ("subsdk9", "main.npdm")
 

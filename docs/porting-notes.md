@@ -9,7 +9,8 @@ from the captions.
 ## The method
 
 1. **Build id.** Every game update changes it. It is at offset `0x40` of
-   the decompressed `main`. 4.0.0 is `2C336A9BCF79C3040CE506CDD391B578`.
+   the decompressed `main`. 4.0.0 is `2C336A9BCF79C3040CE506CDD391B578`,
+   4.0.1 is `158C0C7399AABD7BF83795C2EF3484C7`.
 2. **Find the same code in the new binary.** Copy a run of instruction
    bytes around the old address and search for them in the new `main`.
    Unchanged functions are byte-identical apart from their address.
@@ -34,7 +35,7 @@ from the captions.
 
 | Step | Here |
 |---|---|
-| 1 | `PatternResolver` pins the 4.0.0 build id and refuses any other build |
+| 1 | `PatternResolver` pins the 4.0.1 build id and refuses any other build |
 | 2, 3, 6 | the relaxed pattern pass wildcards exactly those fields (branch and ADRP distances, member-offset immediates) and demands a unique match |
 | 4 | ambiguous matches are rejected, never guessed |
 | 5 | not needed: hooks are LibHakkun trampolines at function entry, computed at runtime |
@@ -46,5 +47,15 @@ from the captions.
 See `docs/symbols.md`, section "What changed in 4.0.0".
 
 Ro expected Nintendo to ship a 4.0.1 shortly after 4.0.0 because 4.0.0
-broke some online behaviour. This repo targets 4.0.0 only by decision; a
-different build makes the mod inactive rather than half-working.
+broke some online behaviour, and it did. This repo targets only the latest
+update (4.0.1 since 2026-10-21) by decision; a different build makes the
+mod inactive rather than half-working.
+
+## 4.0.0 to 4.0.1
+
+The same method, much smaller: Ro published 4.0.1 versions of every patch,
+and with addresses masked the `source.s` files are identical to the 4.0.0
+ones. The six address-located symbols were moved to Ro's 4.0.1 addresses
+(for `onFakeGoal` and `SetRandomCPU`, Ro's hook address minus the unchanged
+hook offset); the pattern-located ones needed no change. See
+`docs/symbols.md`, section "What changed in 4.0.1".

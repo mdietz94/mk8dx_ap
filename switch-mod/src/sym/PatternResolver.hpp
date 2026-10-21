@@ -1,17 +1,17 @@
-// Runtime symbol resolution for MK8DX 4.0.0 (a stripped binary).
+// Runtime symbol resolution for MK8DX 4.0.1 (a stripped binary).
 //
-// The mod supports exactly one game build: 4.0.0, main build id
-// 2C336A9BCF79C304... On any other build nothing is resolved and no hook
+// The mod supports exactly one game build: 4.0.1, main build id
+// 158C0C7399AABD7B... On any other build nothing is resolved and no hook
 // is installed.
 //
 // Per symbol:
-//   * ADDRESS: a published main-relative 4.0.0 address (from the commented
-//     ASM of RoGamer97's 4.0.0 patches). Used as-is.
-//   * PATTERN: for functions nobody has published a 4.0.0 address for. The
+//   * ADDRESS: a published main-relative 4.0.1 address (from the commented
+//     ASM of RoGamer97's 4.0.1 patches). Used as-is.
+//   * PATTERN: for functions nobody has published a 4.0.1 address for. The
 //     byte patterns were authored against 3.0.5, so two passes are tried:
 //       1. exact bytes, at instruction alignment;
 //       2. RELAXED: everything that legitimately moved between 3.0.5 and
-//          4.0.0 wildcarded (branch / ADRP distances, struct-offset
+//          4.0.x wildcarded (branch / ADRP distances, struct-offset
 //          immediates), accepted only when it matches exactly once.
 //     This is the manual porting method Ro demonstrates in "Porting MK8D
 //     patches to v4.0.0": search for the surrounding code, skip the branch
@@ -33,18 +33,18 @@ struct Entry {
     const char* mangled;   // Itanium name (documentation)
     const char* pattern;   // "" = address only
     std::int64_t offset;   // added to the pattern match
-    std::int64_t address;  // published main-relative address on 4.0.0, 0 = none
+    std::int64_t address;  // published main-relative address on 4.0.1, 0 = none
 };
 
 enum class How : std::uint8_t {
     Unresolved = 0,
-    Address = 1,         // published 4.0.0 address
+    Address = 1,         // published 4.0.1 address
     Pattern = 2,         // exact pattern
     PatternRelaxed = 3,  // relaxed pattern, unique match
 };
 
-// First 8 bytes of the 4.0.0 main build id, uppercase hex.
-inline constexpr const char* kBuildId400 = "2C336A9BCF79C304";
+// First 8 bytes of the 4.0.1 main build id, uppercase hex.
+inline constexpr const char* kBuildId = "158C0C7399AABD7B";
 
 // ---- pure scanner (host-testable) -----------------------------------------
 
@@ -75,10 +75,10 @@ std::int64_t scan(const std::uint8_t* hay, std::size_t len,
                   const CompiledPattern& pat, std::size_t align = 1,
                   int* count = nullptr);
 
-// True when `hex` (uppercase build id) is the supported 4.0.0 build.
+// True when `hex` (uppercase build id) is the supported 4.0.1 build.
 bool isSupportedBuildId(const char* hex);
 
-// Resolve one table entry against a 4.0.0 text image. Pure: used by
+// Resolve one table entry against a 4.0.1 text image. Pure: used by
 // resolveAll and by the host test. Returns the main-relative offset or -1.
 // `pattern_rel` (optional) receives what the pattern alone resolved to
 // (-1 if it missed), for cross-checking against a published address.
@@ -88,11 +88,11 @@ std::int64_t resolveEntry(const Entry& e, const std::uint8_t* text,
 
 // ---- module-level API (Switch only) ---------------------------------------
 
-// Identify the build and, if it is 4.0.0, resolve every table entry.
+// Identify the build and, if it is 4.0.1, resolve every table entry.
 // Idempotent; logs a summary.
 void resolveAll();
 
-// True when the running game is MK8DX 4.0.0.
+// True when the running game is MK8DX 4.0.1.
 bool isSupportedBuild();
 
 // Absolute address of a resolved symbol, or 0.

@@ -13,7 +13,7 @@ client (see [changing servers](changing-servers.md)).
 
 | | |
 |---|---|
-| **Mario Kart 8 Deluxe, update 4.0.0** | The mod checks the game's build at boot and does nothing on any other version. 4.0.0 is the current (final) update. |
+| **Mario Kart 8 Deluxe, update 4.0.1** | The mod checks the game's build at boot and does nothing on any other version, 4.0.0 included. 4.0.1 is the current update. In Ryujinx: right-click the game > Manage Title Updates and select the v1507328 update. |
 | **Ryujinx** on this PC, **or** a Switch with **Atmosphere** | Ryujinx 1.3.x is what the mod is tested on. For a Switch, see [install-switch.md](install-switch.md). |
 | **Archipelago 0.6 or newer** | <https://github.com/ArchipelagoMW/Archipelago/releases> |
 | The PC and the Switch on the **same network** | Not needed for Ryujinx on the same PC. |
@@ -100,8 +100,8 @@ python -m worlds.mk8dx._setup.cli firewall
 ## Troubleshooting
 
 **The client says `Switch: not connected`.**
-- Is the game on update 4.0.0? Ryujinx's log (or the client's log once
-  connected) prints the build id; anything but `2C336A9B...` leaves the mod
+- Is the game on update 4.0.1? Ryujinx's log (or the client's log once
+  connected) prints the build id; anything but `158C0C73...` leaves the mod
   inactive.
 - Ryujinx: did you restart the game after installing? Ryujinx's log
   (`Logs\Ryujinx_*.log` next to Ryujinx.exe, or `%APPDATA%\Ryujinx\Logs`)

@@ -71,8 +71,8 @@ async def main(port: int, course: str, rank: int, rule: str, course_id: int = 0)
         await writer.drain()
         print(">>", obj)
 
-    await send({"t": "hello", "mod_ver": "fake-0.1.0", "game_ver": "4.0.0",
-                "build_id": "2C336A9BCF79C3040CE506CDD391B578", "resolved": 16, "total": 17,
+    await send({"t": "hello", "mod_ver": "fake-0.1.0", "game_ver": "4.0.1",
+                "build_id": "158C0C7399AABD7BF83795C2EF3484C7", "resolved": 16, "total": 17,
                 "unresolved": "ui::SetNextCourse"})
     await asyncio.sleep(1.0)
     await send({"t": "id_table", "kind": "driver",

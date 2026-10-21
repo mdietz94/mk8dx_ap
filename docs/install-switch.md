@@ -16,7 +16,7 @@ specific to a console.
 
 - A Switch running **Atmosphere** custom firmware. Start from the
   [NH Switch Guide](https://nh-server.github.io/switch-guide/) if you have none.
-- Mario Kart 8 Deluxe with the **4.0.0** update installed on the console.
+- Mario Kart 8 Deluxe with the **4.0.1** update installed on the console.
 - The Switch and the PC running the MK8DX Client on the **same network**
   (same router / Wi-Fi; a guest network or "AP isolation" blocks it).
 
@@ -74,7 +74,7 @@ folder) cannot run at the same time. The wizard keeps the other mod's files as
   wizard detect the wrong adapter: correct the address and Install again. Mesh / travel routers that isolate wireless clients block
   the probe; try the PC on Ethernet to the same router.
 - **The game boots but nothing happens.** The mod is inactive on any version
-  other than 4.0.0. Check the update under *System Settings > Data
+  other than 4.0.1. Check the update under *System Settings > Data
   Management* or the game's title screen version.
 - **Debug log on console:** Atmosphere does not save the mod's log. Once
   connected, the client mirrors every Switch log line as `[switch:info]`. For
