@@ -38,6 +38,9 @@ namespace {
 
 using u64 = std::uint64_t;
 
+// The DLCState an AP-locked cup reports (see Page_CourseBase::isDLC below).
+constexpr std::int32_t kGatedState = static_cast<std::int32_t>(game::DLCState::NotSale);
+
 std::atomic<std::uint64_t> g_logged_gp{0};
 std::atomic<std::uint64_t> g_logged_cup{0};
 std::atomic<std::uint64_t> g_logged_status{0};
@@ -97,8 +100,8 @@ HkTrampoline<u64, void*, u64, u64, u64> g_getCupStatus = hk::hook::trampoline(
     });
 
 // --- 3. ui::Control_CupButton::setCup(this, const ECup&, const DLCState&) --
-// To lock a cup we hand orig() a pointer to a local DLCState::Locked instead
-// of the caller's value; the caller's object is never written.
+// To lock a cup we hand orig() a pointer to a local kGatedState instead of
+// the caller's value; the caller's object is never written.
 HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampoline(
     [](void* self, u64 x1, u64 x2, u64 x3, u64 x4, u64 x5) -> u64 {
         startNetworkingOnce("ui::Control_CupButton::setCup");
@@ -113,14 +116,15 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
         // so ECup is 0-based (Mushroom == 0) and equals EGrandPrixID. The
         // upstream header's "Mushroom == 1" reading was wrong for this build.
         const int cupIdx = ecup;
-        // Passing DLCState::Locked here changes only the drawing (the cup could
-        // still be entered, 2026-10-16); the press is gated by Page_CourseBase::
-        // isDLC below. Kept so the button never shows an AP-locked cup as open.
-        // (Control_CupButton+0x3CB is 1 for every cup on 4.0.0: not a lock flag.)
+        // setCup only picks the icon frames (4.0.1 disassembly: NotSale and
+        // Locked draw alike, NotBuy and Unlocked alike); the press is gated by
+        // Page_CourseBase::isDLC below, which also feeds this call on the cup
+        // grid. Kept so a caller that skips isDLC never draws a locked cup as
+        // purchasable or open.
         if (state >= 0 && cupIdx >= 0 && cupIdx < game::kCupCount &&
             !ap::ApState::instance().isCupAllowed(cupIdx)) {
-            const std::int32_t locked = static_cast<std::int32_t>(game::DLCState::Locked);
-            return g_setCup.orig(self, x1, reinterpret_cast<u64>(&locked), x3, x4, x5);
+            const std::int32_t gated = kGatedState;
+            return g_setCup.orig(self, x1, reinterpret_cast<u64>(&gated), x3, x4, x5);
         }
         return g_setCup.orig(self, x1, x2, x3, x4, x5);
     });
@@ -130,8 +134,24 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
 // through memory at the hidden x8 pointer; a C++ lambda cannot see x8, so the
 // hook entry is a 2-instruction asm stub that moves x8 into x1 and jumps to
 // the C++ body. The original is invoked through another stub that reloads x8.
-// Locked(4) is the state the game used for Booster Course Pass waves before
-// release: padlock icon, not selectable, no purchase dialog.
+//
+// AP-locked cups report NotSale(0). From the 4.0.1 disassembly (isDLC at
+// +0x494E44 and its callers):
+//   * the cup-grid setup (+0x494B..) disables the button (Control+0x3CB = 0,
+//     the generic "enabled" flag that gates input and picks the greyed
+//     animation) only for Locked(4). A disabled button cannot take the
+//     cursor, so with Locked an open cup boxed in by locked ones (Mushroom
+//     + Lightning, nothing between) was unreachable. That was 0.2.0's gate.
+//   * the cup decide handler (+0x4980A0) re-queries isDLC at press time:
+//     Unlocked(5) enters, NotBuy(2) may run the eShop purchase check and
+//     then enter, NotSale(0) only plays the deny window (Page+0x370), and
+//     1 / 3 / 4 do nothing.
+//   * the focus preview (+0x494F08) shows "???" course names for 0, 1, 4.
+// So NotSale keeps the cursor free and the press inert, and because the
+// press re-reads isDLC, a cup received while the grid is open becomes
+// enterable at once (setup-time Locked needed the page rebuilt).
+// isDLC itself returns Locked for a base cup whose save flag is closed
+// (FlagAccessor::isOpen), which is why gating isOpen soft-locked the grid.
 }  // namespace
 extern "C" std::uint64_t mk8ap_isDlcEntry(std::uint64_t cup);
 extern "C" std::uint64_t mk8ap_callSret(void* fn, std::uint64_t x0, std::uint64_t x8);
@@ -166,7 +186,7 @@ extern "C" std::uint64_t mk8ap_isDlcImpl(std::uint64_t x0, std::uint64_t x8) {
     const int ecup = derefEnum(x0);
     std::int32_t result = local;
     if (ecup >= 0 && ecup < game::kCupCount && !ap::ApState::instance().isCupAllowed(ecup)) {
-        result = static_cast<std::int32_t>(game::DLCState::Locked);
+        result = kGatedState;
     }
     static std::atomic<std::uint64_t> logged{0};
     if (firstTime(logged, ecup) || result != local) {

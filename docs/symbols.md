@@ -122,7 +122,19 @@ First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
   destructor, so it is returned through the hidden x8 pointer and ECup is passed by
   reference; the hook entry is an asm stub (`mk8ap_isDlcEntry`) that forwards x8.
   Returning `Locked(4)` (the pre-release Booster Course Pass state) draws a padlock and
-  makes the cup unselectable: the cursor skips it.
+  makes the cup unselectable. **Superseded in 0.2.1**: Locked disables the button
+  (`Control+0x3CB` = 0), and the cursor cannot cross disabled buttons, so an open cup
+  boxed in by locked ones could not be reached (player report 2026-10-25). See below.
+* **Cup gate, 4.0.1 disassembly (2026-10-25)**: `isDLC` (`+0x494E44`) returns `Locked`
+  for a base cup whose `FlagAccessor::isOpen` is false, `Unlocked` for an open one, and
+  for BCP cups `Unlocked` / `NotSale` / `NotBuy` from `DLCManager`. Callers:
+  grid setup (`+0x494B..`, `+0x4955..`) sets `+0x3CB = (state != Locked)`, the generic
+  Control "enabled" byte (input gating, greyed animation); focus preview (`+0x494F08`)
+  shows "???" course names for states 0, 1, 4; cup decide (`+0x4980A0`) re-queries isDLC
+  and enters on 5, runs the eShop check on 2 (and may enter), opens the deny window
+  (`Page+0x370`) on 0, ignores 1 / 3 / 4. `Control_CupButton::setCup` draws 0 and 4
+  alike and 2 and 5 alike. The gate therefore returns `NotSale(0)`. Not yet replayed
+  in game.
 * **Speed**: by user decision (2026-10-16) the engine-class picker is NOT gated; the
   restriction is the top-speed clamp scaled by Progressive Speed. `engine_max` in the
   state message stays informational.

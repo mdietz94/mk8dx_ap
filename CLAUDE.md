@@ -143,14 +143,20 @@ base_game` unless the save owns the BCP (the user's does not).
   (three races, PlayReport kept the menu pick). Rewriting the Player's
   kart info works. `KartGuardHook::enforceLoadouts()` does both; keep the
   RaceInfo rewrites as belt-and-braces only.
-* **Cup gate lives in `static DLCState Page_CourseBase::isDLC(ECup)`.**
-  Returning `Locked(4)` (the pre-release Booster Course Pass state) draws
-  a padlock and the cursor skips the cup: that is the intended UX. Do NOT
-  gate via `FlagAccessor::isOpen` returning false (soft-locks the game:
-  Deluxe has no closed-cup UI path; the hook now only logs would-be
-  denials) or via `Control_CupButton::setCup`'s DLCState (display only;
-  kept so a locked cup never draws as open). `Control_CupButton+0x3CB` is
-  1 for every cup on 4.0.0 and is not a lock flag.
+* **Cup gate lives in `static DLCState Page_CourseBase::isDLC(ECup)`,
+  returning `NotSale(0)`** (0.2.1). Do NOT return `Locked(4)` (0.2.0): the
+  grid setup then clears the button's enabled flag (`Control+0x3CB`), the
+  cursor cannot land on it, and an open cup boxed in by locked ones
+  (Mushroom + Lightning) is unreachable (player report 2026-10-25). With
+  `NotSale` the cursor moves freely, the preview shows "???" courses, and
+  the decide handler (which re-reads isDLC at press time) plays only the
+  deny window. `NotBuy(2)` would reach the eShop purchase path. Derived
+  from the 4.0.1 disassembly (CupGateHook.cpp has the call-site map);
+  not yet replayed in game. Do NOT gate via `FlagAccessor::isOpen`
+  returning false (isDLC turns a closed base cup into `Locked`, which
+  disables every button: soft-lock; the hook now only logs would-be
+  denials). `Control_CupButton::setCup`'s DLCState only picks icon frames
+  (0 and 4 draw alike), so a gated cup does not look padlocked in the grid.
 * **Item gate**: `gear::ItemOwner::startSlot(this, int slot, const
   EItemSlot&, bool, bool)`; locked rolls become Coin (or None). Verified.
 * **Speed**: `ui::Control_RaceLapCoin::onCalc_` clamps
@@ -199,6 +205,8 @@ base_game` unless the save owns the BCP (the user's does not).
 ## Not yet verified
 
 * Anything past boot on 4.0.1 (races, gates, checks: see Status).
+* The 0.2.1 `NotSale` cup gate: cursor crossing locked cups, the deny
+  window on A, a cup received while the grid is open.
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,
   and the goal (`goal_cups` Trophies).
 * Real Switch hardware (Atmosphere): only Ryujinx so far. Discovery sweep,
