@@ -112,8 +112,9 @@ complete `goal_cups` cups.
    (`[cup] Page_CourseBase::isDLC(ecup=N) vanilla=5 -> 4`).
 5. Pick a locked character: `[kart] player 0 driver N locked -> M` and the
    race uses the starting loadout.
-6. `[speed] clamping to N%` once the race starts; `[item] local kart rolled
-   locked item` on a locked roll.
+6. `[speed] clamping to N%` and `[speed] cap engaged` once the race starts
+   (`[speed] kart N launch:` at cannons and boosts); `[item] local kart
+   rolled locked item A -> B` on a locked roll.
 
 ## Tests
 

@@ -158,9 +158,20 @@ base_game` unless the save owns the BCP (the user's does not).
   denials). `Control_CupButton::setCup`'s DLCState only picks icon frames
   (0 and 4 draw alike), so a gated cup does not look padlocked in the grid.
 * **Item gate**: `gear::ItemOwner::startSlot(this, int slot, const
-  EItemSlot&, bool, bool)`; locked rolls become Coin (or None). Verified.
-* **Speed**: `ui::Control_RaceLapCoin::onCalc_` clamps
-  `KartVehicleMove+0x37C` to `top1 * speed_pct` every frame; top-speed
+  EItemSlot&, bool, bool)`. Verified with Coin as the substitute; since
+  0.2.2 a locked roll falls back through weaker items of its kind first
+  (Star/Bullet/Golden -> Triple Mushroom -> Mushroom, shells -> shells,
+  then Coin, then None; table in `src/ap/ApRules.hpp`, never an item with a
+  per-race limit). Coin-only left 10th-12th with a Coin ~95% of the time.
+* **Speed**: `ui::Control_RaceLapCoin::onCalc_` runs every frame;
+  `ap::rules::SpeedGovernor` (0.2.2) caps `KartVehicleMove+0x37C` at
+  `top1 * speed_pct` for normal driving but lets a one-frame jump of
+  > 4% of top through (cannons, boost pads, item boosts), holds it from
+  climbing while above top, then glides back to the cap at 1% of top per
+  frame. The 0.2.1 hard clamp crawled through Sweet Sweet Canyon's cannon
+  (player report 2026-11). Offsets are sanity-checked EVERY frame; 0.2.1
+  latched the first frame's verdict, so a bad first read disabled the cap
+  for the session (same report: 60% listed, no cap). Top-speed
   floats at `+0x424/+0x428/+0x42C` read sane on 4.0.0. **Engine class is
   deliberately NOT restricted** (user decision 2026-10-16): the speed
   restriction is the clamp only, scaled by Progressive Speed.
@@ -205,6 +216,9 @@ base_game` unless the save owns the BCP (the user's does not).
 ## Not yet verified
 
 * Anything past boot on 4.0.1 (races, gates, checks: see Status).
+* The 0.2.2 speed governor in game (launch threshold and glide rate are
+  guesses: the `[speed] kart N launch:` lines give real values to tune
+  `kLaunchJump` / `kGlideDown`) and the 0.2.2 item fallbacks.
 * The 0.2.1 `NotSale` cup gate: cursor crossing locked cups, the deny
   window on A, a cup received while the grid is open.
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,
