@@ -72,6 +72,15 @@ enum class ItemSlot : std::int32_t {
 // wrappers passed BY CONST REFERENCE in the game ABI (see CupGateHook.cpp).
 inline constexpr int kCupCount = 24;
 
+// mush::EDriverID / EBodyID / ETireID / EWingID counts on 4.0.1 (the text_
+// tables enumerate 54 / 42 / 23 / 16 entries, index 0 = "Invalid"; the
+// parts-list builder queries body 0..40, tire 0..21, glider 0..14).
+// Drivers 44..52 are Booster Course Pass characters (client/tables.py).
+inline constexpr int kBaseDriverCount = 44;
+inline constexpr int kBodyCount = 41;
+inline constexpr int kTireCount = 22;
+inline constexpr int kWingCount = 15;
+
 // ui::DLCState (Control_CupButton::setCup second argument)
 enum class DLCState : std::int32_t {
     NotSale = 0,

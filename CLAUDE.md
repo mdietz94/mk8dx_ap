@@ -44,6 +44,12 @@ hook installed, ap_config.json read, client handshake + state, the
 title-screen demo race ran the KartDirector / SetRandomCPU hooks without a
 crash. Races, gates and checks have not been re-played on 4.0.1.
 
+Part unlocks (0.2.2, 2026-11-04): `PartUnlockHook` opens AP-received drivers /
+karts / tires / gliders in the select menus on a save that has not earned
+them (player report: the mod "only makes sense on a 100% savegame").
+Booted on 4.0.1: 24/25 symbols, the four hooks install and fire at save
+load. Not yet seen in the vehicle select on a fresh save.
+
 Installer (2026-10-18): the release `mk8dx.apworld` bundles a PREBUILT mod
 (`_setup/mod/`, SHA-256 manifest); the Kivy wizard (`/setup`, auto-opens on
 the client's first run) deploys it to Ryujinx / SD card / folder. Verified
@@ -92,7 +98,8 @@ base_game` unless the save owns the BCP (the user's does not).
   lines, many more functions than we use: fetch it when a new hook target
   is needed). The resolver tries exact bytes, then a relaxed form (branch
   distances and struct-offset immediates wildcarded) that must match
-  exactly once. 20/21 resolve on 4.0.1 (and did on 4.0.0); only `DLCManager::getCupStatus`
+  exactly once. 24/25 resolve on 4.0.1 (20/21 before the part-unlock
+  entries); only `DLCManager::getCupStatus`
   does not (relaxed form not unique). Addresses: `docs/symbols.md`.
 * **Hooks are function-entry trampolines** (`HkTrampoline`,
   `installAtMainOffset`). 4.0.0's register reshuffles inside functions do
@@ -157,6 +164,15 @@ base_game` unless the save owns the BCP (the user's does not).
   disables every button: soft-lock; the hook now only logs would-be
   denials). `Control_CupButton::setCup`'s DLCState only picks icon frames
   (0 and 4 draw alike), so a gated cup does not look padlocked in the grid.
+* **Menu unlocks for parts = `FlagAccessor::isOpen(E{Driver,Body,Tire,Wing}ID)`**
+  (`+0x865F14/F60/FAC/FF8`, next to the cup overload; save byte tables at
+  `save+0x188 + 0x1F48/0x1F88/0x1FC8/0x2008`, open == 3). The parts-list
+  builder and the stored-loadout sanitiser both ask these, so
+  `PartUnlockHook` returns true for a closed id the AP state allows. OPEN
+  ONLY, never return false (cf. the cup soft-lock), and base-game ids only
+  (drivers 0..43; BCP drivers 44..52 keep the game's entitlement logic).
+  AP-locked parts the save owns stay selectable; `KartGuard` still swaps
+  them at race start. Map and caller evidence: `docs/symbols.md`.
 * **Item gate**: `gear::ItemOwner::startSlot(this, int slot, const
   EItemSlot&, bool, bool)`; locked rolls become Coin (or None). Verified.
 * **Speed**: `ui::Control_RaceLapCoin::onCalc_` clamps
@@ -215,6 +231,10 @@ base_game` unless the save owns the BCP (the user's does not).
 * `restrict_cpu_items`, multiplayer (local players > 1), VS / Time Trials
   flows beyond one GP race, Booster Course Pass cups (user's save lacks it).
 * `KartGuard` with a non-default `def_*` (so far only Mario / Standard).
+* `PartUnlockHook` in the menus: a received part becoming selectable on a
+  fresh save (needs a second Ryujinx user profile with a new save), Gold
+  Mario via the driver overload, and the menu after a part arrives while
+  the select page is open (the list is built when the page opens).
 
 ## Layout
 
@@ -233,7 +253,7 @@ switch-mod/                  CMakeLists.txt, config/, syms/mk8dx_symbols.toml, s
                              src/ap/{ApClient,ApState,ApProtocol,ApFrameBridge,ApDiscovery,ApConfig},
                              src/game/{GameApi,Structs,Ids} (struct offsets from fishguy6564/MK8DX-Headers),
                              src/hooks/{SocketInit,PlayReport,SaveLoad,RaceFinish,CupGate,ItemGate,
-                                        KartGuard,SpeedCap}Hook.cpp + IdTableDump + SdkSymbolDump,
+                                        KartGuard,PartUnlock,SpeedCap}Hook.cpp + IdTableDump + SdkSymbolDump,
                              tests/ (host tests: test_pattern, test_protocol, test_json)
 scripts/                     build_switchmod.py, build_release.py, release_audit.py, deploy_mod.py,
                              patch_hakkun.py, setup_sail_winpath.py, install_apworld.py,

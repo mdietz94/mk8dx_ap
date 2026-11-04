@@ -4,8 +4,8 @@
 // (driver -> kart -> course). At that moment gear::GetNextRaceInfo() holds
 // every kart's driver/body/tire/glider ids, so:
 //   * any locally controlled kart whose selection is AP-locked is rewritten
-//     to the seed's starting loadout (the select screen is not greyed yet;
-//     that needs a Page_DriverSelect hook nobody has published).
+//     to the seed's starting loadout. The select screens are never closed
+//     for AP-locked picks; PartUnlockHook only OPENS received parts there.
 //
 // "Local" karts: kart 0 is always the first local player; further local
 // players share its RacePlayerType (CPUs differ), so we treat every kart

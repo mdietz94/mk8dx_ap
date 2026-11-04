@@ -31,6 +31,9 @@ Switch / Ryujinx                                   PC
   * `ItemGateHook`: `ItemOwner::startSlot` remaps locked items to Coin.
   * `KartGuardHook`: `ui::SetNextCourse` rewrites locked driver/parts on
     local karts to the starting loadout.
+  * `PartUnlockHook`: the `FlagAccessor::isOpen` driver / body / tire /
+    glider overloads return true for parts the AP state allows, so received
+    parts are selectable on a save that has not earned them. Open-only.
   * `SpeedCapHook`: per-frame clamp of `KartVehicleMove::mSpeed` to
     `top * speed_pct`.
   * `IdTableDump`: `mush::E*ID::text_` tables shipped once so the PC learns
