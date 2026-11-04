@@ -157,6 +157,13 @@ base_game` unless the save owns the BCP (the user's does not).
   disables every button: soft-lock; the hook now only logs would-be
   denials). `Control_CupButton::setCup`'s DLCState only picks icon frames
   (0 and 4 draw alike), so a gated cup does not look padlocked in the grid.
+  **isDLC is gated only for Page_CourseBase's own call sites** (0.2.2, by
+  return address): the driver / part screens call it too, mapping ids
+  30..35 (Tanooki, Link, Villager, Isabelle, Cat Peach, Dry Bowser) to
+  their old Wii U DLC pack's cup (Egg/Triforce/Crossing/Bell). Gating
+  every caller blanked those icons and froze the screen on a pick while
+  that cup was AP-locked (player report 2026-11). Call-site map in
+  CupGateHook.cpp.
 * **Item gate**: `gear::ItemOwner::startSlot(this, int slot, const
   EItemSlot&, bool, bool)`. Verified with Coin as the substitute; since
   0.2.2 a locked roll falls back through weaker items of its kind first
@@ -216,6 +223,8 @@ base_game` unless the save owns the BCP (the user's does not).
 ## Not yet verified
 
 * Anything past boot on 4.0.1 (races, gates, checks: see Status).
+* The 0.2.2 isDLC caller filter in game (Villager / Isabelle / Dry Bowser
+  selectable with the Crossing / Bell cups AP-locked).
 * The 0.2.2 speed governor in game (launch threshold and glide rate are
   guesses: the `[speed] kart N launch:` lines give real values to tune
   `kLaunchJump` / `kGlideDown`) and the 0.2.2 item fallbacks.
