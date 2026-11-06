@@ -42,6 +42,7 @@ extern "C" void hkMain() {
     mk8ap::hooks::installCupGateHooks();
     mk8ap::hooks::installItemGateHook();
     mk8ap::hooks::installKartGuardHook();
+    mk8ap::hooks::installPartUnlockHooks();
     mk8ap::hooks::installSpeedCapHook();
 
     MK8AP_LOG_INFO("=== hkMain END (symbols %d/%d; networking starts on save load) ===",

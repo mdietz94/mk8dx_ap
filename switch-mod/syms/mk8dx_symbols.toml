@@ -165,3 +165,34 @@ name = "mush::EWingID::text_"
 mangled = "_ZN4mush7EWingID5text_Ei"
 pattern = "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA"
 offset = "-0x80"
+
+# The driver / part overloads of FlagAccessor::isOpen, right after the cup one
+# (+0x865E7C). Identical code except the save flag table they index
+# (save+0x188 -> +0x1F48 drivers, +0x1F88 bodies, +0x1FC8 tires, +0x2008
+# gliders; open == 3), so the pattern is the cup entry's with that MOVZ
+# immediate swapped in. Located in the 4.0.1 disassembly (2026-11-04); each
+# matches exactly once (+0x865F14 / +0x865F60 / +0x865FAC / +0x865FF8). Which
+# is which was read off their callers (see PartUnlockHook.cpp).
+[[symbols]]
+name = "gear::FlagAccessor::isOpen(EDriverID)"
+mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush9EDriverIDE"
+pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 E9 83 52 08 69 69 38"
+offset = "-0x24"
+
+[[symbols]]
+name = "gear::FlagAccessor::isOpen(EBodyID)"
+mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush7EBodyIDE"
+pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F1 83 52 08 69 69 38"
+offset = "-0x24"
+
+[[symbols]]
+name = "gear::FlagAccessor::isOpen(ETireID)"
+mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush7ETireIDE"
+pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F9 83 52 08 69 69 38"
+offset = "-0x24"
+
+[[symbols]]
+name = "gear::FlagAccessor::isOpen(EWingID)"
+mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush7EWingIDE"
+pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 01 84 52 08 69 69 38"
+offset = "-0x24"

@@ -32,6 +32,9 @@ Switch / Ryujinx                                   PC
     first unlocked weaker item of its kind, else Coin (`ap/ApRules.hpp`).
   * `KartGuardHook`: `ui::SetNextCourse` rewrites locked driver/parts on
     local karts to the starting loadout.
+  * `PartUnlockHook`: the `FlagAccessor::isOpen` driver / body / tire /
+    glider overloads return true for parts the AP state allows, so received
+    parts are selectable on a save that has not earned them. Open-only.
   * `SpeedCapHook`: per-frame governor on `KartVehicleMove::mSpeed`:
     normal driving capped at `top * speed_pct`, cannon / boost launches
     pass and glide back down (`ap/ApRules.hpp`).
