@@ -21,6 +21,7 @@ def test_describe_unresolved():
     assert describe_unresolved("gear::ItemOwner::startSlot") == ["item-box restriction"]
     got = describe_unresolved("gear::FlagAccessor::isOpen,gear::DLCManager::getCupStatus,nope::x")
     assert got == ["cup locking"]
+    assert describe_unresolved("gear::FlagAccessor::isOpen(EBodyID)") == ["received karts selectable in menus"]
     assert describe_unresolved("gear::GetCurrentUserSaveData") == []
 
 

@@ -21,3 +21,7 @@
     { "gear::GetPlayerManager", "_ZN4gear16GetPlayerManagerEv", "00 00 44 F9 FD 7B C1 A8 C0 03 5F D6 FD 7B BF A9 FD 03 00 91", -0x10, 0x0 },
     { "ui::Page_CourseBase::isDLC", "_ZN2ui15Page_CourseBase5isDLCENS_4ECupE", "1F 0D 00 71 E8 03 1F 32 E8 03 88 1A", -0x70, 0x0 },
     { "mush::EWingID::text_", "_ZN4mush7EWingID5text_Ei", "A9 52 00 91 08 41 00 91 A8 26 00 A9 68 0A 80 52 E0 03 15 AA", -0x80, 0x0 },
+    { "gear::FlagAccessor::isOpen(EDriverID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush9EDriverIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 E9 83 52 08 69 69 38", -0x24, 0x0 },
+    { "gear::FlagAccessor::isOpen(EBodyID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7EBodyIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F1 83 52 08 69 69 38", -0x24, 0x0 },
+    { "gear::FlagAccessor::isOpen(ETireID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7ETireIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F9 83 52 08 69 69 38", -0x24, 0x0 },
+    { "gear::FlagAccessor::isOpen(EWingID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7EWingIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 01 84 52 08 69 69 38", -0x24, 0x0 },

@@ -17,6 +17,7 @@ void installRaceFinishHook();   // ui::RaceWindow::onFakeGoal -> race_result
 void installCupGateHooks();     // FlagAccessor::isOpen / DLCManager::getCupStatus / Control_CupButton::setCup
 void installItemGateHook();     // gear::ItemOwner::startSlot
 void installKartGuardHook();    // ui::SetNextCourse (enforce driver/parts)
+void installPartUnlockHooks();  // FlagAccessor::isOpen(E{Driver,Body,Tire,Wing}ID): open AP parts in menus
 void installSpeedCapHook();     // ui::Control_RaceLapCoin::onCalc_ (per-frame clamp)
 
 // Start the AP worker + dump the id tables, once. Called from the save-load

@@ -62,6 +62,7 @@ functions.
 | `ui::Page_CourseBase::isDLC` | pattern, exact hit `+0x494E44` | `+0x494CD8` | +0x16C |
 | `object::KartDirector::prepareBeforeStructure` | pattern, exact hit `+0x13D778` | `+0x13D588` | +0x1F0 |
 | `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern, exact hits `+0xB51E0 / +0xB5574 / +0x16BA5C / +0x13336C`; tables enumerate 54 / 42 / 23 / 16 entries (as on 4.0.0) | `+0xB4FF0 / +0xB5384 / +0x16B86C / +0x13317C` | +0x1F0 |
+| `gear::FlagAccessor::isOpen(EDriverID / EBodyID / ETireID / EWingID)` | pattern, exact hits `+0x865F14 / +0x865F60 / +0x865FAC / +0x865FF8` (located in the 4.0.1 disassembly, 2026-11-04; booted and installed in Ryujinx the same day) | - | - |
 
 ## What changed in 4.0.1 (from Ro's port)
 
@@ -135,6 +136,23 @@ First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
   (`Page+0x370`) on 0, ignores 1 / 3 / 4. `Control_CupButton::setCup` draws 0 and 4
   alike and 2 and 5 alike. The gate therefore returns `NotSale(0)`. Not yet replayed
   in game.
+* **Part unlocks, 4.0.1 disassembly (2026-11-04)**: the driver / body / tire / glider
+  overloads of `FlagAccessor::isOpen` follow the cup one (`+0x865E7C`) back to back:
+  `+0x865F14 / +0x865F60 / +0x865FAC / +0x865FF8`. Same code, different table:
+  `save+0x188` -> one byte per id at `+0x1F20` (cups), `+0x1F40` (8 slots, one caller,
+  not used), `+0x1F48` drivers, `+0x1F88` bodies, `+0x1FC8` tires, `+0x2008` gliders;
+  open means byte == 3 (1 and 2 are earlier stages of the unlock presentation; `+0x866DFC`
+  scans the 42-slot body table for the first 2). The mapping comes from the callers: the
+  parts-list builder at `+0x474F98` calls the body overload once per body id (41 calls),
+  the tire one 22 times and the glider one 15 times, and the loadout sanitiser
+  `+0x3FD508` checks a stored loadout's driver (`+0x10`), body (`+0x30`), tire (`+0x40`)
+  and glider (`+0x50`) in that order, zeroing any that are not open. Matching
+  `get*State` sret getters sit just before them (`+0x865CEC..+0x865E2C`) and are used by
+  the coin-unlock / presentation code, not by the select lists. `PartUnlockHook` returns
+  true for a closed id the AP state allows (base-game ids only: drivers 0..43, never the
+  BCP drivers 44..52). Boot on 4.0.1: all four resolve and install, and the sanitiser
+  calls them at save load with x1 = a stack pointer (by-reference ABI, as expected).
+  Not yet verified: a received part appearing in the vehicle select on a fresh save.
 * **Speed**: by user decision (2026-10-16) the engine-class picker is NOT gated; the
   restriction is the top-speed clamp scaled by Progressive Speed. `engine_max` in the
   state message stays informational.
@@ -189,8 +207,9 @@ Never commit the dump itself (`*.nso`, `*.text.bin` are gitignored).
 
 ## Known gaps
 
-* The character / kart select pages are not hooked, so locked characters
-  are swapped at race start rather than greyed out in the menu.
+* AP-locked parts the save already owns are still selectable in the menus
+  (they are swapped at race start by `KartGuardHook`): the menus are only
+  ever opened, never closed (see the part-unlock finding above).
 * `EGrandPrixID` is assumed to equal `ECup - 1`; `CupGateHook` logs the
   ids it sees so this can be confirmed on first boot.
 * `ui::CourseInfo` carries no course name. Course ids for the hook channel
