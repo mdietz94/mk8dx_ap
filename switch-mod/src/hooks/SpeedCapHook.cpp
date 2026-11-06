@@ -36,9 +36,22 @@ namespace {
 using ap::rules::SpeedAction;
 using ap::rules::SpeedGovernor;
 
+// Per-kart summary, logged every kSummaryFrames governed frames (~5 s), so a
+// player report says how often the cap held versus let a boost through.
+struct Summary {
+    int frames = 0;
+    int counts[5] = {};      // by SpeedAction
+    float sumIn = 0.0f;      // game speed / top
+    float sumOut = 0.0f;     // written speed / top
+    float maxCappedJump = 0.0f;  // largest one-frame rise (of top) we did not let through
+    void reset() { *this = Summary{}; }
+};
+constexpr int kSummaryFrames = 300;
+
 struct KartSlot {
     void* vehicle = nullptr;
     SpeedGovernor gov;
+    Summary sum;
 };
 KartSlot g_karts[game::race_info::kMaxKarts];
 
@@ -58,6 +71,7 @@ void governKart(int idx, int pct) {
     if (vehicle != slot.vehicle) {  // new race / rebuilt kart: drop history
         slot.vehicle = vehicle;
         slot.gov.reset();
+        slot.sum.reset();
     }
     if (!vehicle) return;
     if (!game::rd<bool>(vehicle, game::vehicle::kIsMaster)) return;
@@ -81,7 +95,7 @@ void governKart(int idx, int pct) {
                        idx, speed, top1, game::rd<float>(move, game::vehicle_move::kTopSpeed2),
                        game::rd<float>(move, game::vehicle_move::kTopSpeed3));
     }
-    if (pct >= 100) { slot.gov.reset(); return; }
+    if (pct >= 100) { slot.gov.reset(); slot.sum.reset(); return; }
     const float prev = slot.gov.prev;
     SpeedAction action;
     const float out = slot.gov.step(speed, top1, pct, &action);
@@ -89,6 +103,28 @@ void governKart(int idx, int pct) {
         ++g_launch_logs;
         MK8AP_LOG_INFO("[speed] kart %d launch: %.3f -> %.3f (top %.3f, cap %d%%), not capped",
                        idx, prev, speed, top1, pct);
+    }
+    Summary& sm = slot.sum;
+    ++sm.frames;
+    ++sm.counts[static_cast<int>(action)];
+    sm.sumIn += speed / top1;
+    sm.sumOut += out / top1;
+    if (prev >= 0.0f && action != SpeedAction::Launch && speed - prev > 0.0f) {
+        const float jump = (speed - prev) / top1;
+        if (jump > sm.maxCappedJump) sm.maxCappedJump = jump;
+    }
+    if (sm.frames >= kSummaryFrames && sm.sumIn <= 0.0f) {
+        sm.reset();  // parked (countdown, results screen): nothing to report
+    } else if (sm.frames >= kSummaryFrames) {
+        MK8AP_LOG_INFO("[speed] kart %d %d frames: game %.0f%% -> written %.0f%% of top (cap %d%%); "
+                       "capped %d launch %d hold %d glide %d free %d; biggest capped rise %.1f%%/frame",
+                       idx, sm.frames, 100.0f * sm.sumIn / sm.frames, 100.0f * sm.sumOut / sm.frames, pct,
+                       sm.counts[static_cast<int>(SpeedAction::Capped)],
+                       sm.counts[static_cast<int>(SpeedAction::Launch)],
+                       sm.counts[static_cast<int>(SpeedAction::Hold)],
+                       sm.counts[static_cast<int>(SpeedAction::Glide)],
+                       sm.counts[static_cast<int>(SpeedAction::Untouched)], 100.0f * sm.maxCappedJump);
+        sm.reset();
     }
     if (out != speed) {
         if (!g_logged_engaged) {

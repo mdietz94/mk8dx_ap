@@ -95,6 +95,19 @@ static void testSpeed() {
     while (v > cap + 1e-4f && frames < 200) { v = g.step(accel(v), top, pct, &a); ++frames; }
     CHECK(near(v, cap) && frames < 50);
 
+    // Mushroom / mini-turbo: +4.4% of top per frame for many frames stays at
+    // the cap (4.0.1 measurement; a 4% threshold let these through).
+    g.reset();
+    v = g.step(cap, top, pct, &a);
+    for (int f = 0; f < 30; ++f) v = g.step(v + top * 0.044f, top, pct, &a);
+    CHECK(near(v, cap) && a == SpeedAction::Capped);
+
+    // Dash panel: +12.5% in one frame passes, the ~5% re-sets afterwards glide.
+    CHECK(near(g.step(cap + top * 0.125f, top, pct, &a), cap + top * 0.125f) && a == SpeedAction::Launch);
+    const float panel = cap + top * 0.125f;
+    v = g.step(panel, top, pct, &a);
+    CHECK(a == SpeedAction::Glide && near(v, panel - top * kGlideDown));
+
     // Braking below the cap passes through; speed under the cap is never raised.
     CHECK(near(g.step(0.5f, top, pct, &a), 0.5f) && a == SpeedAction::Untouched);
     CHECK(near(g.step(-0.3f, top, pct, &a), -0.3f));

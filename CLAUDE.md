@@ -189,10 +189,16 @@ base_game` unless the save owns the BCP (the user's does not).
 * **Speed**: `ui::Control_RaceLapCoin::onCalc_` runs every frame;
   `ap::rules::SpeedGovernor` (0.2.2) caps `KartVehicleMove+0x37C` at
   `top1 * speed_pct` for normal driving but lets a one-frame jump of
-  > 4% of top through (cannons, boost pads, item boosts), holds it from
+  > 7% of top through (cannons, dash panels), holds it from
   climbing while above top, then glides back to the cap at 1% of top per
   frame. The 0.2.1 hard clamp crawled through Sweet Sweet Canyon's cannon
-  (player report 2026-11). Offsets are sanity-checked EVERY frame; 0.2.1
+  (player report 2026-11). Measured 2026-11-06 (4.0.1, top 8.3): mushroom /
+  mini-turbo +4.0-4.4% of top per frame over many frames, dash panel +12.5%
+  once then ~5% re-sets; a 4% threshold let every boost through (Max:
+  "speed doesn't seem limited"), so boosts now stay at the cap; the Sweet
+  Sweet Canyon cannon is a +16% one-frame jump and still passes. A
+  `[speed] kart N 300 frames:` summary (every ~5 s) gives the mix of
+  capped / launch / glide frames. Offsets are sanity-checked EVERY frame; 0.2.1
   latched the first frame's verdict, so a bad first read disabled the cap
   for the session (same report: 60% listed, no cap). Top-speed
   floats at `+0x424/+0x428/+0x42C` read sane on 4.0.0. **Engine class is
@@ -241,9 +247,12 @@ base_game` unless the save owns the BCP (the user's does not).
 * Anything past boot on 4.0.1 (races, gates, checks: see Status).
 * The 0.2.2 isDLC caller filter in game (Villager / Isabelle / Dry Bowser
   selectable with the Crossing / Bell cups AP-locked).
-* The 0.2.2 speed governor in game (launch threshold and glide rate are
-  guesses: the `[speed] kart N launch:` lines give real values to tune
-  `kLaunchJump` / `kGlideDown`) and the 0.2.2 item fallbacks.
+* The speed governor on real hardware. In Ryujinx (4.0.1, 2026-11-06, 60%,
+  200cc) it is verified: driving windows sit at 57-61% of top, mushrooms /
+  dash pads stay capped (biggest capped rise 3.5%/frame), and Sweet Sweet
+  Canyon's cannon passes (7.49 -> 9.54 in one frame, +16% of top 12.49, then
+  held at ~105-111% of top for the flight). The item fallbacks were seen
+  working there too (Bullet / Star / Golden -> Mushroom, Bob-omb -> Banana).
 * The 0.2.1 `NotSale` cup gate: cursor crossing locked cups, the deny
   window on A, a cup received while the grid is open.
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,

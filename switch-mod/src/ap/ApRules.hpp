@@ -86,7 +86,14 @@ int substituteItem(int locked, Allowed&& allowed) {
 //     frame (about 40 frames from 100% to 60%) instead of snapping.
 // Normal acceleration is far below kLaunchJump per frame, so ordinary driving
 // still sits exactly at the cap.
-inline constexpr float kLaunchJump = 0.04f;
+//
+// Measured on 4.0.1 (Ryujinx, top 8.3): a mushroom / drift boost adds
+// 4.0-4.4% of top per frame over many frames, a dash panel 12.5% in one
+// frame and then re-sets ~5% every 6 frames. The first threshold (4%) let
+// every mushroom and mini-turbo through, so a drifting player was boosting
+// past the cap most of the time ("speed doesn't seem limited"). At 7% those
+// stay at the cap and only one-frame launches pass.
+inline constexpr float kLaunchJump = 0.07f;
 inline constexpr float kGlideDown = 0.01f;
 
 enum class SpeedAction : std::uint8_t { Untouched, Capped, Launch, Hold, Glide };
