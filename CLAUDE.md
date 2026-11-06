@@ -164,6 +164,13 @@ base_game` unless the save owns the BCP (the user's does not).
   disables every button: soft-lock; the hook now only logs would-be
   denials). `Control_CupButton::setCup`'s DLCState only picks icon frames
   (0 and 4 draw alike), so a gated cup does not look padlocked in the grid.
+  **isDLC is gated only for Page_CourseBase's own call sites** (0.2.2, by
+  return address): the driver / part screens call it too, mapping ids
+  30..35 (Tanooki, Link, Villager, Isabelle, Cat Peach, Dry Bowser) to
+  their old Wii U DLC pack's cup (Egg/Triforce/Crossing/Bell). Gating
+  every caller blanked those icons and froze the screen on a pick while
+  that cup was AP-locked (player report 2026-11). Call-site map in
+  CupGateHook.cpp.
 * **Menu unlocks for parts = `FlagAccessor::isOpen(E{Driver,Body,Tire,Wing}ID)`**
   (`+0x865F14/F60/FAC/FF8`, next to the cup overload; save byte tables at
   `save+0x188 + 0x1F48/0x1F88/0x1FC8/0x2008`, open == 3). The parts-list
@@ -174,9 +181,26 @@ base_game` unless the save owns the BCP (the user's does not).
   AP-locked parts the save owns stay selectable; `KartGuard` still swaps
   them at race start. Map and caller evidence: `docs/symbols.md`.
 * **Item gate**: `gear::ItemOwner::startSlot(this, int slot, const
-  EItemSlot&, bool, bool)`; locked rolls become Coin (or None). Verified.
-* **Speed**: `ui::Control_RaceLapCoin::onCalc_` clamps
-  `KartVehicleMove+0x37C` to `top1 * speed_pct` every frame; top-speed
+  EItemSlot&, bool, bool)`. Verified with Coin as the substitute; since
+  0.2.2 a locked roll falls back through weaker items of its kind first
+  (Star/Bullet/Golden -> Triple Mushroom -> Mushroom, shells -> shells,
+  then Coin, then None; table in `src/ap/ApRules.hpp`, never an item with a
+  per-race limit). Coin-only left 10th-12th with a Coin ~95% of the time.
+* **Speed**: `ui::Control_RaceLapCoin::onCalc_` runs every frame;
+  `ap::rules::SpeedGovernor` (0.2.2) caps `KartVehicleMove+0x37C` at
+  `top1 * speed_pct` for normal driving but lets a one-frame jump of
+  > 7% of top through (cannons, dash panels), holds it from
+  climbing while above top, then glides back to the cap at 1% of top per
+  frame. The 0.2.1 hard clamp crawled through Sweet Sweet Canyon's cannon
+  (player report 2026-11). Measured 2026-11-06 (4.0.1, top 8.3): mushroom /
+  mini-turbo +4.0-4.4% of top per frame over many frames, dash panel +12.5%
+  once then ~5% re-sets; a 4% threshold let every boost through (Max:
+  "speed doesn't seem limited"), so boosts now stay at the cap; the Sweet
+  Sweet Canyon cannon is a +16% one-frame jump and still passes. A
+  `[speed] kart N 300 frames:` summary (every ~5 s) gives the mix of
+  capped / launch / glide frames. Offsets are sanity-checked EVERY frame; 0.2.1
+  latched the first frame's verdict, so a bad first read disabled the cap
+  for the session (same report: 60% listed, no cap). Top-speed
   floats at `+0x424/+0x428/+0x42C` read sane on 4.0.0. **Engine class is
   deliberately NOT restricted** (user decision 2026-10-16): the speed
   restriction is the clamp only, scaled by Progressive Speed.
@@ -221,6 +245,14 @@ base_game` unless the save owns the BCP (the user's does not).
 ## Not yet verified
 
 * Anything past boot on 4.0.1 (races, gates, checks: see Status).
+* The 0.2.2 isDLC caller filter in game (Villager / Isabelle / Dry Bowser
+  selectable with the Crossing / Bell cups AP-locked).
+* The speed governor on real hardware. In Ryujinx (4.0.1, 2026-11-06, 60%,
+  200cc) it is verified: driving windows sit at 57-61% of top, mushrooms /
+  dash pads stay capped (biggest capped rise 3.5%/frame), and Sweet Sweet
+  Canyon's cannon passes (7.49 -> 9.54 in one frame, +16% of top 12.49, then
+  held at ~105-111% of top for the flight). The item fallbacks were seen
+  working there too (Bullet / Star / Golden -> Mushroom, Bob-omb -> Banana).
 * The 0.2.1 `NotSale` cup gate: cursor crossing locked cups, the deny
   window on A, a cup received while the grid is open.
 * Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,

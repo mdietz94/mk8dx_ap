@@ -7,7 +7,8 @@
 // the roulette lands on, so the visible state stays consistent.
 //
 // Only locally controlled karts are filtered unless the PC sets cpu_items.
-// Locked items become Coin (or None if Coin is locked too).
+// Locked items fall back through weaker items of the same kind, then Coin,
+// then None (ap::rules::substituteItem, ApRules.hpp).
 
 #include "Hooks.hpp"
 
@@ -15,6 +16,7 @@
 
 #include "hk/hook/Trampoline.h"
 
+#include "../ap/ApRules.hpp"
 #include "../ap/ApState.hpp"
 #include "../game/Ids.hpp"
 #include "../game/Structs.hpp"
@@ -22,6 +24,13 @@
 #include "../util/Log.hpp"
 
 namespace mk8ap::hooks {
+
+// ApRules.hpp keeps the EItemSlot ids numeric (host-testable); pin them.
+static_assert(ap::rules::kItemCoin == static_cast<int>(game::ItemSlot::Coin));
+static_assert(ap::rules::kItemNone == static_cast<int>(game::ItemSlot::None));
+static_assert(ap::rules::kItemCount == static_cast<int>(game::ItemSlot::Count));
+static_assert(ap::rules::item::Kinoko3 == static_cast<int>(game::ItemSlot::Kinoko3));
+static_assert(ap::rules::item::KouraR3 == static_cast<int>(game::ItemSlot::KouraR3));
 
 namespace {
 
@@ -60,8 +69,8 @@ HkTrampoline<u64, void*, u64, u64, u64, u64> g_startSlot = hk::hook::trampoline(
         if (st.restricting() && item >= 0 && !st.isItemAllowed(item)) {
             const bool local = ownerIsLocal(owner);
             if (local || st.cpu_items.load(std::memory_order_relaxed)) {
-                std::int32_t sub = static_cast<std::int32_t>(game::ItemSlot::Coin);
-                if (!st.isItemAllowed(sub)) sub = static_cast<std::int32_t>(game::ItemSlot::None);
+                std::int32_t sub = static_cast<std::int32_t>(
+                    ap::rules::substituteItem(item, [&st](int id) { return st.isItemAllowed(id); }));
                 MK8AP_LOG_INFO("[item] %s kart rolled locked item %d -> %d",
                                local ? "local" : "cpu", item, sub);
                 return g_startSlot.orig(owner, x1, reinterpret_cast<u64>(&sub), x3, x4);

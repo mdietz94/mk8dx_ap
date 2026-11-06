@@ -28,14 +28,16 @@ Switch / Ryujinx                                   PC
     `RaceKartChecker+0x40`).
   * `CupGateHook`: `FlagAccessor::isOpen`, `DLCManager::getCupStatus`,
     `Control_CupButton::setCup` return "locked" for AP-locked cups.
-  * `ItemGateHook`: `ItemOwner::startSlot` remaps locked items to Coin.
+  * `ItemGateHook`: `ItemOwner::startSlot` remaps a locked item to the
+    first unlocked weaker item of its kind, else Coin (`ap/ApRules.hpp`).
   * `KartGuardHook`: `ui::SetNextCourse` rewrites locked driver/parts on
     local karts to the starting loadout.
   * `PartUnlockHook`: the `FlagAccessor::isOpen` driver / body / tire /
     glider overloads return true for parts the AP state allows, so received
     parts are selectable on a save that has not earned them. Open-only.
-  * `SpeedCapHook`: per-frame clamp of `KartVehicleMove::mSpeed` to
-    `top * speed_pct`.
+  * `SpeedCapHook`: per-frame governor on `KartVehicleMove::mSpeed`:
+    normal driving capped at `top * speed_pct`, cannon / boost launches
+    pass and glide back down (`ap/ApRules.hpp`).
   * `IdTableDump`: `mush::E*ID::text_` tables shipped once so the PC learns
     the enum ids.
 

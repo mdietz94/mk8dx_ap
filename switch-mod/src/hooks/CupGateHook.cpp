@@ -132,8 +132,9 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
 // --- 4. static ui::DLCState Page_CourseBase::isDLC(ui::ECup) ----------------
 // DLCState carries a user-declared destructor, so the AArch64 ABI returns it
 // through memory at the hidden x8 pointer; a C++ lambda cannot see x8, so the
-// hook entry is a 2-instruction asm stub that moves x8 into x1 and jumps to
-// the C++ body. The original is invoked through another stub that reloads x8.
+// hook entry is an asm stub that moves x8 into x1 (and the caller's return
+// address, x30, into x2) and jumps to the C++ body. The original is invoked
+// through another stub that reloads x8.
 //
 // AP-locked cups report NotSale(0). From the 4.0.1 disassembly (isDLC at
 // +0x494E44 and its callers):
@@ -152,6 +153,21 @@ HkTrampoline<u64, void*, u64, u64, u64, u64, u64> g_setCup = hk::hook::trampolin
 // enterable at once (setup-time Locked needed the page rebuilt).
 // isDLC itself returns Locked for a base cup whose save flag is closed
 // (FlagAccessor::isOpen), which is why gating isOpen soft-locked the grid.
+//
+// ONLY the cup page's own calls are gated. isDLC has 25 call sites on 4.0.1:
+// 18 inside Page_CourseBase (+0x494BDC .. +0x4982E8), and 7 elsewhere. Five
+// of those (+0x4B603C, +0x4B7648, +0x4B9880, +0x4B9CF8, +0x4BBE3C) are the
+// driver / part availability checks: an id 30..35 (Tanooki Mario, Link,
+// Villager, Isabelle, Cat Peach, Dry Bowser: the former Wii U DLC packs) is
+// mapped to its pack's cup (Egg / Triforce / Crossing / Bell) and the
+// character is available iff isDLC(that cup) says so. Gating every caller
+// blanked those characters' icons and froze the select screen on a pick
+// while the pack's cup was AP-locked (player report 2026-11). The remaining
+// two (+0x4E6F44, +0x4E77A8) query a cup read from a global (+0x2084).
+// Calls whose return address lies outside the Page_CourseBase window below
+// get the vanilla answer.
+constexpr std::intptr_t kCupPageCallersLo = -0x300;   // isDLC + this ..
+constexpr std::intptr_t kCupPageCallersHi = 0x3500;   // .. isDLC + this
 }  // namespace
 extern "C" std::uint64_t mk8ap_isDlcEntry(std::uint64_t cup);
 extern "C" std::uint64_t mk8ap_callSret(void* fn, std::uint64_t x0, std::uint64_t x8);
@@ -161,6 +177,7 @@ asm(R"(
     .type mk8ap_isDlcEntry,%function
 mk8ap_isDlcEntry:
     mov x1, x8
+    mov x2, x30
     b mk8ap_isDlcImpl
     .size mk8ap_isDlcEntry, .-mk8ap_isDlcEntry
 
@@ -177,7 +194,7 @@ mk8ap_callSret:
 namespace {
 HkTrampoline<std::uint64_t, std::uint64_t> g_isDlc{&mk8ap_isDlcEntry};
 }  // namespace
-extern "C" std::uint64_t mk8ap_isDlcImpl(std::uint64_t x0, std::uint64_t x8) {
+extern "C" std::uint64_t mk8ap_isDlcImpl(std::uint64_t x0, std::uint64_t x8, std::uint64_t lr) {
     using namespace mk8ap;
     using namespace mk8ap::hooks;
     std::int32_t local = 0;
@@ -185,8 +202,22 @@ extern "C" std::uint64_t mk8ap_isDlcImpl(std::uint64_t x0, std::uint64_t x8) {
                                              reinterpret_cast<std::uint64_t>(&local));
     const int ecup = derefEnum(x0);
     std::int32_t result = local;
-    if (ecup >= 0 && ecup < game::kCupCount && !ap::ApState::instance().isCupAllowed(ecup)) {
+    static const std::uintptr_t isDlcAddr = sym::addr("ui::Page_CourseBase::isDLC");
+    const std::intptr_t rel = static_cast<std::intptr_t>(lr - isDlcAddr);
+    const bool cupPage = isDlcAddr && rel >= kCupPageCallersLo && rel < kCupPageCallersHi;
+    if (cupPage && ecup >= 0 && ecup < game::kCupCount &&
+        !ap::ApState::instance().isCupAllowed(ecup)) {
         result = kGatedState;
+    }
+    if (!cupPage && ecup >= 0 && ecup < game::kCupCount &&
+        !ap::ApState::instance().isCupAllowed(ecup)) {
+        static int passLogs = 0;
+        if (passLogs < 20) {
+            ++passLogs;
+            MK8AP_LOG_INFO("[cup] isDLC(ecup=%d) from +0x%llx (not the cup page): vanilla %d kept",
+                           ecup, static_cast<unsigned long long>(sym::mainOffset("ui::Page_CourseBase::isDLC") + rel),
+                           local);
+        }
     }
     static std::atomic<std::uint64_t> logged{0};
     if (firstTime(logged, ecup) || result != local) {
