@@ -25,3 +25,5 @@
     { "gear::FlagAccessor::isOpen(EBodyID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7EBodyIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F1 83 52 08 69 69 38", -0x24, 0x0 },
     { "gear::FlagAccessor::isOpen(ETireID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7ETireIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 F9 83 52 08 69 69 38", -0x24, 0x0 },
     { "gear::FlagAccessor::isOpen(EWingID)", "_ZNK4gear12FlagAccessor6isOpenEN4mush7EWingIDE", "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 01 84 52 08 69 69 38", -0x24, 0x0 },
+    { "object::KartVehicle::setupStatParam", "", "FF C3 06 D1 E8 B3 00 FD FC B7 00 F9 F8 5F 17 A9", 0x0, 0x170738 },
+    { "ui::GrandPrix::commitResult", "", "FD 43 01 91 F3 03 00 AA 68 02 40 B9 F4 03 01 AA", -0x18, 0x552fb0 },

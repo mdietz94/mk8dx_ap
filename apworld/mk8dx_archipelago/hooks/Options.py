@@ -57,27 +57,60 @@ class RestrictCpuItems(Toggle):
     display_name = "Restrict CPU items"
 
 
+class SpeedRestriction(Choice):
+    """How Progressive Speed holds you back.
+
+    stat_cap: every kart stat (speed, acceleration, weight, handling,
+    traction, mini-turbo, invincibility) is capped at starting_stat_cap
+    points, as if racing on bad parts, and the kart's base top speed is
+    scaled to min_speed_percent (the game's own speed stat only spans ~6%,
+    so the cap alone is barely felt). Boosts scale with the kart, as they do
+    for a slow combo; nothing is clamped per frame. Each Progressive Speed
+    raises both; the last one removes them.
+
+    top_speed_cap: your speed is clamped to min_speed_percent of the kart's
+    top speed, rising with each Progressive Speed (the 0.2.x behaviour)."""
+    display_name = "Speed restriction"
+    option_stat_cap = 0
+    option_top_speed_cap = 1
+    default = 0
+
+
 class SpeedStages(Range):
-    """Number of Progressive Speed items. Your top speed starts at
-    min_speed_percent and reaches 100% when all stages are collected.
-    0 disables the speed cap."""
+    """Number of Progressive Speed items. Each one loosens the restriction
+    picked in speed_restriction; with all of them the kart is unrestricted.
+    0 disables the restriction."""
     display_name = "Speed stages"
     range_start = 0
     range_end = 5
     default = 3
 
 
+class StartingStatCap(Range):
+    """stat_cap mode: the highest level (in points, 1-20; the in-game bars
+    show 0.75 + points / 4) any stat of your kart can have with zero
+    Progressive Speed items. Stats of real combos sit around 3-15 points;
+    8 (2.75 bars) is a bit under the middle. The cap rises evenly to 20
+    (no cap) with the last Progressive Speed."""
+    display_name = "Starting stat cap"
+    range_start = 1
+    range_end = 19
+    default = 8
+
+
 class MinSpeedPercent(Range):
-    """Top speed (percent of normal) with zero Progressive Speed items."""
+    """Top speed (percent of normal) with zero Progressive Speed items.
+    stat_cap mode scales the kart's base top speed (boosts scale with it);
+    top_speed_cap mode clamps the speed every frame."""
     display_name = "Minimum speed percent"
     range_start = 30
     range_end = 90
-    default = 60
+    default = 75
 
 
 class WinRequiresSpeed(Range):
-    """Progressive Speed items required in logic before 'Win' checks are
-    expected. Clamped to speed_stages."""
+    """Progressive Speed items required in logic before 'Win' checks and
+    Grand Prix cup wins are expected. Clamped to speed_stages."""
     display_name = "Win requires speed"
     range_start = 0
     range_end = 5
@@ -85,7 +118,8 @@ class WinRequiresSpeed(Range):
 
 
 class GoalCups(Range):
-    """Number of cups to complete in Grand Prix (all four races) to win.
+    """Number of cups to win in Grand Prix (1st place overall after all
+    four races) to reach the goal.
     Clamped to the number of cups in the seed."""
     display_name = "Goal: cups completed"
     range_start = 1
@@ -111,7 +145,9 @@ def before_options_defined(options: dict) -> dict:
     options["shuffle_vehicles"] = ShuffleVehicles
     options["shuffle_items"] = ShuffleItems
     options["restrict_cpu_items"] = RestrictCpuItems
+    options["speed_restriction"] = SpeedRestriction
     options["speed_stages"] = SpeedStages
+    options["starting_stat_cap"] = StartingStatCap
     options["min_speed_percent"] = MinSpeedPercent
     options["win_requires_speed"] = WinRequiresSpeed
     options["goal_cups"] = GoalCups

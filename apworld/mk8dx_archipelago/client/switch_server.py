@@ -15,7 +15,7 @@ import time
 from typing import Any, Awaitable, Callable
 
 from . import protocol
-from .protocol import (CourseNameMsg, ErrMsg, HelloAckMsg, HelloMsg, IdTableMsg, LogMsg,
+from .protocol import (CourseNameMsg, ErrMsg, GpResultMsg, HelloAckMsg, HelloMsg, IdTableMsg, LogMsg,
                        PingMsg, PlayReportMsg, PongMsg, PrintMsg, RaceResultMsg, StateMsg)
 from .state import BridgeState
 
@@ -27,6 +27,7 @@ SUPPORTED_GAME_VERSION = "4.0.1"
 _SYMBOL_FEATURES = {
     "gear::SaveDataFile::load": "early networking start (falls back to the first menu/race)",
     "ui::RaceWindow::onFakeGoal": "fallback race detection (PlayReport still works)",
+    "ui::GrandPrix::commitResult": "Grand Prix cup checks (winning a cup)",
     "gear::GetRaceInfo": "fallback race detection",
     "gear::FrameworkUtil::getCurrentGameScene": "fallback race detection, speed cap",
     "gear::NetworkUtil::getMyKartIndex": "fallback race detection, speed cap",
@@ -61,6 +62,7 @@ def describe_unresolved(names: str) -> list[str]:
 
 RaceResultHandler = Callable[[RaceResultMsg], Awaitable[None]]
 PlayReportHandler = Callable[[PlayReportMsg], Awaitable[None]]
+GpResultHandler = Callable[[GpResultMsg], Awaitable[None]]
 StateProvider = Callable[[], StateMsg]
 
 
@@ -71,6 +73,7 @@ class SwitchServer:
                  on_play_report: PlayReportHandler,
                  build_state: StateProvider,
                  on_switch_changed: Callable[[], None] | None = None,
+                 on_gp_result: GpResultHandler | None = None,
                  bundled_mod_ver: str | None = None) -> None:
         self.host = host
         self.port = port
@@ -78,6 +81,7 @@ class SwitchServer:
         self.client_ver = client_ver
         self._on_race_result = on_race_result
         self._on_play_report = on_play_report
+        self._on_gp_result = on_gp_result
         self._build_state = build_state
         self._on_switch_changed = on_switch_changed
         self.bundled_mod_ver = bundled_mod_ver
@@ -129,8 +133,8 @@ class SwitchServer:
         st = self._build_state()
         ok = await self._send(st)
         if ok:
-            log.info("state seq=%d pushed to Switch (cups=0x%06x items=0x%06x speed=%d%%)",
-                     st.seq, st.cups, st.items, st.speed_pct)
+            log.info("state seq=%d pushed to Switch (cups=0x%06x items=0x%06x speed=%d%% stat_cap=%d base=%d%%)",
+                     st.seq, st.cups, st.items, st.speed_pct, st.stat_cap, st.base_speed_pct)
         return ok
 
     async def send_print(self, text: str) -> bool:
@@ -212,6 +216,9 @@ class SwitchServer:
             await self._on_race_result(msg)
         elif isinstance(msg, PlayReportMsg):
             await self._on_play_report(msg)
+        elif isinstance(msg, GpResultMsg):
+            if self._on_gp_result is not None:
+                await self._on_gp_result(msg)
         elif isinstance(msg, CourseNameMsg):
             if self.state.learned.learn_course(msg.course_id, msg.res):
                 log.info("learned course id %d -> %s", msg.course_id, msg.res)

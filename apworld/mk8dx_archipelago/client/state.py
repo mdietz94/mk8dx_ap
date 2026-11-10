@@ -14,6 +14,10 @@ from .protocol import StateMsg
 
 log = logging.getLogger("MK8DX")
 
+SPEED_STAT_CAP = 0     # Options.SpeedRestriction.option_stat_cap
+SPEED_TOP_CAP = 1      # Options.SpeedRestriction.option_top_speed_cap
+STAT_MAX = 20          # highest stat level the game has (sum of part points)
+
 
 @dataclass
 class RaceEvent:
@@ -47,7 +51,12 @@ class BridgeState:
         self.shuffle_vehicles = True
         self.shuffle_items = True
         self.speed_stages = 3
-        self.min_speed_pct = 60
+        self.min_speed_pct = 75
+        # speed_restriction: 0 = stat_cap, 1 = top_speed_cap. Defaults to the
+        # top-speed governor so a seed generated before 0.3.0 (no key in
+        # slot_data) keeps behaving as it did.
+        self.speed_restriction = SPEED_TOP_CAP
+        self.starting_stat_cap = 8
         self.cpu_items = False
         self.starting_cup = tables.STARTING_CUP
 
@@ -69,18 +78,42 @@ class BridgeState:
         self.shuffle_vehicles = bool(slot_data.get("shuffle_vehicles", True))
         self.shuffle_items = bool(slot_data.get("shuffle_items", True))
         self.speed_stages = int(slot_data.get("speed_stages", 3))
-        self.min_speed_pct = int(slot_data.get("min_speed_percent", 60))
+        self.min_speed_pct = int(slot_data.get("min_speed_percent", 75))
+        self.speed_restriction = int(slot_data.get("speed_restriction", SPEED_TOP_CAP))
+        self.starting_stat_cap = int(slot_data.get("starting_stat_cap", 8))
         self.cpu_items = bool(slot_data.get("restrict_cpu_items", False))
         self.starting_cup = str(slot_data.get("starting_cup", tables.STARTING_CUP))
 
     # ---- restriction snapshot ----
-    def speed_pct(self) -> int:
+    def _speed_have(self) -> tuple[int, int]:
         stages = max(0, self.speed_stages)
+        return min(self.count(tables.PROGRESSIVE_SPEED), stages), stages
+
+    def uses_stat_cap(self) -> bool:
+        return self.speed_restriction == SPEED_STAT_CAP
+
+    def stat_cap(self) -> int:
+        """Stat cap in points (1..20, 20 = uncapped) for stat_cap mode."""
+        have, stages = self._speed_have()
+        if not self.uses_stat_cap() or stages == 0:
+            return STAT_MAX
+        lo = max(1, min(STAT_MAX, self.starting_stat_cap))
+        return int(round(lo + (STAT_MAX - lo) * have / stages))
+
+    def _speed_scale(self) -> int:
+        have, stages = self._speed_have()
         if stages == 0:
             return 100
-        have = min(self.count(tables.PROGRESSIVE_SPEED), stages)
         lo = max(1, min(100, self.min_speed_pct))
         return int(round(lo + (100 - lo) * have / stages))
+
+    def speed_pct(self) -> int:
+        """Per-frame governor percent (top_speed_cap mode only)."""
+        return 100 if self.uses_stat_cap() else self._speed_scale()
+
+    def base_speed_pct(self) -> int:
+        """Base top speed scale applied at kart setup (stat_cap mode only)."""
+        return self._speed_scale() if self.uses_stat_cap() else 100
 
     def build_state(self) -> StateMsg:
         L = self.learned
@@ -137,6 +170,8 @@ class BridgeState:
             wings=wings & 0xFFFFFFFF,
             items=items & 0xFFFFFFFF,
             speed_pct=self.speed_pct(),
+            stat_cap=self.stat_cap(),
+            base_speed_pct=self.base_speed_pct(),
             engine_max=3,
             def_driver=default_id("driver", tables.DRIVERS, tables.STARTING_DRIVER),
             def_body=default_id("body", tables.BODIES, tables.STARTING_BODY),
@@ -164,5 +199,8 @@ class BridgeState:
             "items": dict(self.received),
             "checked": len(self.checked_locations),
             "speed_pct": self.speed_pct(),
+            "stat_cap": self.stat_cap(),
+            "base_speed_pct": self.base_speed_pct(),
+            "stat_mode": self.uses_stat_cap(),
             "learned": {k: len(m.learned) for k, m in self.learned.maps.items()},
         }

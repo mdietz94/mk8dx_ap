@@ -78,36 +78,3 @@ def resolve_hook(course_id: int, rank_0based: int, rule: int, learned: LearnedId
     if rank_0based < 0:
         return Resolved(course, rank, rule, [], "no rank")
     return Resolved(course, rank, rule, locations_for(course, rank, tiers))
-
-
-class GrandPrixTracker:
-    """Detects "all four courses of cup X finished in one Grand Prix".
-
-    Feed every race in order; returns the cup when the fourth consecutive
-    GP race completes the cup's course set.
-    """
-
-    def __init__(self) -> None:
-        self._runs: dict[int, set[int]] = {}
-
-    def observe(self, course: tables.Course, rule: int) -> tables.Cup | None:
-        if rule != RULE_GRAND_PRIX:
-            # A second report of a race already counted in the current run
-            # (the hook and PlayReport channels both fire per race, and the
-            # hook path may carry a stale rule) must not abandon the run.
-            if course.slot in self._runs.get(course.cup, set()):
-                return None
-            self._runs.clear()
-            return None
-        slots = self._runs.setdefault(course.cup, set())
-        if course.slot == 0 and slots != {0}:
-            slots.clear()
-        slots.add(course.slot)
-        # A GP is sequential; any other cup in flight is abandoned.
-        for k in list(self._runs):
-            if k != course.cup:
-                del self._runs[k]
-        if slots == {0, 1, 2, 3}:
-            self._runs.pop(course.cup, None)
-            return tables.CUPS[course.cup]
-        return None

@@ -113,9 +113,23 @@ static void testSpeed() {
     CHECK(near(g.step(-0.3f, top, pct, &a), -0.3f));
 }
 
+static void testStatCap() {
+    int d[kStatCols];
+    // Illustrative per-column sums (not a real combo).
+    const int mario[kStatCols] = {10, 9, 9, 9, 9, 12, 12, 12, 12, 12, 12, 12, 12, 6};
+    CHECK(statCapDeltas(mario, kStatMax, d) == 0);
+    for (int c = 0; c < kStatCols; ++c) CHECK(d[c] == 0);
+    CHECK(statCapDeltas(mario, 9, d) == 9);   // weight, 4 speed and 4 handling columns are over 9
+    CHECK(d[stat::Weight] == 1 && d[stat::Accel] == 0 && d[stat::SpeedLand] == 3 && d[stat::Invincibility] == 0);
+    for (int c = 0; c < kStatCols; ++c) CHECK(mario[c] - d[c] <= 9);
+    CHECK(statCapDeltas(mario, 0, d) == 0);   // nonsense cap: no change
+    CHECK(statCapDeltas(mario, 25, d) == 0);
+}
+
 int main() {
     testItems();
     testSpeed();
+    testStatCap();
     if (g_fail == 0) std::printf("test_rules: all passed\n");
     return g_fail == 0 ? 0 : 1;
 }

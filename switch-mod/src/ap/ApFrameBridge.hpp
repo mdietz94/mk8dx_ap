@@ -14,6 +14,9 @@ namespace mk8ap::ap {
 void reportRaceResult(int course_id, int rule, int engine, bool mirror,
                       int rank, int kart_index);
 
+// GpResultHook: the local player's final Grand Prix placing. `seq` is stamped here.
+void reportGpResult(int cup, int engine, int placing, int points);
+
 // PlayReportHook: forward a serialized nn::prepo report (copied; caller's
 // buffer may go away). Truncates at kPlayReportMaxBytes.
 void reportPlayReport(const char* room, std::size_t room_len,

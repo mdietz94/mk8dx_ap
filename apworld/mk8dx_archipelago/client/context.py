@@ -18,8 +18,8 @@ from NetUtils import ClientStatus
 from . import tables
 from .learned import course_for_internal
 from .play_report import parse_race_report
-from .protocol import PlayReportMsg, RaceResultMsg
-from .resolver import GrandPrixTracker, resolve_hook, resolve_report
+from .protocol import GpResultMsg, PlayReportMsg, RaceResultMsg
+from .resolver import resolve_hook, resolve_report
 from .state import BridgeState, RaceEvent
 
 log = logging.getLogger("MK8DX")
@@ -34,7 +34,7 @@ class MK8DXCommandProcessor(ClientCommandProcessor):
         """Show MK8DX client state (items, Switch link, learned ids)."""
         s = self.ctx.state.summary()
         self.output(f"AP: {s['ap']}  Switch: {s['switch']} {s['switch_info']}")
-        self.output(f"speed: {s['speed_pct']}%  items received: {sum(s['items'].values())}  "
+        self.output(f"speed: {s['speed_pct']}%  stat cap: {s['stat_cap']}  base speed: {s['base_speed_pct']}%  items received: {sum(s['items'].values())}  "
                     f"checked: {s['checked']}  learned ids: {s['learned']}")
         return True
 
@@ -68,7 +68,6 @@ class MK8DXContext(CommonContext):
         self.state = state
         self.switch = None  # SwitchServer, set by main
         self.slot_data: dict = {}
-        self._gp = GrandPrixTracker()
         self._seen_reports: set[str] = set()
         self._seen_hook: dict[str, float] = {}
         # Pairing window for learning course ids: the hook reports a numeric
@@ -228,11 +227,32 @@ class MK8DXContext(CommonContext):
 
     async def _credit(self, course, rank: int, rule_text: str, locations: list[str],
                       source: str, rule: int) -> None:
+        checked = await self._check(locations)
+        self.state.add_race(RaceEvent(time.time(), source, course.name if course else "?", rank,
+                                      rule_text, "", checked))
+        if checked:
+            log.info("checked: %s", ", ".join(checked))
+        await self._maybe_goal()
+
+    async def on_gp_result(self, msg: GpResultMsg) -> None:
+        """A Grand Prix ended. The cup's check needs 1st place overall."""
+        cup = tables.CUPS[msg.cup] if 0 <= msg.cup < len(tables.CUPS) else None
+        if cup is None:
+            log.warning("gp_result for unknown cup %d (placing %d)", msg.cup, msg.placing)
+            return
+        won = msg.placing == 1
+        log.info("gp_result %s placing=%d points=%d engine=%d -> %s", cup.name, msg.placing,
+                 msg.points, msg.engine, "cup won" if won else "no check (needs 1st place)")
+        checked = await self._check([tables.cup_complete_location(cup)] if won else [])
+        self.state.add_race(RaceEvent(time.time(), "gp", cup.name, msg.placing, "GP total",
+                                      "", checked))
+        if checked:
+            log.info("checked: %s", ", ".join(checked))
+        await self._maybe_goal()
+
+    async def _check(self, locations: list[str]) -> list[str]:
+        """Send each not-yet-checked location; returns the ones sent."""
         checked: list[str] = []
-        if course is not None:
-            cup = self._gp.observe(course, rule)
-            if cup is not None:
-                locations = list(locations) + [tables.cup_complete_location(cup)]
         for name in locations:
             if name in self.state.checked_locations:
                 continue
@@ -243,11 +263,7 @@ class MK8DXContext(CommonContext):
             self.state.checked_locations.add(name)
             checked.append(name)
             await self.check_locations([loc_id])
-        self.state.add_race(RaceEvent(time.time(), source, course.name if course else "?", rank,
-                                      rule_text, "", checked))
-        if checked:
-            log.info("checked: %s", ", ".join(checked))
-        await self._maybe_goal()
+        return checked
 
     async def _maybe_goal(self) -> None:
         if self.finished_game:

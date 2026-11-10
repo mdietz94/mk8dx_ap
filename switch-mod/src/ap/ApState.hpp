@@ -85,6 +85,8 @@ public:
     std::atomic<std::uint32_t> wings{0xFFFFFFFFu};
     std::atomic<std::uint32_t> items{0xFFFFFFFFu};
     std::atomic<int> speed_pct{100};
+    std::atomic<int> stat_cap{20};
+    std::atomic<int> base_speed_pct{100};
     std::atomic<int> engine_max{3};
     std::atomic<int> def_driver{0};
     std::atomic<int> def_body{0};
@@ -104,6 +106,7 @@ public:
 
     // ---- outbound rings (hooks push, worker pops) ---------------------------
     SpscRing<RaceResult, 16> outbound_results;
+    SpscRing<GpResult, 8> outbound_gp;
     SpscRing<PlayReport, 4> outbound_reports;
     SpscRing<IdTable, 8> outbound_tables;
     SpscRing<Log, 256> outbound_logs;

@@ -196,3 +196,28 @@ name = "gear::FlagAccessor::isOpen(EWingID)"
 mangled = "_ZNK4gear12FlagAccessor6isOpenEN4mush7EWingIDE"
 pattern = "08 C4 40 F9 A9 C3 9F B8 08 01 09 8B 09 01 84 52 08 69 69 38"
 offset = "-0x24"
+
+[[symbols]]
+# StatCapHook.cpp: per-kart stat setup during race build (sums the body /
+# driver / tire / glider stat rows into KartVehicle+0x2DC and derives the
+# physics levels). x0 = KartVehicle*, x1 = param object, w2 = bool, s0 = float.
+# Unnamed in every public source; name is ours. Address and pattern from the
+# 4.0.1 disassembly (single caller +0x16FA58).
+name = "object::KartVehicle::setupStatParam"
+mangled = ""
+pattern = "FF C3 06 D1 E8 B3 00 FD FC B7 00 F9 F8 5F 17 A9"
+offset = "0x0"
+address = "0x170738"
+
+[[symbols]]
+# GpResultHook.cpp: records a finished Grand Prix's trophy / stars in the save
+# from each local player's GP history (final placing + total points).
+# x0 = result arg (s32 gate, cup, engine, ...), x1 = bool* save dirty.
+# Unnamed in every public source; name is ours. 4.0.1 disassembly; callers
+# +0x543E28 (GP results flow) and the +0x552CD8 tail of +0x55211C. The
+# prologue is shared by 98 functions, so the pattern starts 0x18 in.
+name = "ui::GrandPrix::commitResult"
+mangled = ""
+pattern = "FD 43 01 91 F3 03 00 AA 68 02 40 B9 F4 03 01 AA"
+offset = "-0x18"
+address = "0x552FB0"

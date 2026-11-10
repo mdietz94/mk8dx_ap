@@ -89,7 +89,12 @@ def _format_status(ctx: "MK8DXContext") -> str:
         sw_txt += f"  mod {sw.get('mod_ver')} / game {sw.get('game_ver')} / symbols {sw.get('resolved')}/{sw.get('total')}"
     parts.append(f"[b]Switch[/b]: {sw_txt}")
     parts.append(f"[b]Mod[/b]: {_mod_line(ctx)}")
-    parts.append(f"[b]Top speed[/b]: {s['speed_pct']}%  ({st.count(tables.PROGRESSIVE_SPEED)}/{st.speed_stages} stages)")
+    stages = f"({st.count(tables.PROGRESSIVE_SPEED)}/{st.speed_stages} stages)"
+    if s["stat_mode"]:
+        cap = "none" if s["stat_cap"] >= 20 else f"{s['stat_cap']} pts ({0.75 + s['stat_cap'] / 4:g} bars)"
+        parts.append(f"[b]Stat cap[/b]: {cap}, base top speed {s['base_speed_pct']}%  {stages}")
+    else:
+        parts.append(f"[b]Top speed[/b]: {s['speed_pct']}%  {stages}")
     cups = [c.name for c in tables.CUPS if st.has(tables.cup_item(c)) or c.name == st.starting_cup]
     parts.append(f"[b]Cups[/b] ({len(cups)}): " + (", ".join(cups) if cups else "[i]none[/i]"))
     if st.shuffle_characters:

@@ -269,6 +269,13 @@ void ApClient::pumpOutbound() {
         st.outbound_results.popDiscard();
         MK8AP_LOG_INFO("[pump] race_result seq=%d course=%d rank=%d sent", r.seq, r.course_id, r.rank);
     }
+    GpResult g;
+    while (st.outbound_gp.peek(g)) {
+        encodeGpResult(line, g);
+        if (!sendLine(line.data(), line.size())) return;
+        st.outbound_gp.popDiscard();
+        MK8AP_LOG_INFO("[pump] gp_result seq=%d cup=%d placing=%d sent", g.seq, g.cup, g.placing);
+    }
     while (const PlayReport* pr = st.outbound_reports.peekRef()) {
         encodePlayReport(line, *pr);
         if (line.truncated()) {

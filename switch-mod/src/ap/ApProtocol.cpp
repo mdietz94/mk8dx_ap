@@ -46,6 +46,20 @@ void encodeRaceResult(LineBuffer& line, const RaceResult& r) {
     finish(line);
 }
 
+void encodeGpResult(LineBuffer& line, const GpResult& g) {
+    line.clear();
+    Encoder e{line};
+    e.beginObject()
+        .key("t").value("gp_result")
+        .key("seq").value(g.seq)
+        .key("cup").value(g.cup)
+        .key("engine").value(g.engine)
+        .key("placing").value(g.placing)
+        .key("points").value(g.points)
+     .endObject();
+    finish(line);
+}
+
 void encodePlayReport(LineBuffer& line, const PlayReport& p) {
     line.clear();
     Encoder e{line};
@@ -155,6 +169,8 @@ bool decodeState(Reader& r, State& out) {
         else if (key == "wings") { if (!r.nextInt(iv)) return false; out.wings = static_cast<std::uint32_t>(iv); }
         else if (key == "items") { if (!r.nextInt(iv)) return false; out.items = static_cast<std::uint32_t>(iv); }
         else if (key == "speed_pct") { if (!r.nextInt(iv)) return false; out.speed_pct = static_cast<int>(iv); }
+        else if (key == "stat_cap") { if (!r.nextInt(iv)) return false; out.stat_cap = static_cast<int>(iv); }
+        else if (key == "base_speed_pct") { if (!r.nextInt(iv)) return false; out.base_speed_pct = static_cast<int>(iv); }
         else if (key == "engine_max") { if (!r.nextInt(iv)) return false; out.engine_max = static_cast<int>(iv); }
         else if (key == "def_driver") { if (!r.nextInt(iv)) return false; out.def_driver = static_cast<int>(iv); }
         else if (key == "def_body") { if (!r.nextInt(iv)) return false; out.def_body = static_cast<int>(iv); }
@@ -165,6 +181,10 @@ bool decodeState(Reader& r, State& out) {
     }
     if (out.speed_pct < 1) out.speed_pct = 1;
     if (out.speed_pct > 100) out.speed_pct = 100;
+    if (out.stat_cap < 1) out.stat_cap = 1;
+    if (out.stat_cap > 20) out.stat_cap = 20;
+    if (out.base_speed_pct < 1) out.base_speed_pct = 1;
+    if (out.base_speed_pct > 100) out.base_speed_pct = 100;
     return true;
 }
 

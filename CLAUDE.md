@@ -186,7 +186,30 @@ base_game` unless the save owns the BCP (the user's does not).
   (Star/Bullet/Golden -> Triple Mushroom -> Mushroom, shells -> shells,
   then Coin, then None; table in `src/ap/ApRules.hpp`, never an item with a
   per-race limit). Coin-only left 10th-12th with a Coin ~95% of the time.
-* **Speed**: `ui::Control_RaceLapCoin::onCalc_` runs every frame;
+* **Stat cap** (0.3.0, `speed_restriction: stat_cap`, the default): the
+  local (non-CPU) kart's 14 stat sums (body + driver + tire + glider rows)
+  are held at `stat_cap` points (1..20, 20 = none; starts at
+  `starting_stat_cap`, rises evenly with Progressive Speed).
+  `StatCapHook` trampolines the stat setup at `main+0x170738` (x0 =
+  KartVehicle*, s0 = a float the hook must forward), lowers the BODY row in
+  the shared table by each column's excess, calls orig, restores the row.
+  Table layout, ids, Mii remap: `docs/symbols.md` (Kart stats). The
+  governor below is idle in this mode (client sends speed_pct 100). Seeds
+  without the `speed_restriction` key (pre-0.3.0) keep the governor.
+  The game's speed stat spans only ~6%, so the same hook also scales the
+  kart's base top speeds (`KartVehicleMove+0x4B8..0x4CC, +0x50C`) by
+  `base_speed_pct` (= `min_speed_percent` rising to 100 with Progressive
+  Speed). The live top and every boost are rebuilt from those each frame,
+  so boosts scale with the kart and nothing is clamped per frame. Player
+  verdict 2026-11-10 (200cc, 60%): "perfect", then asked for a gentler
+  start: `min_speed_percent` defaults to 75 (was 60) for both modes.
+* **Grand Prix checks need 1st place** (0.3.0). `GpResultHook`
+  trampolines the trophy writer `main+0x552FB0` and reports the local
+  player's final GP placing + points (`gp_result`); the client credits
+  `Complete <cup> (Grand Prix)` only for placing 1, and logic gates those
+  locations on `HasWinSpeed()`. It fires even when the save already has
+  the trophy. The old client-side "four GP races of a cup" tracker is gone.
+* **Speed** (`speed_restriction: top_speed_cap`): `ui::Control_RaceLapCoin::onCalc_` runs every frame;
   `ap::rules::SpeedGovernor` (0.2.2) caps `KartVehicleMove+0x37C` at
   `top1 * speed_pct` for normal driving but lets a one-frame jump of
   > 7% of top through (cannons, dash panels), holds it from
@@ -255,8 +278,10 @@ base_game` unless the save owns the BCP (the user's does not).
   working there too (Bullet / Star / Golden -> Mushroom, Bob-omb -> Banana).
 * The 0.2.1 `NotSale` cup gate: cursor crossing locked cups, the deny
   window on A, a cup received while the grid is open.
-* Completing a Grand Prix -> `Complete <cup> (Grand Prix)` check -> Trophy,
-  and the goal (`goal_cups` Trophies).
+* The goal (`goal_cups` Trophies). Winning a cup is verified (Ryujinx 4.0.1,
+  2026-11-10, Mushroom 50cc: `[gp] placing=1 points=60` -> `Complete Mushroom
+  Cup (Grand Prix)` checked; the game's own `gp_result` PlayReport said Rank 1,
+  Score 60). A 2nd / 3rd place cup and multi-cup goals have not been played.
 * Real Switch hardware (Atmosphere): only Ryujinx so far. Discovery sweep,
   nifm request path, the socket pool and the LayeredFS ap_config.json read
   have not been exercised on-console.

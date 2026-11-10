@@ -136,6 +136,34 @@ void governKart(int idx, int pct) {
     }
 }
 
+// stat_cap mode: nothing is clamped per frame (StatCapHook scales the base
+// top speeds at kart setup). Log the local kart's live top speed (+0x420,
+// rebuilt every frame from the scaled bases) and the highest speed seen,
+// every kSummaryFrames, so the scaling can be checked in a race.
+void observeBaseSpeed(int basePct) {
+    static void* s_vehicle = nullptr;
+    static int s_frames = 0;
+    static float s_max = 0.0f, s_sum = 0.0f;
+    void* vehicle = game::kartVehicle(game::localKartIndex());
+    if (vehicle != s_vehicle) { s_vehicle = vehicle; s_frames = 0; s_max = s_sum = 0.0f; }
+    if (!vehicle) return;
+    void* move = game::rd<void*>(vehicle, game::scene::kVehicleMove);
+    if (!move) return;
+    const float speed = game::rd<float>(move, game::vehicle_move::kSpeed);
+    if (!looksSane(speed, 1.0f)) return;
+    ++s_frames;
+    s_sum += speed;
+    if (speed > s_max) s_max = speed;
+    if (s_frames < kSummaryFrames) return;
+    if (s_sum > 0.0f)
+        MK8AP_LOG_INFO("[speed] kart %d %d frames (base %d%%): live top %.3f (max w/ coins %.3f), "
+                       "avg speed %.3f, highest %.3f",
+                       game::localKartIndex(), s_frames, basePct, game::rd<float>(move, 0x420),
+                       game::rd<float>(move, game::vehicle_move::kTopSpeed1), s_sum / s_frames, s_max);
+    s_frames = 0;
+    s_max = s_sum = 0.0f;
+}
+
 HkTrampoline<std::uint64_t, void*> g_onCalc = hk::hook::trampoline(
     [](void* self) -> std::uint64_t {
         startNetworkingOnce("ui::Control_RaceLapCoin::onCalc_");
@@ -155,6 +183,8 @@ HkTrampoline<std::uint64_t, void*> g_onCalc = hk::hook::trampoline(
                                ki ? game::rd<std::int32_t>(ki, game::kart_info::kGliderId) : -1);
             }
             for (int i = 0; i < game::race_info::kMaxKarts; ++i) governKart(i, pct);
+        } else if (st.restricting() && st.base_speed_pct.load(std::memory_order_relaxed) < 100) {
+            observeBaseSpeed(st.base_speed_pct.load(std::memory_order_relaxed));
         } else if (!g_logged_sane) {
             governKart(game::localKartIndex(), 100);  // log raw values once anyway
         }

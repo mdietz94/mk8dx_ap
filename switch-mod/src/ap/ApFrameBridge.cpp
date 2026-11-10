@@ -31,6 +31,19 @@ void reportRaceResult(int course_id, int rule, int engine, bool mirror,
     }
 }
 
+void reportGpResult(int cup, int engine, int placing, int points) {
+    auto& st = ApState::instance();
+    GpResult g{};
+    g.seq = st.next_seq.fetch_add(1, std::memory_order_relaxed);
+    g.cup = cup;
+    g.engine = engine;
+    g.placing = placing;
+    g.points = points;
+    if (!st.outbound_gp.push(g)) {
+        MK8AP_LOG_WARN("[bridge] outbound_gp FULL; dropped gp_result seq=%d", g.seq);
+    }
+}
+
 void reportPlayReport(const char* room, std::size_t room_len,
                       const void* payload, std::size_t size) {
     auto& st = ApState::instance();

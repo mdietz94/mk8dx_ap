@@ -69,3 +69,41 @@ async def test_hook_and_report_pair_teaches_course_id():
     ctx._pair_course_id()
     assert state.learned.course_for_id(39) is None
     assert RaceReport(course="x").course == "x"
+
+
+@pytest.mark.asyncio
+async def test_cup_check_needs_first_place_overall():
+    pytest.importorskip("CommonClient", reason="Archipelago checkout not present")
+    from client import tables
+    from client.context import MK8DXContext
+    from client.play_report import RaceReport
+    from client.protocol import GpResultMsg
+    from client.state import BridgeState
+
+    state = BridgeState()
+    ctx = MK8DXContext(None, None, state)
+    sent: list[int] = []
+
+    async def record(ids):
+        sent.extend(ids)
+    ctx.check_locations = record  # type: ignore[assignment]
+    names: dict[str, int] = {}
+    ctx._location_id = lambda name: names.setdefault(name, len(names) + 1)  # type: ignore[assignment]
+
+    # Finishing all four Mushroom Cup races no longer completes the cup by itself.
+    for c in [c for c in tables.COURSES if c.cup == 0]:
+        ctx._seen_reports.clear()
+        await ctx._credit(c, 5, "GP", [], "prepo", 0)
+    assert "Complete Mushroom Cup (Grand Prix)" not in state.checked_locations
+
+    await ctx.on_gp_result(GpResultMsg(seq=1, cup=0, engine=1, placing=2, points=50))
+    assert "Complete Mushroom Cup (Grand Prix)" not in state.checked_locations
+    assert sent == []
+    await ctx.on_gp_result(GpResultMsg(seq=2, cup=0, engine=1, placing=1, points=54))
+    assert "Complete Mushroom Cup (Grand Prix)" in state.checked_locations
+    assert len(sent) == 1
+    await ctx.on_gp_result(GpResultMsg(seq=3, cup=0, engine=1, placing=1, points=60))
+    assert len(sent) == 1   # already checked
+    await ctx.on_gp_result(GpResultMsg(seq=4, cup=99, engine=1, placing=1, points=60))
+    assert len(sent) == 1
+    assert RaceReport(course="x").course == "x"
