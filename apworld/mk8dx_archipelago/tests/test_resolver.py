@@ -1,7 +1,7 @@
 from client import tables
 from client.learned import LearnedIds, course_for_internal
 from client.play_report import RaceReport
-from client.resolver import (RULE_GRAND_PRIX, RULE_TIME_ATTACK, RULE_VS, GrandPrixTracker,
+from client.resolver import (RULE_GRAND_PRIX, RULE_TIME_ATTACK, RULE_VS,
                              resolve_hook, resolve_report, rule_from_text)
 
 
@@ -79,25 +79,3 @@ def test_resolve_hook_uses_learned_ids():
     assert "Sweet Sweet Canyon - Win" in r.locations
     assert resolve_hook(12, 4, RULE_VS, L).locations == ["Sweet Sweet Canyon - Finish"]
     assert resolve_hook(12, 0, RULE_TIME_ATTACK, L).locations == []
-
-
-def test_grand_prix_tracker():
-    t = GrandPrixTracker()
-    mushroom = [c for c in tables.COURSES if c.cup == 0]
-    assert t.observe(mushroom[0], RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[1], RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[2], RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[3], RULE_GRAND_PRIX).name == "Mushroom Cup"
-    # VS races never complete a cup and reset progress
-    assert t.observe(mushroom[0], RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[1], RULE_VS) is None
-    assert t.observe(mushroom[2], RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[3], RULE_GRAND_PRIX) is None
-    # ...but a duplicate report of an already-counted race (second channel,
-    # possibly with a stale rule) does not abandon the run
-    t = GrandPrixTracker()
-    for c in mushroom[:3]:
-        assert t.observe(c, RULE_GRAND_PRIX) is None
-        assert t.observe(c, RULE_VS) is None
-        assert t.observe(c, RULE_GRAND_PRIX) is None
-    assert t.observe(mushroom[3], RULE_GRAND_PRIX).name == "Mushroom Cup"

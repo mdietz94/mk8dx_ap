@@ -17,6 +17,8 @@ def test_parse_race_result_and_play_report():
     assert isinstance(m, RaceResultMsg) and m.course_id == 7 and m.rank == 0
     pr = parse_line('{"t":"play_report","room":"R","size":3,"truncated":false,"hex":"de0001"}')
     assert isinstance(pr, PlayReportMsg) and pr.payload() == b"\xde\x00\x01"
+    gp = parse_line('{"t":"gp_result","seq":5,"cup":3,"engine":2,"placing":1,"points":54}')
+    assert type(gp).__name__ == "GpResultMsg" and gp.cup == 3 and gp.placing == 1 and gp.points == 54
 
 
 @pytest.mark.parametrize("bad", [b"", b"not json", b'{"x":1}', b'{"t":"nope"}', b'[1,2]'])

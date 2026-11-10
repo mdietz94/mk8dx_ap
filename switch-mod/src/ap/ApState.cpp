@@ -31,6 +31,8 @@ void ApState::applyState(const State& s) {
     wings.store(s.wings, std::memory_order_relaxed);
     items.store(s.items, std::memory_order_relaxed);
     speed_pct.store(s.speed_pct, std::memory_order_relaxed);
+    stat_cap.store(s.stat_cap, std::memory_order_relaxed);
+    base_speed_pct.store(s.base_speed_pct, std::memory_order_relaxed);
     engine_max.store(s.engine_max, std::memory_order_relaxed);
     def_driver.store(s.def_driver, std::memory_order_relaxed);
     def_body.store(s.def_body, std::memory_order_relaxed);
@@ -41,10 +43,10 @@ void ApState::applyState(const State& s) {
     // Publish `enabled` last (release) so readers that observe it also see
     // the masks above.
     enabled.store(s.enabled, std::memory_order_release);
-    MK8AP_LOG_INFO("[state] seq=%d enabled=%d cups=0x%08x items=0x%08x speed=%d%% "
+    MK8AP_LOG_INFO("[state] seq=%d enabled=%d cups=0x%08x items=0x%08x speed=%d%% stat_cap=%d base=%d%% "
                    "drivers=%08x/%08x/%08x/%08x bodies=%08x/%08x tires=%08x wings=%08x "
                    "def=%d/%d/%d/%d cpu_items=%d",
-                   s.seq, s.enabled ? 1 : 0, s.cups, s.items, s.speed_pct,
+                   s.seq, s.enabled ? 1 : 0, s.cups, s.items, s.speed_pct, s.stat_cap, s.base_speed_pct,
                    s.drivers[0], s.drivers[1], s.drivers[2], s.drivers[3],
                    s.bodies[0], s.bodies[1], s.tires, s.wings,
                    s.def_driver, s.def_body, s.def_tire, s.def_wing,

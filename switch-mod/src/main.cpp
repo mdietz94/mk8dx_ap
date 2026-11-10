@@ -44,6 +44,8 @@ extern "C" void hkMain() {
     mk8ap::hooks::installKartGuardHook();
     mk8ap::hooks::installPartUnlockHooks();
     mk8ap::hooks::installSpeedCapHook();
+    mk8ap::hooks::installStatCapHook();
+    mk8ap::hooks::installGpResultHook();
 
     MK8AP_LOG_INFO("=== hkMain END (symbols %d/%d; networking starts on save load) ===",
                    mk8ap::sym::resolvedCount(), mk8ap::sym::totalCount());

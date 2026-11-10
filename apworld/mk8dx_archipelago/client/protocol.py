@@ -44,6 +44,18 @@ class RaceResultMsg:
 
 
 @dataclass
+class GpResultMsg:
+    """A Grand Prix ended (GpResultHook, read where the game records the
+    trophy). placing is 1-based; only 1 earns the cup's check."""
+    t: str = "gp_result"
+    seq: int = 0
+    cup: int = -1
+    engine: int = -1
+    placing: int = -1
+    points: int = -1
+
+
+@dataclass
 class PlayReportMsg:
     """Serialized nn::prepo PlayReport (MessagePack, hex-encoded)."""
     t: str = "play_report"
@@ -114,6 +126,10 @@ class StateMsg:
     wings: int = 0xFFFFFFFF
     items: int = 0xFFFFFFFF
     speed_pct: int = 100
+    # Stat cap in points (1..20) for every stat of the local kart; 20 = none.
+    stat_cap: int = 20
+    # Base top speed scale (1..100) applied at kart setup in stat_cap mode.
+    base_speed_pct: int = 100
     engine_max: int = 3
     def_driver: int = 0
     def_body: int = 0
@@ -148,6 +164,7 @@ class ErrMsg:
 _INBOUND: dict[str, type] = {
     "hello": HelloMsg,
     "race_result": RaceResultMsg,
+    "gp_result": GpResultMsg,
     "play_report": PlayReportMsg,
     "course_name": CourseNameMsg,
     "id_table": IdTableMsg,

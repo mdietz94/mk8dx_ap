@@ -60,6 +60,16 @@ struct RaceResult {
     int kart_index = -1;
 };
 
+// Grand Prix over (GpResultHook): the local player's final placing in the
+// cup (1 = first) and total points, read where the game records the trophy.
+struct GpResult {
+    int seq = 0;
+    int cup = -1;          // mush::EGrandPrixID (0-based)
+    int engine = -1;       // save engine slot
+    int placing = -1;      // 1-based final GP placing
+    int points = -1;
+};
+
 // Serialized nn::prepo PlayReport captured at the IPC layer. Carries the
 // game's own end-of-race telemetry (Course / Rank / Rule / Engine / Driver /
 // Body / Tire / Wing / FinishReason ...) as a MessagePack blob; the PC
@@ -97,6 +107,7 @@ struct Ping {
 
 void encodeHello(util::json::LineBuffer&, const Hello&);
 void encodeRaceResult(util::json::LineBuffer&, const RaceResult&);
+void encodeGpResult(util::json::LineBuffer&, const GpResult&);
 void encodePlayReport(util::json::LineBuffer&, const PlayReport&);
 void encodeIdTable(util::json::LineBuffer&, const IdTable&);
 void encodeLog(util::json::LineBuffer&, const Log&);
@@ -125,6 +136,8 @@ struct State {
     std::uint32_t wings = 0xFFFFFFFFu;
     std::uint32_t items = 0xFFFFFFFFu;      // bit = gear::EItemSlot
     int speed_pct = 100;        // 1..100
+    int stat_cap = 20;          // 1..20 stat points per stat, 20 = uncapped
+    int base_speed_pct = 100;   // 1..100 base top speed scale at kart setup (stat_cap mode)
     int engine_max = 3;         // highest allowed EEngineLevelSlot (informational)
     int def_driver = 0;         // substitutes for locked selections
     int def_body = 0;

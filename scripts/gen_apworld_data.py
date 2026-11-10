@@ -54,6 +54,8 @@ def build() -> dict[str, object]:
             "region": cup.name,
             "category": ["Cup Completion", BCP if cup.bcp else BASE],
             "place_item": [tables.TROPHY],
+            # The check fires only for 1st place overall (client on_gp_result).
+            "requires": "{HasWinSpeed()}",
         })
 
     # ---- courses: Finish / Top 3 / Win

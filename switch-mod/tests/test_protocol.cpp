@@ -46,6 +46,17 @@ int main() {
         CHECK(s.find("\"mirror\":true") != std::string::npos);
         CHECK(s.find("\"rank\":0") != std::string::npos);
     }
+    // gp_result
+    {
+        GpResult g{}; g.seq = 9; g.cup = 3; g.engine = 2; g.placing = 1; g.points = 54;
+        mk8ap::util::json::LineBuffer line;
+        encodeGpResult(line, g);
+        std::string s(line.data(), line.size());
+        CHECK(s.find("\"t\":\"gp_result\"") != std::string::npos);
+        CHECK(s.find("\"cup\":3") != std::string::npos);
+        CHECK(s.find("\"placing\":1") != std::string::npos);
+        CHECK(s.find("\"points\":54") != std::string::npos);
+    }
     // play_report hex
     {
         PlayReport p{};
@@ -92,6 +103,8 @@ int main() {
         CHECK(m.state.bodies[1] == 8);
         CHECK(m.state.items == 32769);
         CHECK(m.state.speed_pct == 60);
+        CHECK(m.state.stat_cap == 20);   // absent -> uncapped
+        CHECK(m.state.base_speed_pct == 100);
         CHECK(m.state.def_wing == 3);
     }
     // speed clamp + defaults
@@ -100,6 +113,16 @@ int main() {
         CHECK(decodeStr("{\"t\":\"state\",\"speed_pct\":500}", m));
         CHECK(m.state.speed_pct == 100);
         CHECK(m.state.cups == 0xFFFFFFFFu);
+        CHECK(decodeStr("{\"t\":\"state\",\"stat_cap\":8}", m));
+        CHECK(m.state.stat_cap == 8);
+        CHECK(decodeStr("{\"t\":\"state\",\"stat_cap\":0}", m));
+        CHECK(m.state.stat_cap == 1);
+        CHECK(decodeStr("{\"t\":\"state\",\"stat_cap\":99}", m));
+        CHECK(m.state.stat_cap == 20);
+        CHECK(decodeStr("{\"t\":\"state\",\"base_speed_pct\":70}", m));
+        CHECK(m.state.base_speed_pct == 70);
+        CHECK(decodeStr("{\"t\":\"state\",\"base_speed_pct\":0}", m));
+        CHECK(m.state.base_speed_pct == 1);
         CHECK(!m.state.enabled);
     }
     // print / pong / err / unknown / malformed

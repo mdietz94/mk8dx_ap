@@ -131,4 +131,38 @@ struct SpeedGovernor {
     }
 };
 
+// ---- stat cap ---------------------------------------------------------------
+//
+// A kart's stats are the per-column sum of four part rows (body + driver +
+// tire + glider, 14 s32 columns each; the sum is the stat level, 1..20, and
+// the selection screen draws 0.75 + sum / 4 bars). The stat cap holds every
+// column's sum at `cap`: statCapDeltas() returns, per column, how much to
+// subtract from ONE of the four rows (StatCapHook uses the body row) so the
+// sum lands on the cap. Columns already at or under the cap are untouched;
+// a cap of kStatMax (or more) changes nothing.
+inline constexpr int kStatCols = 14;
+inline constexpr int kStatMax = 20;
+
+// Column order of the part rows (verified against the community stat sheet).
+namespace stat {
+inline constexpr int Weight = 0, Accel = 1, Hidden2 = 2, Traction = 3, MiniTurbo = 4,
+                     SpeedLand = 5, SpeedWater = 6, SpeedAntigrav = 7, SpeedAir = 8,
+                     HandlingLand = 9, HandlingWater = 10, HandlingAntigrav = 11,
+                     HandlingAir = 12, Invincibility = 13;
+}  // namespace stat
+
+// Returns the number of columns that need lowering.
+inline int statCapDeltas(const int (&sums)[kStatCols], int cap, int (&delta)[kStatCols]) {
+    int n = 0;
+    for (int c = 0; c < kStatCols; ++c) {
+        delta[c] = 0;
+        if (cap >= kStatMax || cap < 1) continue;
+        if (sums[c] > cap) {
+            delta[c] = sums[c] - cap;
+            ++n;
+        }
+    }
+    return n;
+}
+
 }  // namespace mk8ap::ap::rules

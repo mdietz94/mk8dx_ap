@@ -124,6 +124,7 @@ async def main(args: argparse.Namespace) -> None:
     sw = SwitchServer(host, port, state, client_ver=__version__,
                       on_race_result=ctx.on_race_result,
                       on_play_report=ctx.on_play_report,
+                      on_gp_result=ctx.on_gp_result,
                       build_state=state.build_state,
                       bundled_mod_ver=bundled)
     ctx.switch = sw

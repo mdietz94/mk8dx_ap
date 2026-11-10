@@ -21,7 +21,7 @@ def test_default_state_is_starting_loadout():
     m = st.build_state()
     assert m.enabled and m.seq == 1
     assert m.cups == 1  # Mushroom Cup only
-    assert m.speed_pct == 60
+    assert m.speed_pct == 75
     mario = next(e for e in tables.DRIVERS if e.name == "Mario")
     assert (m.drivers[mario.default_id // 32] >> (mario.default_id % 32)) & 1
     luigi = next(e for e in tables.DRIVERS if e.name == "Luigi")
@@ -47,7 +47,41 @@ def test_items_unlock_bits_and_speed():
     assert (m.items >> star.default_id) & 1
     assert m.speed_pct == 100
     st.received[tables.PROGRESSIVE_SPEED] = 1
-    assert st.build_state().speed_pct == 73
+    assert st.build_state().speed_pct == 83
+
+
+def test_stat_cap_mode_rises_with_progressive_speed():
+    st = BridgeState()
+    st.apply_slot_data({"speed_restriction": 0, "speed_stages": 3, "starting_stat_cap": 8})
+    m = st.build_state()
+    assert m.stat_cap == 8
+    assert m.speed_pct == 100          # the top-speed governor is off in this mode
+    assert m.base_speed_pct == 75
+    st.add_item(tables.PROGRESSIVE_SPEED)
+    assert st.build_state().stat_cap == 12
+    assert st.build_state().base_speed_pct == 83
+    st.add_item(tables.PROGRESSIVE_SPEED, 2)
+    assert st.build_state().stat_cap == 20
+    assert st.build_state().base_speed_pct == 100
+    st.add_item(tables.PROGRESSIVE_SPEED)   # extra copies do not overflow
+    assert st.build_state().stat_cap == 20
+
+
+def test_stat_cap_off_in_top_speed_mode_and_old_seeds():
+    st = BridgeState()
+    st.apply_slot_data({"speed_stages": 3})      # pre-0.3.0 seed: no speed_restriction key
+    m = st.build_state()
+    assert m.stat_cap == 20 and m.speed_pct == 75 and m.base_speed_pct == 100
+    st.apply_slot_data({"speed_restriction": 0, "speed_stages": 0})
+    m = st.build_state()
+    assert m.stat_cap == 20 and m.speed_pct == 100 and m.base_speed_pct == 100
+
+
+def test_stat_cap_is_on_the_wire():
+    from client.protocol import encode
+    st = BridgeState()
+    st.apply_slot_data({"speed_restriction": 0, "starting_stat_cap": 5})
+    assert b'"stat_cap":5' in encode(st.build_state())
 
 
 def test_slot_data_shuffle_off_allows_everything():

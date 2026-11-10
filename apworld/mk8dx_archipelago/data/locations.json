@@ -8,7 +8,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Flower Cup (Grand Prix)",
@@ -19,7 +20,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Star Cup (Grand Prix)",
@@ -30,7 +32,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Special Cup (Grand Prix)",
@@ -41,7 +44,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Shell Cup (Grand Prix)",
@@ -52,7 +56,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Banana Cup (Grand Prix)",
@@ -63,7 +68,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Leaf Cup (Grand Prix)",
@@ -74,7 +80,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Lightning Cup (Grand Prix)",
@@ -85,7 +92,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Egg Cup (Grand Prix)",
@@ -96,7 +104,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Triforce Cup (Grand Prix)",
@@ -107,7 +116,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Crossing Cup (Grand Prix)",
@@ -118,7 +128,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Bell Cup (Grand Prix)",
@@ -129,7 +140,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Golden Dash Cup (Grand Prix)",
@@ -140,7 +152,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Lucky Cat Cup (Grand Prix)",
@@ -151,7 +164,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Turnip Cup (Grand Prix)",
@@ -162,7 +176,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Propeller Cup (Grand Prix)",
@@ -173,7 +188,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Rock Cup (Grand Prix)",
@@ -184,7 +200,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Moon Cup (Grand Prix)",
@@ -195,7 +212,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Fruit Cup (Grand Prix)",
@@ -206,7 +224,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Boomerang Cup (Grand Prix)",
@@ -217,7 +236,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Feather Cup (Grand Prix)",
@@ -228,7 +248,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Cherry Cup (Grand Prix)",
@@ -239,7 +260,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Acorn Cup (Grand Prix)",
@@ -250,7 +272,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Complete Spiny Cup (Grand Prix)",
@@ -261,7 +284,8 @@
     ],
     "place_item": [
       "Trophy"
-    ]
+    ],
+    "requires": "{HasWinSpeed()}"
   },
   {
     "name": "Mario Kart Stadium - Finish",

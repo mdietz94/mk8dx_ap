@@ -20,6 +20,7 @@ network-specific is compiled in, so one binary serves every player.
 | `hello` | `mod_ver, game_ver, build_id, resolved, total, unresolved, device_id` | on every (re)connect; `unresolved` is a comma-separated list of game functions the mod could not locate |
 | `play_report` | `room, size, truncated, hex` | every nn::prepo PlayReport the game saves (end-of-race records carry Course/Rank/Rule/Engine/Driver/...); `hex` is MessagePack |
 | `race_result` | `seq, course_id, rule, engine, mirror, rank(0-based), kart_index` | `ui::RaceWindow::onFakeGoal` (fallback channel) |
+| `gp_result` | `seq, cup(0-based), engine, placing(1-based), points` | a Grand Prix ended (`GpResultHook`, where the game records the trophy). The client credits `Complete <cup> (Grand Prix)` only for `placing` 1 |
 | `course_name` | `course_id, res` | accepted by the client but not sent by the mod (`ui::CourseInfo` carries no name). Course ids are learned by pairing `race_result` with the `play_report` of the same race |
 | `id_table` | `kind ("driver"/"body"/"tire"/"wing"), entries:[{id,text}]` | once per session after save load |
 | `log` | `level, msg` | every INFO+ log line |
@@ -30,7 +31,7 @@ network-specific is compiled in, so one binary serves every player.
 | `t` | fields | when |
 |---|---|---|
 | `hello_ack` | `ok, seed, slot, client_ver, err` | reply to `hello` |
-| `state` | `seq, enabled, cups, drivers[4], bodies[2], tires, wings, items, speed_pct, engine_max, def_driver, def_body, def_tire, def_wing, cpu_items` | after `hello_ack`, after every ReceivedItems, after new id tables |
+| `state` | `seq, enabled, cups, drivers[4], bodies[2], tires, wings, items, speed_pct, stat_cap, base_speed_pct, engine_max, def_driver, def_body, def_tire, def_wing, cpu_items` | after `hello_ack`, after every ReceivedItems, after new id tables |
 | `print` | `text` | free text for the Switch log |
 | `pong` | `ts_ms` | reply to `ping` |
 | `err` | `code, ctx` | protocol errors |
@@ -39,3 +40,10 @@ network-specific is compiled in, so one binary serves every player.
 allowed. Masks are indexed by the game's own enum ids (learned at runtime,
 see `client/learned.py`). `enabled=false` (or no state received yet) means
 the game plays vanilla. There is no item replay and nothing to double-count.
+
+`speed_pct` (1..100) drives the per-frame top-speed governor
+(`speed_restriction: top_speed_cap`). In `speed_restriction: stat_cap`
+mode, `stat_cap` (1..20, 20 = none) caps every stat sum of the local kart
+at race build and `base_speed_pct` (1..100) scales its base top speeds at
+the same moment. The client sends the unused fields at their neutral
+values (100 / 20 / 100). A mod older than 0.3.0 skips both new keys.

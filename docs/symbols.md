@@ -62,6 +62,8 @@ functions.
 | `ui::Page_CourseBase::isDLC` | pattern, exact hit `+0x494E44` | `+0x494CD8` | +0x16C |
 | `object::KartDirector::prepareBeforeStructure` | pattern, exact hit `+0x13D778` | `+0x13D588` | +0x1F0 |
 | `mush::E{Driver,Body,Tire,Wing}ID::text_` | pattern, exact hits `+0xB51E0 / +0xB5574 / +0x16BA5C / +0x13336C`; tables enumerate 54 / 42 / 23 / 16 entries (as on 4.0.0) | `+0xB4FF0 / +0xB5384 / +0x16B86C / +0x13317C` | +0x1F0 |
+| `object::KartVehicle::setupStatParam` (our name; unnamed in public sources) | address `0x170738`, pattern exact hit at the same place (4.0.1 disassembly, 2026-11-09) | - | - |
+| `ui::GrandPrix::commitResult` (our name; unnamed in public sources) | address `0x552FB0`; pattern starts 0x18 in (the prologue is shared by 98 functions), unique (4.0.1 disassembly, 2026-11-10) | - | - |
 | `gear::FlagAccessor::isOpen(EDriverID / EBodyID / ETireID / EWingID)` | pattern, exact hits `+0x865F14 / +0x865F60 / +0x865FAC / +0x865FF8` (located in the 4.0.1 disassembly, 2026-11-04; booted and installed in Ryujinx the same day) | - | - |
 
 ## What changed in 4.0.1 (from Ro's port)
@@ -156,6 +158,49 @@ First boot on a real 4.0.0 dump (Ryujinx 1.3.3, 2026-10-16): build id
 * **Speed**: by user decision (2026-10-16) the engine-class picker is NOT gated; the
   restriction is the top-speed clamp scaled by Progressive Speed. `engine_max` in the
   state message stays informational.
+* **Kart stats** (4.0.1 static analysis, 2026-11-09; `StatCapHook.cpp`). Stat points
+  live in four global tables, not in KartVehicle / KartVehicleMove: GOT slot
+  `main+0x12F9D98` -> global -> manager, `manager+0xF0` = table object (`tbl+0x20`
+  must be non-null). Rows are 14 s32 (0x38 bytes): body `tbl+0x98` (count u16
+  `+0xD4`, 41), driver `+0xA0` (`+0xD6`, 53), tire `+0xA8` (`+0xD8`, 22), glider
+  `+0xB0` (`+0xDA`, 15); an out-of-range id reads the fallback row at `tbl+0x1B8 /
+  0x1F0 / 0x228 / 0x260`. Part ids on KartVehicle: body `+0xB4`, driver `+0xB8`,
+  tire `+0xC0`, glider `+0xC4` (`+0xA8` and `+0xB0` both hold the player index, so
+  `vehicle::kBodyId/kDriverId` in Structs.hpp are wrong; they only feed logs). Mii
+  drivers 0x1D / 0x34 with u32 `v+0xFC <= 2` use driver row `s32[main+0xF242C8 + 4 *
+  form]` = {17, 0, 10}. `+0x170738` (single caller `+0x16FA58`, kart setup) sums the
+  four rows per column into `KartVehicle+0x2DC + 4 * col` and indexes the per-level
+  physics tables with `clamp(sum - 1, 0, 19)`; CPUs (`v+0xD2`) get level 20 on
+  several stats. The select screen draws `0.75 + sum / 4` bars (checked on many
+  combos). Columns, matched 100% against the community stat sheet: 0 weight,
+  1 acceleration, 2 (not in the sheet), 3 traction, 4 mini-turbo, 5..8 speed
+  ground / water / anti-gravity / air, 9..12 handling (same order), 13
+  invincibility. Ruled out on the way: `KartVehicle+0x78` (per-body/tire chassis
+  tuning and the model list).
+* **Level tables / base top speed** (4.0.1 static, 2026-11-10). The table object
+  also holds 21-entry per-level tables (`tbl+0x28` weight 0xC each, `+0x30`
+  accel-ish 8 each, `+0x58/+0x60/+0x68` ground / water / anti-grav speed 2 floats
+  each, `+0x70` air 1 float). `+0x170738` copies them into KartVehicleMove (via
+  `+0x185F98`, its only caller): speed bases at `Move+0x4B8/4BC` (ground, 0 / 10
+  coins), `+0x4C0/4C4` water, `+0x4C8/4CC` anti-grav, `+0x50C` air. Ground runs
+  only 7.525/8.025 (level 0) to 8.000/8.500 (level 19), ~6%, so a stat cap alone
+  is barely felt; accel runs 0.035 to 0.130. `+0x182C14` (every frame) rebuilds
+  the live top `Move+0x420 = lerp(+0x4B8, +0x4BC, coins / 10) * Move+0x4B4`
+  (engine factor) and the boost / star speeds as multiples of it, so
+  `StatCapHook` scales the seven bases once after the original (verified
+  2026-11-10, 200cc, 60%: live top 7.155, highest 8.36 with boosts).
+* **Grand Prix result** (4.0.1 static, 2026-11-10; `GpResultHook.cpp`). Points
+  table: 12 rows of 12 s32 at `main+0xF739D4` (row = kart count - 1; 12 karts =
+  15 12 10 9 8 7 6 5 4 3 2 1); `+0x8703A0` / `+0x8703EC` read it for the
+  PlayReport and the results UI. The trophy writer `+0x552FB0(arg, bool* dirty)`
+  returns unless `arg[0] == 0`, then for each local player (`arg[0xC]`) takes
+  Player = `PlayerManager->ptrs[PlayerManager+0x17C + 4i]` and the head of its
+  GP history ring (`Player+0x58` buf, `+0x60` cap, `+0x64` head, `+0x68` count,
+  5 u32 per entry): entry[0] = total points (stars: >= 60 three, 57..59 two,
+  54..56 one), entry[2] = final placing (1/2/3 -> trophy byte 3/2/1). It stores
+  max(old, new) at `save+0x188 -> +0x688 + engine * 0x20 + cup` (stars at
+  `+0x588`); `Control_TrophyIcon::setCup` (`+0x479D98`) reads the same bytes.
+  The per-race PlayReport has no GP total (its `Points` is online rating).
 * Ryujinx itself prints every PlayReport as JSON (`ServicePrepo
   ProcessPlayReport`) in its log, which doubles as a cross-check for the
   mod's MessagePack capture during emulator testing.

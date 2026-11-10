@@ -18,7 +18,9 @@ void installCupGateHooks();     // FlagAccessor::isOpen / DLCManager::getCupStat
 void installItemGateHook();     // gear::ItemOwner::startSlot
 void installKartGuardHook();    // ui::SetNextCourse (enforce driver/parts)
 void installPartUnlockHooks();  // FlagAccessor::isOpen(E{Driver,Body,Tire,Wing}ID): open AP parts in menus
-void installSpeedCapHook();     // ui::Control_RaceLapCoin::onCalc_ (per-frame clamp)
+void installSpeedCapHook();     // ui::Control_RaceLapCoin::onCalc_ (per-frame clamp, top_speed_cap mode)
+void installStatCapHook();      // KartVehicle stat setup (+0x170738): cap stat sums, stat_cap mode
+void installGpResultHook();     // GP trophy writer (+0x552FB0): final placing -> gp_result
 
 // Start the AP worker + dump the id tables, once. Called from the save-load
 // hook and, in case that pattern did not resolve, from every other hook that
