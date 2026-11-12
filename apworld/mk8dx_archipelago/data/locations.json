@@ -5,11 +5,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Flower Cup (Grand Prix)",
@@ -17,11 +13,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Star Cup (Grand Prix)",
@@ -29,11 +21,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Special Cup (Grand Prix)",
@@ -41,11 +29,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Shell Cup (Grand Prix)",
@@ -53,11 +37,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Banana Cup (Grand Prix)",
@@ -65,11 +45,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Leaf Cup (Grand Prix)",
@@ -77,11 +53,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Lightning Cup (Grand Prix)",
@@ -89,11 +61,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Egg Cup (Grand Prix)",
@@ -101,11 +69,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Triforce Cup (Grand Prix)",
@@ -113,11 +77,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Crossing Cup (Grand Prix)",
@@ -125,11 +85,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Bell Cup (Grand Prix)",
@@ -137,11 +93,7 @@
     "category": [
       "Cup Completion",
       "Base Game"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Golden Dash Cup (Grand Prix)",
@@ -149,11 +101,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Lucky Cat Cup (Grand Prix)",
@@ -161,11 +109,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Turnip Cup (Grand Prix)",
@@ -173,11 +117,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Propeller Cup (Grand Prix)",
@@ -185,11 +125,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Rock Cup (Grand Prix)",
@@ -197,11 +133,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Moon Cup (Grand Prix)",
@@ -209,11 +141,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Fruit Cup (Grand Prix)",
@@ -221,11 +149,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Boomerang Cup (Grand Prix)",
@@ -233,11 +157,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Feather Cup (Grand Prix)",
@@ -245,11 +165,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Cherry Cup (Grand Prix)",
@@ -257,11 +173,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Acorn Cup (Grand Prix)",
@@ -269,11 +181,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Complete Spiny Cup (Grand Prix)",
@@ -281,11 +189,7 @@
     "category": [
       "Cup Completion",
       "Booster Course Pass"
-    ],
-    "place_item": [
-      "Trophy"
-    ],
-    "requires": "{HasWinSpeed()}"
+    ]
   },
   {
     "name": "Mario Kart Stadium - Finish",
@@ -3175,5 +3079,293 @@
     ],
     "requires": "{GoalTrophies()}",
     "victory": true
+  },
+  {
+    "name": "Win Mushroom Cup (Grand Prix)",
+    "region": "Mushroom Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Flower Cup (Grand Prix)",
+    "region": "Flower Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Star Cup (Grand Prix)",
+    "region": "Star Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Special Cup (Grand Prix)",
+    "region": "Special Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Shell Cup (Grand Prix)",
+    "region": "Shell Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Banana Cup (Grand Prix)",
+    "region": "Banana Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Leaf Cup (Grand Prix)",
+    "region": "Leaf Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Lightning Cup (Grand Prix)",
+    "region": "Lightning Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Egg Cup (Grand Prix)",
+    "region": "Egg Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Triforce Cup (Grand Prix)",
+    "region": "Triforce Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Crossing Cup (Grand Prix)",
+    "region": "Crossing Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Bell Cup (Grand Prix)",
+    "region": "Bell Cup",
+    "category": [
+      "Cup Win",
+      "Base Game"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Golden Dash Cup (Grand Prix)",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Lucky Cat Cup (Grand Prix)",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Turnip Cup (Grand Prix)",
+    "region": "Turnip Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Propeller Cup (Grand Prix)",
+    "region": "Propeller Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Rock Cup (Grand Prix)",
+    "region": "Rock Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Moon Cup (Grand Prix)",
+    "region": "Moon Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Fruit Cup (Grand Prix)",
+    "region": "Fruit Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Boomerang Cup (Grand Prix)",
+    "region": "Boomerang Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Feather Cup (Grand Prix)",
+    "region": "Feather Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Cherry Cup (Grand Prix)",
+    "region": "Cherry Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Acorn Cup (Grand Prix)",
+    "region": "Acorn Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Win Spiny Cup (Grand Prix)",
+    "region": "Spiny Cup",
+    "category": [
+      "Cup Win",
+      "Booster Course Pass"
+    ],
+    "place_item": [
+      "Trophy"
+    ],
+    "requires": "{HasWinSpeed()}"
   }
 ]

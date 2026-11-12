@@ -20,7 +20,7 @@ network-specific is compiled in, so one binary serves every player.
 | `hello` | `mod_ver, game_ver, build_id, resolved, total, unresolved, device_id` | on every (re)connect; `unresolved` is a comma-separated list of game functions the mod could not locate |
 | `play_report` | `room, size, truncated, hex` | every nn::prepo PlayReport the game saves (end-of-race records carry Course/Rank/Rule/Engine/Driver/...); `hex` is MessagePack |
 | `race_result` | `seq, course_id, rule, engine, mirror, rank(0-based), kart_index` | `ui::RaceWindow::onFakeGoal` (fallback channel) |
-| `gp_result` | `seq, cup(0-based), engine, placing(1-based), points` | a Grand Prix ended (`GpResultHook`, where the game records the trophy). The client credits `Complete <cup> (Grand Prix)` only for `placing` 1 |
+| `gp_result` | `seq, cup(0-based), engine, placing(1-based), points` | a Grand Prix ended (`GpResultHook`, where the game records the trophy). The client credits `Complete <cup> (Grand Prix)` for any placing and `Win <cup> (Grand Prix)` for `placing` 1 (a 0.3.0 seed, without `gp_win_locations` in slot data, has only `Complete`, credited for `placing` 1) |
 | `course_name` | `course_id, res` | accepted by the client but not sent by the mod (`ui::CourseInfo` carries no name). Course ids are learned by pairing `race_result` with the `play_report` of the same race |
 | `id_table` | `kind ("driver"/"body"/"tire"/"wing"), entries:[{id,text}]` | once per session after save load |
 | `log` | `level, msg` | every INFO+ log line |

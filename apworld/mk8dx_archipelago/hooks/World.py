@@ -21,11 +21,11 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 
 
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
-    # Number of cup-completion locations actually in this seed (course_selection);
-    # GoalTrophies() clamps the goal to it.
+    # Number of cup-win locations (each holds a Trophy) actually in this seed
+    # (course_selection); GoalTrophies() clamps the goal to it.
     world.cup_completion_count = sum(
         1 for loc in multiworld.get_locations(player)
-        if loc.name.startswith("Complete ") and loc.name.endswith("(Grand Prix)")
+        if loc.name.startswith("Win ") and loc.name.endswith(" (Grand Prix)")
     )
 
 
@@ -63,7 +63,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     for it in speed[stages:]:
         item_pool.remove(it)
 
-    # One Trophy per cup-completion location that exists in this seed (they
+    # One Trophy per cup-win location that exists in this seed (they
     # are place_item-locked there; surplus trophies would float into the
     # pool and satisfy the goal without racing).
     want = getattr(world, "cup_completion_count", 0)
@@ -107,6 +107,9 @@ def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld,
 
 def after_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
     slot_data["cup_completion_count"] = getattr(world, "cup_completion_count", 0)
+    # 0.3.1+: "Complete <cup>" = any placing, "Win <cup>" = 1st (holds the
+    # Trophy). Without this key the client keeps 0.3.0's single 1st-place check.
+    slot_data["gp_win_locations"] = True
     slot_data["starting_cup"] = getattr(world, "starting_cup", STARTING_CUPS[0])
     slot_data["goal_trophies"] = max(1, min(int(get_option_value(multiworld, player, "goal_cups")),
                                             slot_data["cup_completion_count"] or 1))
