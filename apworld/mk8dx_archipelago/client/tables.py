@@ -249,6 +249,21 @@ def cup_complete_location(cup: Cup) -> str:
     return f"Complete {cup.name} (Grand Prix)"
 
 
+# Grand Prix rank stars, as the game awards them from the cup's point total
+# (trophy writer +0x552FB0, see docs/symbols.md): (stars, minimum points).
+# 60 = 1st in all four races. The points alone decide it, as in game.
+GP_STAR_RANKS: tuple[tuple[int, int], ...] = ((1, 54), (2, 57), (3, 60))
+
+
+def cup_star_location(cup: Cup, stars: int) -> str:
+    return f"{cup.name} (Grand Prix) - {stars} Star{'' if stars == 1 else 's'}"
+
+
+def gp_stars_for_points(points: int) -> int:
+    """In-game star rank (0..3) for a Grand Prix point total."""
+    return max((s for s, need in GP_STAR_RANKS if points >= need), default=0)
+
+
 def course_location(course: Course, tier: str) -> str:
     return f"{course.name} - {tier}"
 

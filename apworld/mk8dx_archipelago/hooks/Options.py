@@ -33,6 +33,14 @@ class IncludeWinLocations(DefaultOnToggle):
     display_name = "Win locations"
 
 
+class IncludeStarLocations(DefaultOnToggle):
+    """Add '1 Star', '2 Stars' and '3 Stars' checks to every cup's Grand Prix,
+    awarded like the in-game rank from the cup's point total (54+ / 57+ /
+    60, i.e. 1st in all four races for 3 Stars). A better rank also checks
+    the lower ones. Gated in logic like the cup win (win_requires_speed)."""
+    display_name = "Grand Prix star locations"
+
+
 class ShuffleCharacters(DefaultOnToggle):
     """Lock every character except Mario until its item is received. Locked
     selections are swapped to Mario when the race starts (the select screen
@@ -141,6 +149,7 @@ def before_options_defined(options: dict) -> dict:
     options["course_selection"] = CourseSelection
     options["include_top3_locations"] = IncludeTop3Locations
     options["include_win_locations"] = IncludeWinLocations
+    options["include_star_locations"] = IncludeStarLocations
     options["shuffle_characters"] = ShuffleCharacters
     options["shuffle_vehicles"] = ShuffleVehicles
     options["shuffle_items"] = ShuffleItems

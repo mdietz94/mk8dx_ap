@@ -46,9 +46,28 @@ def test_locations_cover_every_course_and_cup():
             assert tables.course_location(c, tier) in locs
     for cup in tables.CUPS:
         assert tables.cup_complete_location(cup) in locs
+        for stars, _ in tables.GP_STAR_RANKS:
+            assert tables.cup_star_location(cup, stars) in locs
     items = {i["name"] for i in json.loads((APWORLD / "data" / "items.json").read_text(encoding="utf-8"))}
     for cup in tables.CUPS:
         assert tables.cup_item(cup) in items
     for name in (tables.STARTING_DRIVER,):
         assert f"Character: {name}" in items
     assert tables.PROGRESSIVE_SPEED in items and tables.TROPHY in items
+
+
+def test_star_locations_keep_earlier_ids_stable():
+    # Manual numbers locations in file order; the stars were added in 0.3.1
+    # after every older location so in-progress seeds keep their ids.
+    names = [l["name"] for l in json.loads((APWORLD / "data" / "locations.json").read_text(encoding="utf-8"))]
+    first_star = names.index(tables.cup_star_location(tables.CUPS[0], 1))
+    assert names[first_star - 1] == "Trophy Collection Complete"
+    assert len(names) - first_star == 3 * len(tables.CUPS)
+    # The goal counts "Complete ... (Grand Prix)" names; stars must not match.
+    assert not any(n.startswith("Complete ") for n in names[first_star:])
+
+
+def test_gp_stars_match_game_thresholds():
+    assert [tables.gp_stars_for_points(p) for p in (-1, 0, 53, 54, 56, 57, 59, 60)] == [0, 0, 0, 1, 1, 2, 2, 3]
+    assert tables.cup_star_location(tables.CUPS[0], 1) == "Mushroom Cup (Grand Prix) - 1 Star"
+    assert tables.cup_star_location(tables.CUPS[0], 3) == "Mushroom Cup (Grand Prix) - 3 Stars"

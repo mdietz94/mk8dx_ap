@@ -6,4 +6,4 @@ package must never pull Kivy: the apworld is imported on headless
 generation hosts too.
 """
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"

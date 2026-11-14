@@ -241,9 +241,14 @@ class MK8DXContext(CommonContext):
             log.warning("gp_result for unknown cup %d (placing %d)", msg.cup, msg.placing)
             return
         won = msg.placing == 1
-        log.info("gp_result %s placing=%d points=%d engine=%d -> %s", cup.name, msg.placing,
-                 msg.points, msg.engine, "cup won" if won else "no check (needs 1st place)")
-        checked = await self._check([tables.cup_complete_location(cup)] if won else [])
+        # Star rank from the point total, as in game; independent of placing.
+        stars = tables.gp_stars_for_points(msg.points)
+        log.info("gp_result %s placing=%d points=%d engine=%d stars=%d -> %s", cup.name, msg.placing,
+                 msg.points, msg.engine, stars, "cup won" if won else "no cup check (needs 1st place)")
+        locations = [tables.cup_complete_location(cup)] if won else []
+        if self.slot_data.get("include_star_locations", False):
+            locations += [tables.cup_star_location(cup, s) for s in range(1, stars + 1)]
+        checked = await self._check(locations)
         self.state.add_race(RaceEvent(time.time(), "gp", cup.name, msg.placing, "GP total",
                                       "", checked))
         if checked:

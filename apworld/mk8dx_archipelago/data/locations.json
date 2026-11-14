@@ -3175,5 +3175,653 @@
     ],
     "requires": "{GoalTrophies()}",
     "victory": true
+  },
+  {
+    "name": "Mushroom Cup (Grand Prix) - 1 Star",
+    "region": "Mushroom Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Mushroom Cup (Grand Prix) - 2 Stars",
+    "region": "Mushroom Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Mushroom Cup (Grand Prix) - 3 Stars",
+    "region": "Mushroom Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Flower Cup (Grand Prix) - 1 Star",
+    "region": "Flower Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Flower Cup (Grand Prix) - 2 Stars",
+    "region": "Flower Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Flower Cup (Grand Prix) - 3 Stars",
+    "region": "Flower Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Star Cup (Grand Prix) - 1 Star",
+    "region": "Star Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Star Cup (Grand Prix) - 2 Stars",
+    "region": "Star Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Star Cup (Grand Prix) - 3 Stars",
+    "region": "Star Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Special Cup (Grand Prix) - 1 Star",
+    "region": "Special Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Special Cup (Grand Prix) - 2 Stars",
+    "region": "Special Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Special Cup (Grand Prix) - 3 Stars",
+    "region": "Special Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Shell Cup (Grand Prix) - 1 Star",
+    "region": "Shell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Shell Cup (Grand Prix) - 2 Stars",
+    "region": "Shell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Shell Cup (Grand Prix) - 3 Stars",
+    "region": "Shell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Banana Cup (Grand Prix) - 1 Star",
+    "region": "Banana Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Banana Cup (Grand Prix) - 2 Stars",
+    "region": "Banana Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Banana Cup (Grand Prix) - 3 Stars",
+    "region": "Banana Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Leaf Cup (Grand Prix) - 1 Star",
+    "region": "Leaf Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Leaf Cup (Grand Prix) - 2 Stars",
+    "region": "Leaf Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Leaf Cup (Grand Prix) - 3 Stars",
+    "region": "Leaf Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lightning Cup (Grand Prix) - 1 Star",
+    "region": "Lightning Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lightning Cup (Grand Prix) - 2 Stars",
+    "region": "Lightning Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lightning Cup (Grand Prix) - 3 Stars",
+    "region": "Lightning Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Egg Cup (Grand Prix) - 1 Star",
+    "region": "Egg Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Egg Cup (Grand Prix) - 2 Stars",
+    "region": "Egg Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Egg Cup (Grand Prix) - 3 Stars",
+    "region": "Egg Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Triforce Cup (Grand Prix) - 1 Star",
+    "region": "Triforce Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Triforce Cup (Grand Prix) - 2 Stars",
+    "region": "Triforce Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Triforce Cup (Grand Prix) - 3 Stars",
+    "region": "Triforce Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Crossing Cup (Grand Prix) - 1 Star",
+    "region": "Crossing Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Crossing Cup (Grand Prix) - 2 Stars",
+    "region": "Crossing Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Crossing Cup (Grand Prix) - 3 Stars",
+    "region": "Crossing Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Bell Cup (Grand Prix) - 1 Star",
+    "region": "Bell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Bell Cup (Grand Prix) - 2 Stars",
+    "region": "Bell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Bell Cup (Grand Prix) - 3 Stars",
+    "region": "Bell Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Base Game"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Golden Dash Cup (Grand Prix) - 1 Star",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Golden Dash Cup (Grand Prix) - 2 Stars",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Golden Dash Cup (Grand Prix) - 3 Stars",
+    "region": "Golden Dash Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lucky Cat Cup (Grand Prix) - 1 Star",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lucky Cat Cup (Grand Prix) - 2 Stars",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Lucky Cat Cup (Grand Prix) - 3 Stars",
+    "region": "Lucky Cat Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Turnip Cup (Grand Prix) - 1 Star",
+    "region": "Turnip Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Turnip Cup (Grand Prix) - 2 Stars",
+    "region": "Turnip Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Turnip Cup (Grand Prix) - 3 Stars",
+    "region": "Turnip Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Propeller Cup (Grand Prix) - 1 Star",
+    "region": "Propeller Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Propeller Cup (Grand Prix) - 2 Stars",
+    "region": "Propeller Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Propeller Cup (Grand Prix) - 3 Stars",
+    "region": "Propeller Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Rock Cup (Grand Prix) - 1 Star",
+    "region": "Rock Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Rock Cup (Grand Prix) - 2 Stars",
+    "region": "Rock Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Rock Cup (Grand Prix) - 3 Stars",
+    "region": "Rock Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Moon Cup (Grand Prix) - 1 Star",
+    "region": "Moon Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Moon Cup (Grand Prix) - 2 Stars",
+    "region": "Moon Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Moon Cup (Grand Prix) - 3 Stars",
+    "region": "Moon Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Fruit Cup (Grand Prix) - 1 Star",
+    "region": "Fruit Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Fruit Cup (Grand Prix) - 2 Stars",
+    "region": "Fruit Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Fruit Cup (Grand Prix) - 3 Stars",
+    "region": "Fruit Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Boomerang Cup (Grand Prix) - 1 Star",
+    "region": "Boomerang Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Boomerang Cup (Grand Prix) - 2 Stars",
+    "region": "Boomerang Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Boomerang Cup (Grand Prix) - 3 Stars",
+    "region": "Boomerang Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Feather Cup (Grand Prix) - 1 Star",
+    "region": "Feather Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Feather Cup (Grand Prix) - 2 Stars",
+    "region": "Feather Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Feather Cup (Grand Prix) - 3 Stars",
+    "region": "Feather Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Cherry Cup (Grand Prix) - 1 Star",
+    "region": "Cherry Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Cherry Cup (Grand Prix) - 2 Stars",
+    "region": "Cherry Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Cherry Cup (Grand Prix) - 3 Stars",
+    "region": "Cherry Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Acorn Cup (Grand Prix) - 1 Star",
+    "region": "Acorn Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Acorn Cup (Grand Prix) - 2 Stars",
+    "region": "Acorn Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Acorn Cup (Grand Prix) - 3 Stars",
+    "region": "Acorn Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Spiny Cup (Grand Prix) - 1 Star",
+    "region": "Spiny Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Spiny Cup (Grand Prix) - 2 Stars",
+    "region": "Spiny Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
+  },
+  {
+    "name": "Spiny Cup (Grand Prix) - 3 Stars",
+    "region": "Spiny Cup",
+    "category": [
+      "Grand Prix Stars",
+      "Booster Course Pass"
+    ],
+    "requires": "{HasWinSpeed()}"
   }
 ]

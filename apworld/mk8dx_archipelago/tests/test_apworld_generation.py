@@ -53,6 +53,7 @@ SCENARIOS = [
     ("bcp_only_finish_only", {"course_selection": "booster_course_pass",
                               "include_top3_locations": False, "include_win_locations": False}),
     ("finish_only", {"include_top3_locations": False, "include_win_locations": False}),
+    ("no_stars", {"course_selection": "base_game", "include_star_locations": False}),
     ("no_shuffles", {"shuffle_characters": False, "shuffle_vehicles": False, "shuffle_items": False, "speed_stages": 0}),
     ("max_goal", {"goal_cups": 24, "starting_cups": 4, "speed_stages": 5, "win_requires_speed": 5}),
     ("base_game_max_goal", {"course_selection": "base_game", "goal_cups": 24}),

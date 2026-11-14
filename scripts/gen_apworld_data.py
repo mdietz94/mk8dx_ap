@@ -35,6 +35,7 @@ def build() -> dict[str, object]:
         BCP: {},
         "Top 3": {"yaml_option": ["include_top3_locations"]},
         "Win": {"yaml_option": ["include_win_locations"]},
+        "Grand Prix Stars": {"yaml_option": ["include_star_locations"]},
         "Characters": {"yaml_option": ["shuffle_characters"]},
         "Vehicles": {"yaml_option": ["shuffle_vehicles"]},
         "Item Box": {"yaml_option": ["shuffle_items"]},
@@ -107,6 +108,19 @@ def build() -> dict[str, object]:
         "requires": "{GoalTrophies()}",
         "victory": True,
     })
+
+    # ---- Grand Prix rank stars: 1 / 2 / 3 Stars per cup, cumulative (a
+    # 3-star cup checks all three). Appended last: Manual numbers locations
+    # in order, so earlier ids stay stable for seeds generated before 0.3.1.
+    for cup in tables.CUPS:
+        for stars, _ in tables.GP_STAR_RANKS:
+            locations.append({
+                "name": tables.cup_star_location(cup, stars),
+                "region": cup.name,
+                "category": ["Grand Prix Stars", BCP if cup.bcp else BASE],
+                # 54+ points practically means winning the cup; same bar.
+                "requires": "{HasWinSpeed()}",
+            })
 
     return {"items": items, "locations": locations, "regions": regions, "categories": categories}
 

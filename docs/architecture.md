@@ -59,5 +59,6 @@ Switch / Ryujinx                                   PC
 Manual-template generation code (Data/Items/Locations/Regions/Rules) with
 MK8DX data. Regions = cups (require the cup item); locations = per course
 Finish / Top 3 / Win + "Complete <cup> (Grand Prix)" holding a locked
-`Trophy`; goal = `Trophy x goal_cups`. Items: cups, characters, karts,
+`Trophy` + "<cup> (Grand Prix) - 1 Star / 2 Stars / 3 Stars" (GP rank,
+from the `gp_result` points); goal = `Trophy x goal_cups`. Items: cups, characters, karts,
 tires, gliders, item-box items, Progressive Speed, Coin Bonus filler.

@@ -11,6 +11,11 @@
       "include_win_locations"
     ]
   },
+  "Grand Prix Stars": {
+    "yaml_option": [
+      "include_star_locations"
+    ]
+  },
   "Characters": {
     "yaml_option": [
       "shuffle_characters"

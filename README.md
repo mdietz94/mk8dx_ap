@@ -95,7 +95,8 @@ python scripts/switch_smoke_test.py --course Gu_FirstCircuit --rank 1 --rule VS 
 Connect the client to the room, boot the game with the mod. The client's
 *Kart* tab shows the Switch link, unlocked cups/characters/items, current
 top speed and recent races. Locations: per course *Finish*, *Top 3*,
-*Win* (Grand Prix or VS), and *Complete \<cup\> (Grand Prix)*; goal:
+*Win* (Grand Prix or VS), *Complete \<cup\> (Grand Prix)*, and the Grand Prix
+rank *1 Star* / *2 Stars* / *3 Stars* per cup (`include_star_locations`); goal:
 complete `goal_cups` cups.
 
 ## First run checklist (on-game verification)
