@@ -47,8 +47,8 @@ Switch / Ryujinx                                   PC
   routes `play_report` / `race_result` to the context, learns id tables.
 * `context.py`: `CommonContext` subclass; received items -> `state.py`
   snapshot -> `state` push; race events -> `resolver.py` -> LocationChecks;
-  `GrandPrixTracker` credits "Complete X Cup" after four GP races; goal =
-  N cups.
+  `gp_result` credits "Complete <cup> (Grand Prix)" (any placing) and
+  "Win <cup> (Grand Prix)" (1st place); goal = N cups won.
 * `learned.py`: id tables persisted to `mk8dx_learned_ids.json` in the
   Archipelago user dir.
 * `tables.py`: single source of truth for names; `scripts/gen_apworld_data.py`
@@ -58,6 +58,7 @@ Switch / Ryujinx                                   PC
 
 Manual-template generation code (Data/Items/Locations/Regions/Rules) with
 MK8DX data. Regions = cups (require the cup item); locations = per course
-Finish / Top 3 / Win + "Complete <cup> (Grand Prix)" holding a locked
+Finish / Top 3 / Win + per cup "Complete <cup> (Grand Prix)" (any placing)
+and "Win <cup> (Grand Prix)" (1st place, `HasWinSpeed()`) holding a locked
 `Trophy`; goal = `Trophy x goal_cups`. Items: cups, characters, karts,
 tires, gliders, item-box items, Progressive Speed, Coin Bonus filler.

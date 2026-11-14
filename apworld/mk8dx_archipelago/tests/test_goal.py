@@ -1,4 +1,4 @@
-"""The client sends CLIENT_GOAL once enough cups are completed, keeps it
+"""The client sends CLIENT_GOAL once enough cups are won, keeps it
 across reconnects (CommonContext.finished_game) and never carries it over to
 a different slot."""
 
@@ -26,13 +26,15 @@ except ImportError:
     pass
 
 
-def _ctx(goal_trophies: int):
+def _ctx(goal_trophies: int, gp_win_locations: bool = True):
     pytest.importorskip("CommonClient", reason="Archipelago checkout not present")
     from client.context import MK8DXContext
     from client.state import BridgeState
 
     ctx = MK8DXContext(None, None, BridgeState())
     ctx.slot_data = {"goal_trophies": goal_trophies}
+    if gp_win_locations:
+        ctx.slot_data["gp_win_locations"] = True
     ctx.seed_name, ctx.auth = "seed1", "Mario"
     sent: list = []
 
@@ -48,16 +50,26 @@ def _goals(sent) -> int:
 
 
 @pytest.mark.asyncio
-async def test_goal_sent_once_when_enough_cups():
+async def test_goal_sent_once_when_enough_cups_won():
     ctx, sent = _ctx(2)
-    ctx.state.checked_locations |= {"Complete Mushroom Cup (Grand Prix)", "Mario Kart Stadium: Win"}
+    ctx.state.checked_locations |= {"Win Mushroom Cup (Grand Prix)", "Mario Kart Stadium - Win",
+                                    "Complete Mushroom Cup (Grand Prix)",
+                                    "Complete Flower Cup (Grand Prix)"}
     await ctx._maybe_goal()
-    assert _goals(sent) == 0 and not ctx.finished_game
+    assert _goals(sent) == 0 and not ctx.finished_game   # completing a cup is not winning it
 
-    ctx.state.checked_locations.add("Complete Flower Cup (Grand Prix)")
+    ctx.state.checked_locations.add("Win Flower Cup (Grand Prix)")
     await ctx._maybe_goal()
     await ctx._maybe_goal()
     assert _goals(sent) == 1 and ctx.finished_game
+
+
+@pytest.mark.asyncio
+async def test_goal_0_3_0_seed_counts_complete_locations():
+    ctx, sent = _ctx(1, gp_win_locations=False)
+    ctx.state.checked_locations.add("Complete Mushroom Cup (Grand Prix)")
+    await ctx._maybe_goal()
+    assert _goals(sent) == 1
 
 
 @pytest.mark.asyncio
@@ -65,7 +77,7 @@ async def test_goal_survives_disconnect_but_not_slot_change():
     ctx, _ = _ctx(1)
     from CommonClient import CommonContext
     ctx.send_msgs = CommonContext.send_msgs.__get__(ctx)  # type: ignore[assignment]  # no server: dropped
-    ctx.state.checked_locations.add("Complete Mushroom Cup (Grand Prix)")
+    ctx.state.checked_locations.add("Win Mushroom Cup (Grand Prix)")
     await ctx._maybe_goal()
     assert ctx.finished_game  # CommonClient re-sends CLIENT_GOAL on the next Connected
 

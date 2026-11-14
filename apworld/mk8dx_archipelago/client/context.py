@@ -234,16 +234,28 @@ class MK8DXContext(CommonContext):
             log.info("checked: %s", ", ".join(checked))
         await self._maybe_goal()
 
+    def _has_gp_win_locations(self) -> bool:
+        """0.3.1+ seeds: 'Complete <cup>' for any placing plus 'Win <cup>' for
+        1st. A 0.3.0 seed has only 'Complete <cup>', checked for 1st place."""
+        return bool(self.slot_data.get("gp_win_locations"))
+
     async def on_gp_result(self, msg: GpResultMsg) -> None:
-        """A Grand Prix ended. The cup's check needs 1st place overall."""
+        """A Grand Prix ended: 'Complete <cup>' for any placing, 'Win <cup>'
+        for 1st place overall."""
         cup = tables.CUPS[msg.cup] if 0 <= msg.cup < len(tables.CUPS) else None
         if cup is None:
             log.warning("gp_result for unknown cup %d (placing %d)", msg.cup, msg.placing)
             return
         won = msg.placing == 1
+        if self._has_gp_win_locations():
+            locations = [tables.cup_complete_location(cup)]
+            if won:
+                locations.append(tables.cup_win_location(cup))
+        else:
+            locations = [tables.cup_complete_location(cup)] if won else []
         log.info("gp_result %s placing=%d points=%d engine=%d -> %s", cup.name, msg.placing,
-                 msg.points, msg.engine, "cup won" if won else "no check (needs 1st place)")
-        checked = await self._check([tables.cup_complete_location(cup)] if won else [])
+                 msg.points, msg.engine, "cup won" if won else "cup finished (win needs 1st place)")
+        checked = await self._check(locations)
         self.state.add_race(RaceEvent(time.time(), "gp", cup.name, msg.placing, "GP total",
                                       "", checked))
         if checked:
@@ -271,14 +283,14 @@ class MK8DXContext(CommonContext):
         need = int(self.slot_data.get("goal_trophies", 0) or 0)
         if need <= 0:
             return
-        have = sum(1 for n in self.state.checked_locations
-                   if n.startswith("Complete ") and n.endswith("(Grand Prix)"))
+        won = tables.is_cup_win_location if self._has_gp_win_locations() else tables.is_cup_complete_location
+        have = sum(1 for n in self.state.checked_locations if won(n))
         if have >= need:
             # Set before sending: if the socket is down, send_msgs drops the
             # message and CommonClient re-sends CLIENT_GOAL on reconnect.
             self.finished_game = True
             self._goal_key = (str(self.seed_name or ""), str(self.auth or ""))
-            log.info("goal reached: %d/%d cups completed", have, need)
+            log.info("goal reached: %d/%d cups won", have, need)
             await self.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
 
     # ---- setup wizard ----

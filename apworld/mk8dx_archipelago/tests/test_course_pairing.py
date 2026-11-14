@@ -71,17 +71,13 @@ async def test_hook_and_report_pair_teaches_course_id():
     assert RaceReport(course="x").course == "x"
 
 
-@pytest.mark.asyncio
-async def test_cup_check_needs_first_place_overall():
-    pytest.importorskip("CommonClient", reason="Archipelago checkout not present")
-    from client import tables
+def _gp_ctx(slot_data: dict):
     from client.context import MK8DXContext
-    from client.play_report import RaceReport
-    from client.protocol import GpResultMsg
     from client.state import BridgeState
 
     state = BridgeState()
     ctx = MK8DXContext(None, None, state)
+    ctx.slot_data = dict(slot_data)
     sent: list[int] = []
 
     async def record(ids):
@@ -89,21 +85,51 @@ async def test_cup_check_needs_first_place_overall():
     ctx.check_locations = record  # type: ignore[assignment]
     names: dict[str, int] = {}
     ctx._location_id = lambda name: names.setdefault(name, len(names) + 1)  # type: ignore[assignment]
+    return ctx, state, sent
 
-    # Finishing all four Mushroom Cup races no longer completes the cup by itself.
+
+@pytest.mark.asyncio
+async def test_cup_complete_any_placing_win_needs_first():
+    pytest.importorskip("CommonClient", reason="Archipelago checkout not present")
+    from client import tables
+    from client.play_report import RaceReport
+    from client.protocol import GpResultMsg
+
+    ctx, state, sent = _gp_ctx({"gp_win_locations": True})
+    complete, win = "Complete Mushroom Cup (Grand Prix)", "Win Mushroom Cup (Grand Prix)"
+
+    # Finishing all four Mushroom Cup races does not complete the cup by itself.
     for c in [c for c in tables.COURSES if c.cup == 0]:
         ctx._seen_reports.clear()
         await ctx._credit(c, 5, "GP", [], "prepo", 0)
-    assert "Complete Mushroom Cup (Grand Prix)" not in state.checked_locations
+    assert complete not in state.checked_locations and sent == []
 
-    await ctx.on_gp_result(GpResultMsg(seq=1, cup=0, engine=1, placing=2, points=50))
-    assert "Complete Mushroom Cup (Grand Prix)" not in state.checked_locations
-    assert sent == []
+    await ctx.on_gp_result(GpResultMsg(seq=1, cup=0, engine=1, placing=7, points=30))
+    assert complete in state.checked_locations and win not in state.checked_locations
+    assert len(sent) == 1
     await ctx.on_gp_result(GpResultMsg(seq=2, cup=0, engine=1, placing=1, points=54))
-    assert "Complete Mushroom Cup (Grand Prix)" in state.checked_locations
-    assert len(sent) == 1
+    assert win in state.checked_locations
+    assert len(sent) == 2   # Complete was already checked
     await ctx.on_gp_result(GpResultMsg(seq=3, cup=0, engine=1, placing=1, points=60))
-    assert len(sent) == 1   # already checked
-    await ctx.on_gp_result(GpResultMsg(seq=4, cup=99, engine=1, placing=1, points=60))
-    assert len(sent) == 1
+    assert len(sent) == 2
+    # Winning first checks both at once.
+    await ctx.on_gp_result(GpResultMsg(seq=4, cup=1, engine=1, placing=1, points=60))
+    assert {"Complete Flower Cup (Grand Prix)", "Win Flower Cup (Grand Prix)"} <= state.checked_locations
+    assert len(sent) == 4
+    await ctx.on_gp_result(GpResultMsg(seq=5, cup=99, engine=1, placing=1, points=60))
+    assert len(sent) == 4
     assert RaceReport(course="x").course == "x"
+
+
+@pytest.mark.asyncio
+async def test_cup_check_0_3_0_seed_needs_first_place_overall():
+    """A seed without gp_win_locations has only 'Complete <cup>', for 1st place."""
+    pytest.importorskip("CommonClient", reason="Archipelago checkout not present")
+    from client.protocol import GpResultMsg
+
+    ctx, state, sent = _gp_ctx({})
+    await ctx.on_gp_result(GpResultMsg(seq=1, cup=0, engine=1, placing=2, points=50))
+    assert state.checked_locations == set() and sent == []
+    await ctx.on_gp_result(GpResultMsg(seq=2, cup=0, engine=1, placing=1, points=54))
+    assert state.checked_locations == {"Complete Mushroom Cup (Grand Prix)"}
+    assert len(sent) == 1

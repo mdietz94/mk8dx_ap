@@ -16,8 +16,9 @@
 //   entry[0] = total GP points (>= 60 three stars, 57..59 two, 54..56 one)
 //   entry[2] = final GP placing, 1 = first (1/2/3 -> gold/silver/bronze)
 // and writes max(old, trophy) to save+0x688 + engine*0x20 + cup. We read the
-// same entry before calling the original and report it; the PC credits the
-// cup's "Complete <cup> (Grand Prix)" check only for placing 1.
+// same entry before calling the original and report it, for every placing;
+// the PC credits "Complete <cup> (Grand Prix)" for any placing and
+// "Win <cup> (Grand Prix)" only for placing 1.
 
 #include "Hooks.hpp"
 

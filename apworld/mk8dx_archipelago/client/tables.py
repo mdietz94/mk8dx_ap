@@ -246,7 +246,21 @@ def cup_item(cup: Cup) -> str:
 
 
 def cup_complete_location(cup: Cup) -> str:
+    """Finish the cup's Grand Prix, any placing."""
     return f"Complete {cup.name} (Grand Prix)"
+
+
+def cup_win_location(cup: Cup) -> str:
+    """Win the cup's Grand Prix (1st place overall); holds the cup's Trophy."""
+    return f"Win {cup.name} (Grand Prix)"
+
+
+def is_cup_complete_location(name: str) -> bool:
+    return name.startswith("Complete ") and name.endswith(" (Grand Prix)")
+
+
+def is_cup_win_location(name: str) -> bool:
+    return name.startswith("Win ") and name.endswith(" (Grand Prix)")
 
 
 def course_location(course: Course, tier: str) -> str:

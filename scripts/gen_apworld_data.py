@@ -40,7 +40,7 @@ def build() -> dict[str, object]:
         "Item Box": {"yaml_option": ["shuffle_items"]},
     }
 
-    # ---- cups: one region + one unlock item + one completion location each
+    # ---- cups: one region + one unlock item + a Complete and a Win location each
     for cup in tables.CUPS:
         cats = ["Cups", BCP if cup.bcp else BASE]
         items.append({"name": tables.cup_item(cup), "progression": True, "category": cats, "count": 1})
@@ -49,13 +49,11 @@ def build() -> dict[str, object]:
             "connects_to": [],
             "starting": True,
         }
+        # Any placing (client on_gp_result).
         locations.append({
             "name": tables.cup_complete_location(cup),
             "region": cup.name,
             "category": ["Cup Completion", BCP if cup.bcp else BASE],
-            "place_item": [tables.TROPHY],
-            # The check fires only for 1st place overall (client on_gp_result).
-            "requires": "{HasWinSpeed()}",
         })
 
     # ---- courses: Finish / Top 3 / Win
@@ -79,7 +77,7 @@ def build() -> dict[str, object]:
             "requires": "{HasWinSpeed()}",
         })
 
-    # ---- trophies (placed at cup completions; count trimmed in hooks/World.py)
+    # ---- trophies (placed at cup wins; count trimmed in hooks/World.py)
     items.append({"name": tables.TROPHY, "progression": True, "category": ["Trophies"],
                   "count": len(tables.CUPS)})
 
@@ -107,6 +105,18 @@ def build() -> dict[str, object]:
         "requires": "{GoalTrophies()}",
         "victory": True,
     })
+
+    # ---- cup wins: 1st place overall, each holding a locked Trophy. Appended
+    # last (Manual numbers locations in list order) so the ids of everything
+    # above stay what 0.3.0 seeds were generated with.
+    for cup in tables.CUPS:
+        locations.append({
+            "name": tables.cup_win_location(cup),
+            "region": cup.name,
+            "category": ["Cup Win", BCP if cup.bcp else BASE],
+            "place_item": [tables.TROPHY],
+            "requires": "{HasWinSpeed()}",
+        })
 
     return {"items": items, "locations": locations, "regions": regions, "categories": categories}
 
